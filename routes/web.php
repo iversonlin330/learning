@@ -12,5 +12,18 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::post('/login', 'Auth\LoginController@postLogin');
+Route::get('/logout', 'Auth\LoginController@getLogout');
+
+Route::resource('groups', 'GroupController');
+Route::resource('questions', 'QuestionController');
+Route::resource('registers', 'Auth\RegisterController');
+Route::get('verify', 'Auth\RegisterController@getVerify');
+
