@@ -2,14 +2,10 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class Student extends Model
 {
-    use Notifiable;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -39,22 +35,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 	
-	//protected $appends = array('classroom');
-	
 	public function user_info()
     {
         if($this->role == 99){
 			return [];
-		}else if($this->role == 50){
+		}else if($this->role == 1){
 			return $this->hasOne('App\Teacher','user_id','id');
 		}{
 			return $this->hasOne('App\Student','user_id','id');
 		}
     }
-	/*
-	public function getAvailabilityAttribute()
-    {
-        return $this->calculateAvailability();  
-    }
-	*/
 }

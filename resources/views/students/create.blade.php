@@ -13,21 +13,10 @@
         </style>
     </head>
     <body>
-		學生登入
-		<form action="{{url('login')}}" method="post">
+		<form action="{{url('students')}}" method="post">
 			@csrf
-			<input type="text" name="account" />
-			<input type="text" name="role" value="1" hidden>
+			<input type="text"/>
 			<input type="submit">
 		</form>
-		老師/admin登入
-		<form action="{{url('login')}}" method="post">
-			@csrf
-			<input type="text" name="account" />
-			<input type="password" name="password" />
-			<input type="submit">
-		</form>
-		<a href="{{url('forget')}}">忘記密碼</a>
-		<a href="{{url('registers')}}">註冊</a>
     </body>
 </html>

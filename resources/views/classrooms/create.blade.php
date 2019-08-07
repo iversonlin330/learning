@@ -13,21 +13,20 @@
         </style>
     </head>
     <body>
-		學生登入
-		<form action="{{url('login')}}" method="post">
-			@csrf
-			<input type="text" name="account" />
-			<input type="text" name="role" value="1" hidden>
+	<span>Hello, {{Auth::user()->name}} <a href="{{url('logout')}}">登出</a></span>
+	<br>
+	<span>班級資料建立</a>
+		<form action="{{url('classrooms')}}" method="post">
+		@csrf
+			<select name="grade">
+				<option>年級</option>
+			</select>
+			<select name="class">
+				<option>班級</option>
+			</select>
+			<input name="class_id"/>
+			<input type="number" name="number_of poeple"/>
 			<input type="submit">
 		</form>
-		老師/admin登入
-		<form action="{{url('login')}}" method="post">
-			@csrf
-			<input type="text" name="account" />
-			<input type="password" name="password" />
-			<input type="submit">
-		</form>
-		<a href="{{url('forget')}}">忘記密碼</a>
-		<a href="{{url('registers')}}">註冊</a>
     </body>
 </html>

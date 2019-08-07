@@ -79,12 +79,17 @@ class RegisterController extends Controller
     {
 		$data = $request->all();
 		$token = str_random(32);
+		$data['account'] = '123@com';
 		$data['name'] = 'test';
-		$data['gender'] = '1';
+		$data['gender'] = 1;
+		$data['city_id'] = 1;
+		$data['service_school'] = 1;
+		$data['service_grade'] = 1;
+		$data['service_subject'] = 1;
+		
 		$data['email'] = '123@com';
 		$data['password'] = '123';
-		$data['school_id'] = '1';
-		$data['url'] = url('/verify?email='.$data['email'].'&remember_token='.$token);
+		$data['url'] = url('/verify?account='.$data['email'].'&remember_token='.$token);
 		
 		Mail::to($data['email'])
 			//->subject('認證...')
@@ -92,30 +97,31 @@ class RegisterController extends Controller
 			->send(new Register($data));
 		
 		User::create([
+			'account' => $data['account'],
             'name' => $data['name'],
-			'gender' => $data['gender'] = '1',
-            'email' => $data['email'],
+			'gender' => $data['gender'],
             'password' => Hash::make($data['password']),
-			'school_id' => $data['school_id'],
-			'role' => 1,
+			'role' => 50,
 			'remember_token' => $token,
+			'email' => $data['email'],
         ]);
 		
 		return view('mails.register',compact('data'));
     }
 	
-	protected function getVerify(Request $request)
+	public function getVerify(Request $request)
     {
 		$data = $request->all();
-		$user = User::where('email',$data['email'])
+		$user = User::where('account',$data['account'])
 			->where('remember_token',$data['remember_token'])
 			->update(['email_verified_at' => date('Y-m-d H:i:s')]);
-		if($user){
-			$user = User::where('email',$data['email'])->first();
+		$user = User::where('account',$data['account'])->first();
+		if(!$user->user_info){
+			$user = User::where('account',$data['account'])->first();
 			Auth::login($user);
-			return redirect('groups');
+			return redirect('teachers/create');
 		}else{
-			
+			return redirect('groups');
 		}
 	}
 }

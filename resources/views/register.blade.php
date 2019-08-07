@@ -13,10 +13,29 @@
         </style>
     </head>
     <body>
-		學生登入
+		老師註冊
 		<form action="{{url('registers')}}" method="post">
 			@csrf
-			<input type="text" name="account" />
+			姓名<input type="text" name="name" />
+			性別<input type="text" name="name" />
+			所屬縣市
+			<select>
+					<option></option>
+			</select>
+			服務學校
+			<input type="text" name="name" />
+			任教年級
+			<input type="text" name="name" />
+			任教班級
+			<input type="text" name="name" />
+			任教科目
+			<input type="text" name="name" />
+			Email
+			<input type="text" name="name" />
+			密碼
+			<input type="text" name="name" />
+			密碼再次確認
+			<input type="text" name="name" />
 			<input type="text" name="role" value="1" hidden>
 			<input type="submit">
 		</form>

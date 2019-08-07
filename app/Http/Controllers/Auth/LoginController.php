@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 //use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 use Illuminate\Http\Request;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -43,15 +44,44 @@ class LoginController extends Controller
 		$data = $request->all();
 		
 		//dd($data);
-		if($data['role'] == 1){
-			Auth::loginUsingId(1);
-			return redirect('groups');
-		}else{
-			$credentials = $request->only('email', 'password');
+		$user = User::where('account',$data['account'])->first();
+		if(!$user){
+			return back();
+		}
+		
+		if($user->role == 1){
+			$user = User::where('account',$data['account'])->first();
+			Auth::login($user);
+			if($user->user_info){
+				return redirect('groups');
+			}else{
+				return redirect('students/create');
+			}
+		}elseif($user->role == 50){
+			$credentials = $request->only('account', 'password');
+			if(Auth::attempt($credentials)){
+				$user = Auth::user();
+				if($user->user_info){
+					return redirect('groups');
+				}else{
+					return redirect('teachers/create');
+				}
+			}else{
+				return back();
+			}
+		}elseif($user->role == 99){
+			$credentials = $request->only('account', 'password');
 			if(Auth::attempt($credentials)){
 				return redirect('groups');
 			}else{
-				return redirect('/');
+				return back();
+			}
+		}else{
+			$credentials = $request->only('account', 'password');
+			if(Auth::attempt($credentials)){
+				return redirect('groups');
+			}else{
+				return back();
 			}
 		}
 		
