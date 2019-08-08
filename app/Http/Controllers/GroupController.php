@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Group;
 
 class GroupController extends Controller
 {
@@ -14,7 +15,8 @@ class GroupController extends Controller
     public function index()
     {
         //
-		return view('groups');
+		$groups = Group::all();
+		return view('groups.index',compact('groups'));
     }
 
     /**
@@ -25,6 +27,7 @@ class GroupController extends Controller
     public function create()
     {
         //
+		return view('groups.create');
     }
 
     /**
@@ -36,6 +39,11 @@ class GroupController extends Controller
     public function store(Request $request)
     {
         //
+		Group::create([
+			'title' => 'test',
+			'subject' => '自然',
+			'grade' => '二上',
+		]);
     }
 
     /**

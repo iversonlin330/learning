@@ -14,27 +14,27 @@
     </head>
     <body>
 	<span>Hello, {{Auth::user()->name}} <a href="{{url('logout')}}">登出</a></span>
-	<div><a href="{{url('classrooms')}}">學生資料設定</a></div>
+	<br>
+	<a href="{{url('classrooms/create')}}">建立</a>
 		<table>
 			<thead>
 				<th>ID</th>
-				<th>科目</th>
 				<th>年級</th>
-				<th>題組名稱</th>
+				<th>班級</th>
+				<th>人數</th>
 				<th>動作</th>
 			</thead>
 			<tbody>
+			@foreach($classrooms as $classroom)
 				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td>
-						<a href="#">開始作答</a>
-						<a href="#">瀏覽題目</a>
-						<a href="#">指定班級作答</a>
-					</td>
+					<td>{{ $classroom->class_number }}<td>
+					<td>{{ $classroom->grade }}<td>
+					<td>{{ $classroom->classroom }}<td>
+					<td>{{ $classroom->number_student() }}<td>
+					<td><a href="{{url('classrooms/'.$classroom->id.'/edit')}}">編輯</a>&nbsp<a href="{{url('classrooms/'.$classroom->id.'/delete')}}">刪除</a><td>
 				</tr>
+			@endforeach
+				
 			</tbody>
 		</table>
     </body>
