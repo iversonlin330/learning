@@ -20,6 +20,9 @@ class CreateQuestionsTable extends Migration
 			$table->string('type');
 			$table->string('group_id');
 			$table->string('correct_answer');
+			$table->string('grade');
+			$table->string('history');
+			$table->string('goal');
             $table->timestamps();
         });
     }

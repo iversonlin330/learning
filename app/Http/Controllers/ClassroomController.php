@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\User;
 use App\Classroom;
+use App\Student;
 
 class ClassroomController extends Controller
 {
@@ -45,15 +46,18 @@ class ClassroomController extends Controller
     {
         //
 		$user = Auth::user();
-		//$data = $request->all();
+		$data = $request->all();
+		/*
+		dd($data);
 		$data = [
 			'class_number' => 'A',
 			'grade' => 1,
 			'classroom' => '甲班',
 			'number_of_poeple' => 10,
 		];
+		*/
 		$data['teacher_id'] = str_pad($user->user_info->id,3,'0',STR_PAD_LEFT);
-		Classroom::create([
+		$new_classroom = Classroom::create([
             'class_number' => $data['class_number'],
 			'grade' => $data['grade'],
 			'classroom' => $data['classroom'],
@@ -61,16 +65,20 @@ class ClassroomController extends Controller
         ]);
 		
 		for($i=1;$i<=$data['number_of_poeple'];$i++){
-			User::create([
+			$new_user = User::create([
 				'account' => $data['teacher_id'] . $data['class_number'] . str_pad($i,3,'0',STR_PAD_LEFT),
 				'name' => 'student',
 				'role' => 1,
 				'gender' => 0,
 			]);
+			
+			Student::create([
+				'user_id' => $new_user->id,
+				'classroom_id' => $new_classroom->id,
+			]);
 		}
 		
 		return redirect('/classrooms');
-		dd($user,$data);
     }
 
     /**
@@ -117,5 +125,14 @@ class ClassroomController extends Controller
     public function destroy($id)
     {
         //
+		$classroom = Classroom::where('id',$id)->first();
+		/*
+		$teacher_id = str_pad($classroom->teacher_id,3,'0',STR_PAD_LEFT);
+		
+		$classroom->students->delete();
+		$classroom->users->delete();
+		*/
+		$classroom->delete();
+		return back();
     }
 }

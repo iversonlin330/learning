@@ -49,12 +49,27 @@ class Classroom extends Model
 	
 	public function number_student()
     {
-        return User::where('account','like',$this->teacher_id . $this->class_number . '%')->count();
+        $teacher_id = str_pad($this->teacher_id,3,'0',STR_PAD_LEFT);
+		return User::where('account','like',$teacher_id . $this->class_number . '%')->count();
+    }
+	
+	public function users()
+    {
+		 $teacher_id = str_pad($this->teacher_id,3,'0',STR_PAD_LEFT);
+		 return User::where('account','like',$teacher_id . $this->class_number . '%');
     }
 	
 	public function students()
     {
-		 return User::where('account','like',$this->teacher_id . $this->class_number . '%')->get();
+		 return $this->hasMany('App\Student','classroom_id','id');
     }
+	
+	public function delete()
+	{
+		$this->users()->delete();
+		$this->students()->delete();
+
+		return parent::delete(); 
+	}
 	
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Teacher;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -78,7 +79,9 @@ class RegisterController extends Controller
 	protected function store(Request $request)
     {
 		$data = $request->all();
+		
 		$token = str_random(32);
+		/*
 		$data['account'] = '123@com';
 		$data['name'] = 'test';
 		$data['gender'] = 1;
@@ -89,21 +92,34 @@ class RegisterController extends Controller
 		
 		$data['email'] = '123@com';
 		$data['password'] = '123';
-		$data['url'] = url('/verify?account='.$data['email'].'&remember_token='.$token);
+		*/
+		$data['url'] = url('/verify?account='.$data['account'].'&remember_token='.$token);
 		
-		Mail::to($data['email'])
+		/*
+		Mail::to($data['account'])
 			//->subject('認證...')
 			//->send("<a href>");
 			->send(new Register($data));
-		
-		User::create([
+		*/
+		$user = User::create([
 			'account' => $data['account'],
             'name' => $data['name'],
 			'gender' => $data['gender'],
             'password' => Hash::make($data['password']),
 			'role' => 50,
 			'remember_token' => $token,
-			'email' => $data['email'],
+			'email' => $data['account'],
+        ]);
+		
+		//dd($user,$data);
+		
+		Teacher::create([
+			'user_id' => $user->id,
+            'city_id' => $data['city_id'],
+			'school_id' => $data['school_id'],
+            'grade' => $data['grade'],
+			'classroom' => $data['classroom'],
+			'subject' => json_encode($data['subject']),
         ]);
 		
 		return view('mails.register',compact('data'));
@@ -116,12 +132,15 @@ class RegisterController extends Controller
 			->where('remember_token',$data['remember_token'])
 			->update(['email_verified_at' => date('Y-m-d H:i:s')]);
 		$user = User::where('account',$data['account'])->first();
+		Auth::login($user);
+		return redirect('groups');
+		/*
 		if(!$user->user_info){
 			$user = User::where('account',$data['account'])->first();
 			Auth::login($user);
 			return redirect('teachers/create');
 		}else{
 			return redirect('groups');
-		}
+		}*/
 	}
 }

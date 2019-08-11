@@ -18,10 +18,10 @@ class CreateStudentsTable extends Migration
 			$table->string('user_id');
 			//$table->string('teacher_id');
 			$table->string('classroom_id');
-			$table->string('computer');
-            $table->string('search_time');
-			$table->string('typing');
-			$table->string('search_easy');
+			$table->string('computer')->nullable();
+            $table->string('search_time')->nullable();
+			$table->string('typing')->nullable();
+			$table->string('search_easy')->nullable();
 			$table->timestamps();
         });
     }
