@@ -18,9 +18,9 @@
 				<option value="自然">自然</option>
 				<option value="社會">社會</option>
 			</select>
-			<select class="browser-default custom-select large_filter" style="width:220px;">
-				<option selected>年級排列：由高到低</option>
-				<option value="1">年級排列：由低到高</option>
+			<select id="sort_grade" class="browser-default custom-select large_filter" style="width:220px;">
+				<option value="desc" selected>年級排列：由高到低</option>
+				<option value="asc">年級排列：由低到高</option>
 			</select>
 			<button class="btn btn_filter">篩選</button>
 		</div>
@@ -148,19 +148,35 @@
 @section('script')
 @parent
 <script>
-function sort_group_table(){
+function sort_group_table(type){
     var $tbody = $('#group_table tbody');
 	$tbody.find('tr').sort(function(a,b){ 
 		var tda = $(a).find('td:eq(2)').text(); // can replace 1 with the column you want to sort on
 		var tdb = $(b).find('td:eq(2)').text(); // this will sort on the second column
 				// if a < b return 1
-		return tda < tdb ? 1 
+		if(type == 'desc'){
+			return tda < tdb ? 1 
 			   // else if a > b return -1
 			   : tda > tdb ? -1 
 			   // else they are equal - return 0    
-			   : 0;           
+			   : 0;  
+		}else{
+			return tda > tdb ? 1 
+			   // else if a > b return -1
+			   : tda < tdb ? -1 
+			   // else they are equal - return 0    
+			   : 0;  
+		}
+		         
 	}).appendTo($tbody);
 }
+sort_group_table('desc');
+
+$("#sort_grade").change(function(){
+	var type = $(this).val();
+	sort_group_table(type);
+});
+
 
 $("#filter_subject").change(function () {
     //split the current value of searchInput

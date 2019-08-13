@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Classroom;
 use App\Student;
+use App\User;
 
 class StudentController extends Controller
 {
@@ -41,6 +42,24 @@ class StudentController extends Controller
         //
 		$user = Auth::user();
 		$data = $request->all();
+		
+		User::where('id',$user->id)
+			->update([
+				'name' =>$data['name'],
+				'gender' =>$data['gender']
+			]);
+			
+		Student::where('user_id',$user->id)
+			->update([
+				'computer' =>$data['stu_question_1'],
+				'search_time' =>$data['stu_question_2'],
+				'typing' =>$data['stu_question_3'],
+				'search_easy' =>$data['stu_question_4'],
+			]);
+			
+		return redirect('groups');
+		/*
+		dd($data);
 		$teacher_id = intval(substr($user->account,0,3));
 		$class_number = substr($user->account,3,1);
 		$classroom = Classroom::where('teacher_id',$teacher_id)
@@ -64,6 +83,7 @@ class StudentController extends Controller
 			'search_easy' => $user->id,
 		]);
 		dd($data);
+		*/
     }
 
     /**

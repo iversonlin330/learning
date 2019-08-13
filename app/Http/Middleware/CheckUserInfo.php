@@ -16,11 +16,11 @@ class CheckUserInfo
      */
     public function handle($request, Closure $next)
     {
-		if(!in_array($request->getPathInfo(),["/verify",'/teachers/create','students/create','/logout',"/teachers"])){
+		if(!in_array($request->getPathInfo(),["/verify",'/teachers/create','/students/create','/logout',"/teachers","/students"])){
 			$user = Auth::user();
 			if($user){
 				if($user->role == 1){
-					if(!$user->name == 'student'){
+					if($user->name == 'student'){
 						//return view("students.create");
 						return redirect('students/create');
 					}
