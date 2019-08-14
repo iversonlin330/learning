@@ -45,4 +45,9 @@ class Student extends Model
 			return $this->hasOne('App\Student','user_id','id');
 		}
     }
+	
+	public function classroom()
+    {
+		return $this->hasOne('App\Classroom','id','classroom_id');
+    }
 }

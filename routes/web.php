@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::resource('questions', 'QuestionController');
 		Route::resource('classrooms', 'ClassroomController');
 		Route::resource('students', 'StudentController');
+		Route::get('testing/{id}', 'TestingController@index');
 	});
 });
 

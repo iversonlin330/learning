@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Groups;
 
 class User extends Authenticatable
 {
@@ -49,6 +50,17 @@ class User extends Authenticatable
 			return $this->hasOne('App\Teacher','user_id','id');
 		}{
 			return $this->hasOne('App\Student','user_id','id');
+		}
+    }
+	
+	public function groups()
+    {
+        if($this->role == 99){
+			return Group::all();
+		}else if($this->role == 50){
+			return Group::all();
+		}{
+			return $this->user_info->classroom->groups;
 		}
     }
 	/*

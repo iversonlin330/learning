@@ -72,4 +72,9 @@ class Classroom extends Model
 		return parent::delete(); 
 	}
 	
+	public function groups()
+	{
+		return $this->belongsToMany('\App\Group','group_classroom','classroom_id','group_id');
+	}
+	
 }

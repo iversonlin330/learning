@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Group;
+use Auth;
 
 class GroupController extends Controller
 {
@@ -15,7 +16,8 @@ class GroupController extends Controller
     public function index()
     {
         //
-		$groups = Group::all();
+		$user = Auth::user();
+		$groups = $user->groups();
 		return view('groups.index',compact('groups'));
     }
 
@@ -55,6 +57,10 @@ class GroupController extends Controller
     public function show($id)
     {
         //
+		$group = Group::find($id);
+		$questions = $group->question;
+		//dd($questions);
+		return view('groups.show',compact('group','questions'));
     }
 
     /**

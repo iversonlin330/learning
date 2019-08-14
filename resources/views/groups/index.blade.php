@@ -57,7 +57,7 @@
 								<a href="#" style="float: left; margin-right: 10px;">指定班級作答</a>
 								@endif
 								@if(Auth::user()->role == 99)
-								<a href="UC3-PF6_admin_view_detial.html" style="float: left; margin-right: 10px;">查看詳細資訊</a>
+								<a href="{{url('groups/'.$group->id)}}" style="float: left; margin-right: 10px;">查看詳細資訊</a>
 								@endif
 							</td>
 						</tr>
