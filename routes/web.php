@@ -27,6 +27,10 @@ Route::get('/login', function () {
 */
 Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/verify', 'Auth\RegisterController@getVerify');
+Route::get('/forgot', 'Auth\LoginController@getForgot');
+Route::post('/forgot', 'Auth\LoginController@postForgot');
+Route::get('/reset', 'Auth\LoginController@getReset');
+Route::post('/reset', 'Auth\LoginController@postReset');
 
 Route::group(['middleware' => ['auth']], function () {
 	Route::resource('teachers', 'TeacherController');
@@ -37,6 +41,7 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::resource('classrooms', 'ClassroomController');
 		Route::resource('students', 'StudentController');
 		Route::get('testing/{id}', 'TestingController@index');
+		Route::post('testing-finish/{id}', 'TestingController@finish');
 	});
 });
 

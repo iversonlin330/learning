@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Auth;
 use Illuminate\Http\Request;
 use App\User;
+use App\Mail\Forgot;
+use Illuminate\Support\Facades\Mail;
 
 class LoginController extends Controller
 {
@@ -91,5 +93,50 @@ class LoginController extends Controller
 	public function getLogout(){
 		Auth::logout();
 		return redirect('/');
+	}
+	
+	public function getForgot(){
+		return view('forgot');
+	}
+	
+	public function postForgot(Request $request){
+		$data = $request->all();
+		$user = User::where('account',$data['email'])->first();
+		if($user){
+			$data = $user;
+			$data['url'] = url('/reset?account='.$data['email'].'&remember_token='.$user->remember_token);
+			Mail::to($data['email'])
+			->send(new Forgot($data));
+			return [ 'status' => 'Success','message' =>'成功'];
+		}else{
+			return [ 'status' => 'Fail','message' =>'Email錯誤'];
+		}
+	}
+	
+	public function getReset(Request $request){
+		$data = $request->all();
+		
+		$user = User::where('account',$data['email'])
+			->where('remember_token',$data['remember_token'])
+			->first();
+		if($user){
+			Auth::login($user);
+			return view('reset');
+		}else{
+			return false;
+		}
+	}
+	
+	public function postReset(Request $request){
+		$data = $request->all();
+		
+		$user = User::where('account',$data['email'])->first();
+		
+		$user = User::where('account',$data['email'])
+			->update([
+				'password' => Hash::make($data['password']),
+			]);
+		
+		
 	}
 }

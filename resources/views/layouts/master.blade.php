@@ -15,7 +15,7 @@
 </head>
 
 <body class="gradient">
-    @if(Auth::check() && Auth::user()->name != 'student')
+    @if(Auth::check() && Auth::user()->name != 'student' && !Request::is('reset'))
 	<header>
         <nav class="nav-bar">
             <a class="brand">數位閱讀學習平台</a>

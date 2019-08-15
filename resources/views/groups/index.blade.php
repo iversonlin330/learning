@@ -51,7 +51,7 @@
 							<td>{{$group->grade}}</td>
 							<td>{{$group->title}}</td>
 							<td class="td-underline">
-								<a href="#" style="float: left; margin-right: 10px;">開始作答</a>
+								<a href="{{url('testing/'.$group->id)}}" style="float: left; margin-right: 10px;">開始作答</a>
 								@if(Auth::user()->role == 50)
 								<a href="{{url('groups/'.$group->id)}}" style="float: left; margin-right: 10px;">瀏覽題目</a>
 								<a href="#" style="float: left; margin-right: 10px;">指定班級作答</a>
@@ -62,7 +62,7 @@
 							</td>
 						</tr>
 					@endforeach
-					<tr>
+					<!--tr>
 						<td>A001</td>
 						<td>自然</td>
 						<td>二上</td>
@@ -105,7 +105,7 @@
 							<a href="UC2-PF8_teacher_view_detial.html" style="float: left; margin-right: 10px;">瀏覽題目</a>
 							<a href="" data-toggle="modal" data-target="#assignation_exam" >指定班級作答</a>
 						</td>
-					</tr>
+					</tr-->
 				</tbody>
 			</table>
 			<!-- 指定班級作答彈跳視窗 -->
