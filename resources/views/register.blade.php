@@ -70,7 +70,7 @@
 						<div class="mb-15">
 							<div><label for="teacher_subject" class="lable_title">任教科目</label></div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" name="subject[]" id="inlineCheckbox1" value="chinese">
+								<input class="form-check-input" type="checkbox" name="subject[]" id="inlineCheckbox1" value="chinese" required>
 								<label class="form-check-label" for="teacher_subject">國語</label>
 							</div>
 							<div class="form-check form-check-inline">
@@ -112,7 +112,7 @@
 						<div class="modal-body pop-up text-center">
 								<p>已經傳送郵件至您的信箱<br>
 								請至信箱點擊連結完成認證</p>
-								<button type="button" class="btn btn_style" data-dismiss="modal" onclick="location.href='login.html'">確認</button>
+								<button type="button" class="btn btn_style" data-dismiss="modal" onclick="location.href='{{url('/')}}'">確認</button>
 						</div>
 					</div>
 				</div>
