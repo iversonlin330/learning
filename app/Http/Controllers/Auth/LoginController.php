@@ -107,9 +107,23 @@ class LoginController extends Controller
 			$data['url'] = url('/reset?account='.$data['email'].'&remember_token='.$user->remember_token);
 			Mail::to($data['email'])
 			->send(new Forgot($data));
-			return [ 'status' => 'Success','message' =>'成功'];
+			/*
+			return response()->json([
+				'success' => true,
+				"message" => "Insert successfully",
+			], 200);
+			*/
+			return response()->json([
+				'success' => true,
+				"message" => "成功",
+			], 200);
+			//return [ 'status' => 'Success','message' =>'成功'];
 		}else{
-			return [ 'status' => 'Fail','message' =>'Email錯誤'];
+			return response()->json([
+				'success' => false,
+				"message" => "Email錯誤",
+			], 200);
+			//return [ 'status' => 'Fail','message' =>'Email錯誤'];
 		}
 	}
 	

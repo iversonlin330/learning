@@ -14,17 +14,17 @@
 		<div class="teacher_forgotPassword">
 			<p style="margin-bottom: 15px;" class="title-20">忘記密碼</p>
 			<hr class="line">
+			<form action="{{url('/forgot')}}" method="post">
 			<div class="teacher_forgotPassword_main white_box_bg mb-30">
-				<form action="{{url('/forgot')}}" method="post">
-					<div class="row" style="margin:0;">
-						<div class="form-group">
-							<label for="forgotPassword" class="lable_title">輸入電子信箱</label>
-							<input style="width: 300px;" type="email" class="form-control" id="forgotPassword" name="email">
-						</div>
+				<div class="row" style="margin:0;">
+					<div class="form-group">
+						<label for="forgotPassword" class="lable_title">輸入電子信箱</label>
+						<input style="width: 300px;" type="email" class="form-control" id="forgotPassword" name="email" required>
 					</div>
-				</form>
+				</div>
 			</div>
 			<button id="submit_btn" type="submit" class="btn btn_style">確認</button>
+			</form>
 		</div>
 	</div>
 	<!-- 重設密碼彈跳視窗 -->
@@ -46,16 +46,17 @@
 @section('script')
 @parent
 <script>
-	$("#submit_btn").click(function(){
+	$("form").submit(function(e) {
+		e.preventDefault();
 		$.ajax({
 		  type: 'POST',
 		  url: "{{url('/forgot')}}",
 		  data: $("form").serialize(),
 		}).done(function(data) {
-		  if(data.status == 'Fail'){
-			  alert(data.message);
-		  }else{
+		  if(data.success){
 			  $("#forget_password").modal('show');
+		  }else{
+			  alert(data.message);
 		  }
 		});
 		//$('form').submit();

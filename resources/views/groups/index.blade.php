@@ -26,7 +26,7 @@
 		</div>
 		<div class="top_right_button">
 			@if(Auth::user()->role == 50)
-			<button class="btn btn_function" onclick="location.href='UC2-PF15_teacher_view_exam_record.html'" >作答記錄查看</button>
+			<button class="btn btn_function" onclick="location.href='{{ url('record/index') }}'" >作答記錄查看</button>
 			@endif
 			@if(Auth::user()->role == 99)
 			<button class="btn btn_function" onclick="location.href=' UC3-PF12_import_exam.html'">題組匯入</button>
@@ -58,6 +58,7 @@
 								@endif
 								@if(Auth::user()->role == 99)
 								<a href="{{url('groups/'.$group->id)}}" style="float: left; margin-right: 10px;">查看詳細資訊</a>
+								<a href="{{url('groups/'.$group->id.'/edit')}}" style="float: left; margin-right: 10px;">編輯題組內容</a>
 								@endif
 							</td>
 						</tr>

@@ -77,4 +77,9 @@ class Classroom extends Model
 		return $this->belongsToMany('\App\Group','group_classroom','classroom_id','group_id');
 	}
 	
+	public function teacher()
+    {
+		return $this->hasOne('App\Teacher','id','teacher_id');
+    }
+	
 }

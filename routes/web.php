@@ -40,8 +40,15 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::resource('questions', 'QuestionController');
 		Route::resource('classrooms', 'ClassroomController');
 		Route::resource('students', 'StudentController');
+		Route::resource('users', 'UserController');
 		Route::get('testing/{id}', 'TestingController@index');
 		Route::post('testing-finish/{id}', 'TestingController@finish');
+		
+		Route::get('record/index', 'RecordController@index');
+		Route::get('record/single', 'RecordController@single');
+		Route::get('record/mulit', 'RecordController@mulit');
+		Route::get('record/export', 'RecordController@export');
+		
 	});
 });
 

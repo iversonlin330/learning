@@ -81,20 +81,15 @@ class RegisterController extends Controller
 		$data = $request->all();
 		
 		$token = str_random(32);
-		/*
-		$data['account'] = '123@com';
-		$data['name'] = 'test';
-		$data['gender'] = 1;
-		$data['city_id'] = 1;
-		$data['service_school'] = 1;
-		$data['service_grade'] = 1;
-		$data['service_subject'] = 1;
-		
-		$data['email'] = '123@com';
-		$data['password'] = '123';
-		*/
 		$data['url'] = url('/verify?account='.$data['account'].'&remember_token='.$token);
 		
+		$is_exist = User::where('account', $data['account'])->first();
+		if($is_exist){
+			return response()->json([
+				'success' => false,
+				"message" => "此Email已申請過",
+			], 200);
+		}
 		/*
 		Mail::to($data['account'])
 			//->subject('認證...')
@@ -111,8 +106,6 @@ class RegisterController extends Controller
 			'email' => $data['account'],
         ]);
 		
-		//dd($user,$data);
-		
 		Teacher::create([
 			'user_id' => $user->id,
             'city_id' => $data['city_id'],
@@ -122,7 +115,12 @@ class RegisterController extends Controller
 			'subject' => json_encode($data['subject']),
         ]);
 		
-		return view('mails.register',compact('data'));
+		return response()->json([
+			'success' => true,
+			"message" => "新增成功",
+		], 200);
+		
+		//return view('mails.register',compact('data'));
     }
 	
 	public function getVerify(Request $request)

@@ -50,4 +50,9 @@ class Student extends Model
     {
 		return $this->hasOne('App\Classroom','id','classroom_id');
     }
+	
+	public function user()
+    {
+		return $this->hasOne('App\User','id','user_id');
+    }
 }

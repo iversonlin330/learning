@@ -44,7 +44,7 @@
 							<div class="mb-30">
 								<!--a href="UC2-PF4_forgot_password.html" class="signup">忘記密碼?</a>
 								<a href="UC2-PF2_teacher_signup.html" class="signup">申請帳號</a-->
-								<a href="{{url('forget')}}" class="signup">忘記密碼?</a>
+								<a href="{{url('forgot')}}" class="signup">忘記密碼?</a>
 								<a href="{{url('registers')}}" class="signup">申請帳號</a-->
 							</div>
 							<button  type="submit" class="btn btn_style">登入</button>

@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
-use App\User;
 use App\Classroom;
 use App\Student;
+use App\User;
 
-class ClassroomController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +18,6 @@ class ClassroomController extends Controller
     public function index()
     {
         //
-		$user = Auth::user();
-		//$classrooms = Classroom::where('teacher_id',$user->info_id)->get();
-		$classrooms = $user->user_info->classrooms;
-		return view('classrooms.index',compact('classrooms'));
     }
 
     /**
@@ -32,8 +28,7 @@ class ClassroomController extends Controller
     public function create()
     {
         //
-		
-		return view('classrooms.create');
+		return view('students.create');
     }
 
     /**
@@ -47,43 +42,22 @@ class ClassroomController extends Controller
         //
 		$user = Auth::user();
 		$data = $request->all();
-		/*
-		dd($data);
-		$data = [
-			'class_number' => 'A',
-			'grade' => 1,
-			'classroom' => '甲班',
-			'number_of_poeple' => 10,
-		];
-		*/
-		$data['teacher_id'] = str_pad($user->user_info->id,3,'0',STR_PAD_LEFT);
-		$new_classroom = Classroom::create([
-            'class_number' => $data['class_number'],
-			'grade' => $data['grade'],
-			'classroom' => $data['classroom'],
-			'teacher_id' => $user->user_info->id,
-        ]);
 		
-		for($i=1;$i<=$data['number_of_poeple'];$i++){
-			$new_user = User::create([
-				'account' => $data['teacher_id'] . $data['class_number'] . str_pad($i,3,'0',STR_PAD_LEFT),
-				'name' => 'student',
-				'role' => 1,
-				'gender' => 0,
-			]);
+		$classroom = Classroom::find($data['classroom_id'])->first();
+		
+		$new_user = User::create([
+			'account' => str_pad($classroom->teacher->id,3,'0',STR_PAD_LEFT) . $classroom->class_number . str_pad($data['student_id'],3,'0',STR_PAD_LEFT),
+			'name' => 'student',
+			'role' => 1,
+			'gender' => 0,
+		]);
+		
+		Student::create([
+			'user_id' => $new_user->id,
+			'classroom_id' => $classroom->id,
+		]);
 			
-			Student::create([
-				'user_id' => $new_user->id,
-				'classroom_id' => $new_classroom->id,
-			]);
-		}
-		
-		return response()->json([
-			'success' => true,
-			"message" => "新增成功",
-		], 200);
-		
-		//return redirect('/classrooms');
+		return back();
     }
 
     /**
@@ -105,9 +79,7 @@ class ClassroomController extends Controller
      */
     public function edit($id)
     {
-		$classroom = Classroom::with('students.user')->find($id);
-		
-		return view('classrooms.edit',compact('classroom'));
+        //
     }
 
     /**
@@ -131,14 +103,9 @@ class ClassroomController extends Controller
     public function destroy($id)
     {
         //
-		$classroom = Classroom::where('id',$id)->first();
-		/*
-		$teacher_id = str_pad($classroom->teacher_id,3,'0',STR_PAD_LEFT);
-		
-		$classroom->students->delete();
-		$classroom->users->delete();
-		*/
-		$classroom->delete();
+		$user = User::where('id',$id)->first();
+		$user->user_info->delete();
+		$user->delete();
 		return back();
     }
 }
