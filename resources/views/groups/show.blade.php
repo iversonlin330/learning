@@ -30,6 +30,28 @@
 					</tr>
 				</thead>
 				<tbody>
+				@foreach($questions as $question)
+					<tr>
+						<td>{{ $question->no }}</td>
+						<td>{{ $question->type }}</td>
+						<td>{{ $question->grade }}</td>
+						<td>{{ $question->history }}</td>
+						<td>{{ $question->name }}
+							@if($question->item)
+							<br>
+							選項範例：
+							<?php $item = explode('@',$question->item); ?>
+							<br>A:{{ $item[0] }}<br>B:{{ $item[1] }}<br>C:{{ $item[2] }}<br>D:{{ $item[3] }}
+							@endif
+						</td>
+						<td>{{ $question->correct_answer }}</td>   
+						<td>{{ $question->goal }}</td>
+						<td class="td-underline">
+							<a href="" style="float: left; margin-right: 10px;">編輯</a>
+							<a href="" data-toggle="modal" data-target="#delete">刪除</a>
+						</td>
+					</tr>
+				@endforeach
 					<tr>
 						<td>1</td>
 						<td>單選</td>

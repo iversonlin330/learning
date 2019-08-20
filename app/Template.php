@@ -4,10 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Group extends Model
+class Template extends Model
 {
     //
 	protected $guarded = ['id','created_at','updated_at'];
+	
+	protected $casts = [
+        'question_map' => 'array',
+		'content' => 'array',
+    ];
 	
 	public function questions()
     {
