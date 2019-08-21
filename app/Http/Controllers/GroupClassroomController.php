@@ -44,6 +44,13 @@ class GroupClassroomController extends Controller
 		$data = $request->all();
 		
 		foreach($data['classroom_id'] as $classroom_id){
+			$is_exist = GroupClassroom::where('group_id' , $data['group_id'])
+				->where('classroom_id',$classroom_id)
+				->first();
+			if($is_exist){
+				continue;
+			}	
+			
 			GroupClassroom::create([
 				'group_id' => $data['group_id'],
 				'classroom_id' => $classroom_id,

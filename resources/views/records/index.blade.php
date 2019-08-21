@@ -51,7 +51,6 @@
 					
 					@foreach($classrooms as $classroom)
 						@foreach($classroom->groups as $group)
-						{{$group->id}}
 						<tr>
 							<td class="text-center">
 								<div class="form-check form-check-inline">
@@ -61,7 +60,7 @@
 							</td>
 							<td>{{ $group->id }}</td>
 							<td>{{ $group->subject }}</td>
-							<td>{{ $group->grade }}</td>
+							<td>{{ $classroom->grade }}</td>
 							<td>{{ $classroom->classroom }}</td>
 							<td>{{ $group->title }}</td>
 							<td>80%</td>

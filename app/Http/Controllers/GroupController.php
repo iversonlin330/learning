@@ -59,8 +59,7 @@ class GroupController extends Controller
     {
         //
 		$group = Group::find($id);
-		$questions = $group->question;
-		//dd($questions);
+		$questions = $group->questions;
 		return view('groups.show',compact('group','questions'));
     }
 

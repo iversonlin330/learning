@@ -136,7 +136,7 @@
 										</td>
 									</tr>
 									@endforeach
-									<input id="group_id" name="group_id" value=""  />
+									<input id="group_id" name="group_id" value=""  hidden />
 										<!--tr>
 											<td>二年甲班</td>
 											<td class="text-center">
