@@ -13,7 +13,7 @@ class CreateGroupClassroomTable extends Migration
      */
     public function up()
     {
-        Schema::create('group_classroom', function (Blueprint $table) {
+        Schema::create('group_classrooms', function (Blueprint $table) {
             $table->bigIncrements('id');
 			$table->string('group_id');
 			$table->string('classroom_id');
@@ -28,6 +28,6 @@ class CreateGroupClassroomTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('group_classroom');
+        Schema::dropIfExists('group_classrooms');
     }
 }

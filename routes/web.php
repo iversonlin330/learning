@@ -48,7 +48,7 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('record/single', 'RecordController@single');
 		Route::get('record/mulit', 'RecordController@mulit');
 		Route::get('record/export', 'RecordController@export');
-		
+		Route::resource('group_classrooms', 'GroupClassroomController');
 	});
 });
 

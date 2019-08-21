@@ -45,7 +45,7 @@
 				</thead>
 				<tbody>
 					@foreach($groups as $group)
-						<tr>
+						<tr data-id="{{ $group->id }}">
 							<td>{{$group->id}}</td>
 							<td>{{$group->subject}}</td>
 							<td>{{$group->grade}}</td>
@@ -54,7 +54,7 @@
 								<a href="{{url('testing/'.$group->id)}}" style="float: left; margin-right: 10px;">開始作答</a>
 								@if(Auth::user()->role == 50)
 								<a href="{{url('groups/'.$group->id)}}" style="float: left; margin-right: 10px;">瀏覽題目</a>
-								<a href="#" style="float: left; margin-right: 10px;">指定班級作答</a>
+								<a class="assign" href="#" style="float: left; margin-right: 10px;">指定班級作答</a>
 								@endif
 								@if(Auth::user()->role == 99)
 								<a href="{{url('groups/'.$group->id)}}" style="float: left; margin-right: 10px;">查看詳細資訊</a>
@@ -114,6 +114,7 @@
 				aria-hidden="true">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
+						<form action="{{ url('group_classrooms') }}" method="post">
 						<div class="modal-body pop-up text-center" style="width:350px;">
 							<div class="exam_table">
 								<table class="table table-bordered">
@@ -124,7 +125,19 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
+									@foreach($classrooms as $classroom)
+									<tr>
+										<td>{{ $classroom->grade }}年{{ $classroom->classroom }}班</td>
+										<td class="text-center">
+											<div class="form-check form-check-inline">
+												<input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="classroom_id[]" value="{{ $classroom->id }}">
+												<label class="form-check-label" for=""></label>
+											</div>
+										</td>
+									</tr>
+									@endforeach
+									<input id="group_id" name="group_id" value=""  />
+										<!--tr>
 											<td>二年甲班</td>
 											<td class="text-center">
 												<div class="form-check form-check-inline">
@@ -132,12 +145,13 @@
 													<label class="form-check-label" for=""></label>
 												</div>
 											</td>
-										</tr>
+										</tr-->
 									</tbody>
 								</table>
 							</div>
-							<button type="button" class="btn btn_style" data-dismiss="modal">確認</button>
+							<button type="submit" class="btn btn_style">確認</button>
 						</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -205,5 +219,26 @@ $("#filter_subject").change(function () {
     .show();
 });
 
+$(".assign").click(function(){
+	var group_id = $(this).closest('tr').data('id');
+	$("#group_id").val(group_id);
+	$("#assignation_exam").modal('show');
+});
+/*
+$("form").submit(function(e) {
+	e.preventDefault();
+	$.ajax({
+	  type: 'POST',
+	  url: $(this).attr('action'),
+	  data: $("form").serialize(),
+	}).done(function(data) {
+	  if(data.success){
+		  $("#teacher_signup").modal('show');
+	  }else{
+		  alert(data.message);
+	  }
+	});
+});
+*/
 </script>
 @endsection

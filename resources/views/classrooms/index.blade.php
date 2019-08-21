@@ -38,7 +38,7 @@
 							</td>
 						</tr>
 					@endforeach
-					<tr>
+					<!--tr>
 						<td>A</td>
 						<td>二</td>
 						<td>甲班</td>
@@ -47,7 +47,7 @@
 							<a href="UC2-PF11_class_edit.html" style="float: left; margin-right: 10px;">編輯</a>
 							<a href="" data-toggle="modal" data-target="#delete" >刪除</a>
 						</td>
-					</tr>
+					</tr-->
 				</tbody>
 			</table>
 			<div class="application clearfix mb-5">

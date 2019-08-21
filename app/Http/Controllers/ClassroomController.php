@@ -56,6 +56,18 @@ class ClassroomController extends Controller
 			'number_of_poeple' => 10,
 		];
 		*/
+		
+		$is_exist = Classroom::where('class_number',$data['class_number'])
+			->where('teacher_id',$user->user_info->id)
+			->first();
+			
+		if($is_exist){
+			return response()->json([
+				'success' => false,
+				"message" => "班級ID已使用過",
+			], 200);
+		}
+		
 		$data['teacher_id'] = str_pad($user->user_info->id,3,'0',STR_PAD_LEFT);
 		$new_classroom = Classroom::create([
             'class_number' => $data['class_number'],

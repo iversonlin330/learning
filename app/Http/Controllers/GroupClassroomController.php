@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Group;
 use Auth;
+use App\GroupClassroom;
+use App\Student;
+use App\User;
 
-class GroupController extends Controller
+class GroupClassroomController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +18,6 @@ class GroupController extends Controller
     public function index()
     {
         //
-		$user = Auth::user();
-		$groups = $user->groups();
-		$classrooms = $user->user_info->classrooms;
-		return view('groups.index',compact('groups','classrooms'));
     }
 
     /**
@@ -30,7 +28,7 @@ class GroupController extends Controller
     public function create()
     {
         //
-		return view('groups.create');
+		return view('students.create');
     }
 
     /**
@@ -41,12 +39,18 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
-		Group::create([
-			'title' => 'test',
-			'subject' => '自然',
-			'grade' => '二上',
-		]);
+        
+		$user = Auth::user();
+		$data = $request->all();
+		
+		foreach($data['classroom_id'] as $classroom_id){
+			GroupClassroom::create([
+				'group_id' => $data['group_id'],
+				'classroom_id' => $classroom_id,
+			]);
+		}
+		
+		return back();
     }
 
     /**
@@ -58,10 +62,6 @@ class GroupController extends Controller
     public function show($id)
     {
         //
-		$group = Group::find($id);
-		$questions = $group->question;
-		//dd($questions);
-		return view('groups.show',compact('group','questions'));
     }
 
     /**
