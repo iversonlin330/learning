@@ -9,6 +9,7 @@
 @endsection
  
 @section('content')
+<form action="{{ Request::url() }}" method="post">
 <div class="container container_exam">
 	<div class="row">
 		<div class="exam">
@@ -109,12 +110,29 @@
                     </div>
 					@endif
 				@endforeach
+				<div id="template_finish" class="main_view_content">
+					<!--banner-->
+					<div class="exam_banner">
+						<img src="img/exam-banner.jpg" alt="">
+					</div>
+					<div class="exam_finish">
+						<div><p class="title-20">你已完成全部題目，要修改答案嗎？</p>
+						</div>
+						<div class="text-center">
+							<div class="btn-group">
+								<button type="submit" class="btn btn_style">送出答案</button>
+								<button type="" class="btn btn_cancel" onclick="change_template(1)">修改答案</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
+			
 			<div class="question">
 				<div class="question_header">
 					<div style="position:relative;">
 						<img src="{{ asset('img/mission.png') }}">
-						<input type="button" value="返回" onclick="history.back()" class="btn_function"
+						<input type="button" value="返回" onclick="location.href='{{ url('groups') }}'" class="btn_function"
 							style="position:absolute; right:10px; top:10px; padding:5px 10px; border-radius: 5px;" />
 					</div>
 				</div>
@@ -132,19 +150,19 @@
 									<div class="question_each_content_text_position">學生</div>
 									<div class="question_each_content_text_descrition">
 									@if($question->type == 1)
-										<textarea name="answer[{{$index}}]"></textarea>
+										<textarea name="answer[{{$question->id}}]"></textarea>
 									@elseif($question->type == 2)
 										<?php $item = explode('@',$question->item) ?>
-										<div class="answer_choose"><input type="radio" name="answer[{{$index}}]" value="A">{{ $item[0] }}</div>
-										<div class="answer_choose"><input type="radio" name="answer[{{$index}}]" value="B">{{ $item[1] }}</div>
-										<div class="answer_choose"><input type="radio" name="answer[{{$index}}]" value="C">{{ $item[2] }}</div>
-										<div class="answer_choose"><input type="radio" name="answer[{{$index}}]" value="D">{{ $item[3] }}</div>
+										<div class="answer_choose"><input type="radio" name="answer[{{$question->id}}]" value="A">{{ $item[0] }}</div>
+										<div class="answer_choose"><input type="radio" name="answer[{{$question->id}}]" value="B">{{ $item[1] }}</div>
+										<div class="answer_choose"><input type="radio" name="answer[{{$question->id}}]" value="C">{{ $item[2] }}</div>
+										<div class="answer_choose"><input type="radio" name="answer[{{$question->id}}]" value="D">{{ $item[3] }}</div>
 									@elseif($question->type == 3)
 										<?php $item = explode('@',$question->item) ?>
-										<div class="answer_choose"><input type="checkbox" name="answer[{{$index}}][]" value="A">{{ $item[0] }}</div>
-										<div class="answer_choose"><input type="checkbox" name="answer[{{$index}}][]" value="B">{{ $item[1] }}</div>
-										<div class="answer_choose"><input type="checkbox" name="answer[{{$index}}][]" value="C">{{ $item[2] }}</div>
-										<div class="answer_choose"><input type="checkbox" name="answer[{{$index}}][]" value="D">{{ $item[3] }}</div>
+										<div class="answer_choose"><input type="checkbox" name="answer[{{$question->id}}][]" value="A">{{ $item[0] }}</div>
+										<div class="answer_choose"><input type="checkbox" name="answer[{{$question->id}}][]" value="B">{{ $item[1] }}</div>
+										<div class="answer_choose"><input type="checkbox" name="answer[{{$question->id}}][]" value="C">{{ $item[2] }}</div>
+										<div class="answer_choose"><input type="checkbox" name="answer[{{$question->id}}][]" value="D">{{ $item[3] }}</div>
 									@endif
 									@if(array_key_exists($index+1,$question_step))
 									<div id="change_step">
@@ -164,6 +182,7 @@
 			</div>
 		</div>
 	</div>
+</form>
 @endsection
  
 @section('script')
@@ -187,10 +206,15 @@ function change_template(num){
 	$(".main_view_content").hide();
 	$(".question_content .question_each").hide();
 	$('#template_'+num).show();
-	//console.log(question_map[num]);
-	for(x in question_map[num]){
-		console.log('#q_'+question_map[num][x]);
-		$('#q_'+question_map[num][x]).show();
+	console.log(Object.keys(question_map).length);
+	if(num > Object.keys(question_map).length){
+		//Final
+		$('#template_finish').show();
+	}else{
+		for(x in question_map[num]){
+			console.log('#q_'+question_map[num][x]);
+			$('#q_'+question_map[num][x]).show();
+		}
 	}
 }
 

@@ -18,7 +18,12 @@ class GroupController extends Controller
         //
 		$user = Auth::user();
 		$groups = $user->groups();
-		$classrooms = $user->user_info->classrooms;
+		if($user->role == 50){
+			$classrooms = $user->user_info->classrooms;
+		}else{
+			$classrooms = [];
+		}
+		
 		return view('groups.index',compact('groups','classrooms'));
     }
 

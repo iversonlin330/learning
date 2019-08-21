@@ -42,7 +42,8 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::resource('students', 'StudentController');
 		Route::resource('users', 'UserController');
 		Route::get('testing/{id}', 'TestingController@index');
-		Route::post('testing-finish/{id}', 'TestingController@finish');
+		Route::post('testing/{id}', 'TestingController@finish');
+		Route::get('testing-view/{id}', 'TestingController@view');
 		
 		Route::get('record/index', 'RecordController@index');
 		Route::get('record/single', 'RecordController@single');
