@@ -63,15 +63,14 @@
 							<td>{{ $classroom->grade }}</td>
 							<td>{{ $classroom->classroom }}</td>
 							<td>{{ $group->title }}</td>
-							<td>80%</td>
+							<td>{{ $classroom->groups_rate($group->id) }}</td>
 							<td class="td-underline"><a href="{{ url('record/single/'.'?classroom_id='.$classroom->id.'&group_id='.$group->id) }}">瀏覽</a></td>
 						</tr>
 						@endforeach
 					
 					@endforeach
 					
-					<tr>
-						<!--選取-->
+					<!--tr>
 						<td class="text-center">
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
@@ -87,7 +86,6 @@
 						<td class="td-underline"><a href="UC2-PF16_teacher_view_single_result.html">瀏覽</a></td>
 					</tr>
 					<tr>
-						<!--選取-->
 						<td class="text-center">
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
@@ -101,7 +99,7 @@
 						<td>題組A</td>
 						<td>80%</td>
 						<td class="td-underline"><a href="UC3-PF9_admin_view_single_result.html">瀏覽</a></td>
-					</tr>
+					</tr-->
 				</tbody>
 			</table>
 		</div>

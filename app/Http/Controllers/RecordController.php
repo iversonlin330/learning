@@ -65,10 +65,10 @@ class RecordController extends Controller
 					$result[$question->id][] = $answer->answer;
 				}
 			}elseif($question->type == 2){
-				$A = $this->cal_count($user_answers,$question->id,'A');
-				$B = $this->cal_count($user_answers,$question->id,'B');
-				$C = $this->cal_count($user_answers,$question->id,'C');
-				$D = $this->cal_count($user_answers,$question->id,'D');
+				$A = $this->cal_count($answers,$question->id,'A');
+				$B = $this->cal_count($answers,$question->id,'B');
+				$C = $this->cal_count($answers,$question->id,'C');
+				$D = $this->cal_count($answers,$question->id,'D');
 				$result[$question->id] = [$A,$B,$C,$D];
 				/*
 				foreach($answers as $index => $answer){
@@ -76,22 +76,39 @@ class RecordController extends Controller
 				}
 				*/
 			}elseif($question->type == 3){
+				$total = $A = $B = $C = $D = 0;
 				foreach($answers as $index => $answer){
-					$result[$question->id][] = json_decode($answer->answer,true);
+					$temp = json_decode($answer->answer,true);
+					$total = $total + count($temp);
+					foreach($temp as $v){
+						if($v == 'A') $A++;
+						elseif($v == 'B') $B++;
+						elseif($v == 'C') $C++;
+						elseif($v == 'D') $D++;
+					}
 				}
+				$result[$question->id] = [
+					round($A/$total*100),
+					round($B/$total*100),
+					round($C/$total*100),
+					round($D/$total*100),
+				];
 			}
-			//dd($user_answers->where('question_id',$question->id));
-			//$result[$question->id] = 
 			
 		}
 		
-		//dd($result);
 		return view('records.single',compact('group','classroom','questions','user_answers','result'));
     }
 	
 	private function cal_count($data,$question_id,$item){
-		$total = $data->where('question_id',$question_id)
-			->count();
+		$total = $data->count();
+		return round($data->where('question_id',$question_id)
+			->where('answer',$item)
+			->count()/$total*100);
+	}
+	
+	private function cal_multi_count($data,$question_id,$item){
+		$total = $data->count();
 		return round($data->where('question_id',$question_id)
 			->where('answer',$item)
 			->count()/$total*100);

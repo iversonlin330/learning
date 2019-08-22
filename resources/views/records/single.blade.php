@@ -36,11 +36,11 @@
 									@endforeach
 								@elseif($question->type==2)
 								<div style="width: 220px; height: 220px">
-								  <canvas id="canvasPie"></canvas>
+								  <canvas class="canvasPie" data-rate="{{ implode(',',$result[$question->id]) }}"></canvas>
 								</div>
 								@elseif($question->type==3)
 								<div style="width: 220px; height: 220px">
-								  <canvas id="canvasPie"></canvas>
+								  <canvas class="canvasPie" data-rate="{{ implode(',',$result[$question->id]) }}"></canvas>
 								</div>
 								@endif
 							</td>
@@ -48,7 +48,7 @@
 						
 						@endforeach
 						
-						<tr>
+						<!--tr>
 							<td style="width:10%">1</td>
 							<td style="width:90%">
 								<div style="width: 220px; height: 220px">
@@ -69,7 +69,7 @@
 								文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字文字簡答文字簡答文字簡答文字簡答文字簡答文字簡答文字。<br>
 								・簡答文字簡答文字簡答文字簡答文字簡答簡答文字簡答文字簡答文字簡答文字
 							</td>
-						</tr>
+						</tr-->
 						</tbody> 
 					</div>
 				</table>
@@ -89,6 +89,26 @@
     var labels = ['A', 'B','C','D'];
 
 $(".canvasPie").each(function(){
+	var rate = $(this).data('rate');
+	
+    var pieChart = new Chart($(this), {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                //答案比例
+                data: rate.split(","),
+                backgroundColor: [
+                    //資料顏色
+                    "#FDC777",
+                    "#E57878",
+                    "#78A0E5",
+                    "#88725B"
+                ],
+            }],
+        }
+    });
+	
 	
 })
 

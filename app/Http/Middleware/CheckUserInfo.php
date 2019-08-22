@@ -27,7 +27,7 @@ class CheckUserInfo
 				}elseif($user->role == 50){
 					if(!$user->user_info){
 						//return view("teachers.create");
-						return redirect('teachers/create');
+						//return redirect('teachers/create');
 					}
 				}elseif($user->role == 99){
 					
