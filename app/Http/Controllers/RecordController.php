@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Classroom;
+use App\Group;
 use App\Student;
 use App\User;
+use App\UserAnswer;
 
 class RecordController extends Controller
 {
@@ -44,26 +46,57 @@ class RecordController extends Controller
     public function single(Request $request)
     {
         //
-		$user = Auth::user();
 		$data = $request->all();
-		
 		$classroom = Classroom::find($data['classroom_id'])->first();
+		$group = Group::find($data['group_id'])->first();
 		
-		$new_user = User::create([
-			'account' => str_pad($classroom->teacher->id,3,'0',STR_PAD_LEFT) . $classroom->class_number . str_pad($data['student_id'],3,'0',STR_PAD_LEFT),
-			'name' => 'student',
-			'role' => 1,
-			'gender' => 0,
-		]);
+		$questions = $group->questions;
+		$user_ids = $classroom->students->pluck('user_id')->toArray();
+		$question_ids = $group->questions->pluck('id')->toArray();
 		
-		Student::create([
-			'user_id' => $new_user->id,
-			'classroom_id' => $classroom->id,
-		]);
+		$user_answers = UserAnswer::whereIn('question_id',$question_ids)
+			->whereIn('user_id',$user_ids)
+			->get();
+		$result = [];
+		foreach($questions as $question){
+			$answers = $user_answers->where('question_id',$question->id);
+			if($question->type == 1){
+				foreach($answers as $index => $answer){
+					$result[$question->id][] = $answer->answer;
+				}
+			}elseif($question->type == 2){
+				$A = $this->cal_count($user_answers,$question->id,'A');
+				$B = $this->cal_count($user_answers,$question->id,'B');
+				$C = $this->cal_count($user_answers,$question->id,'C');
+				$D = $this->cal_count($user_answers,$question->id,'D');
+				$result[$question->id] = [$A,$B,$C,$D];
+				/*
+				foreach($answers as $index => $answer){
+					$result[$question->id][] = $A;
+				}
+				*/
+			}elseif($question->type == 3){
+				foreach($answers as $index => $answer){
+					$result[$question->id][] = json_decode($answer->answer,true);
+				}
+			}
+			//dd($user_answers->where('question_id',$question->id));
+			//$result[$question->id] = 
 			
-		return back();
+		}
+		
+		//dd($result);
+		return view('records.single',compact('group','classroom','questions','user_answers','result'));
     }
-
+	
+	private function cal_count($data,$question_id,$item){
+		$total = $data->where('question_id',$question_id)
+			->count();
+		return round($data->where('question_id',$question_id)
+			->where('answer',$item)
+			->count()/$total*100);
+	}
+	
     /**
      * Display the specified resource.
      *

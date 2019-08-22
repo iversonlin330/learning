@@ -51,8 +51,8 @@
 				</tbody>
 			</table>
 			<div class="application clearfix mb-5">
-			  <a href="UC2-PF13_add_classNum.html">班級數量增加申請</a>
-			  <a href="UC2-PF14_changeStudentID.html">學生ID更改申請</a>
+			  <a href="{{ url('add-class') }}">班級數量增加申請</a>
+			  <a href="{{ url('change-id') }}">學生ID更改申請</a>
 			</div>
 			<!-- 刪除確認-彈跳視窗 -->
 			<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete"

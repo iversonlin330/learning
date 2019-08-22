@@ -33,6 +33,10 @@ Route::get('/reset', 'Auth\LoginController@getReset');
 Route::post('/reset', 'Auth\LoginController@postReset');
 
 Route::group(['middleware' => ['auth']], function () {
+	Route::get('add-class', 'TeacherController@getAddClass');
+	Route::post('add-class', 'TeacherController@postAddClass');
+	Route::get('change-id', 'TeacherController@getChangeId');
+	Route::post('change-id', 'TeacherController@postChangeId');
 	Route::resource('teachers', 'TeacherController');
 	Route::get('/logout', 'Auth\LoginController@getLogout');
 	Route::group(['middleware' => ['user.info']], function () {

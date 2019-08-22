@@ -107,4 +107,39 @@ class TeacherController extends Controller
     {
         //
     }
+	
+	public function getAddClass()
+    {
+        //
+		return view('teachers.addClass');
+    }
+	
+	public function postAddClass(Request $request)
+    {
+        //
+		//Mail
+		
+		return response()->json([
+			'success' => true,
+			'message' => 'test'
+		]);
+    }
+	
+	public function getChangeId()
+    {
+        //
+		return view('teachers.changeId');
+    }
+	
+	public function postChangeId(Request $request)
+    {
+        //
+		//Mail
+		
+		return response()->json([
+			'success' => true,
+			'message' => 'test'
+		]);
+    }
+	
 }

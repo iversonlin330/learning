@@ -44,11 +44,17 @@ class TestingController extends Controller
 		$user = Auth::user();
 		$data = $request->all();
 		foreach($data['answer'] as $question_id => $answer){
+			
+			$user_answer = UserAnswer::firstOrNew(array('question_id' => $question_id,'user_id' => $user->id));
+			$user_answer->answer = (is_array($answer))? json_encode($answer) : $answer;
+			$user_answer->save();
+			/*
 			UserAnswer::create([
 				'question_id' =>  $question_id,
 				'answer' => (is_array($answer))? json_encode($answer) : $answer,
 				'user_id' => $user->id
 			]);
+			*/
 		}
 		
 		return redirect('/testing-view/'.$id);

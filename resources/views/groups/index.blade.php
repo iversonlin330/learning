@@ -36,20 +36,33 @@
 			<table id="group_table" class="table table-bordered">
 				<thead>
 					<tr>
+						@if(Auth::user()->role >=50)
 						<th style="width:15%">ID</th>
 						<th style="width:15%">科目</th>
 						<th style="width:15%">年級</th>
 						<th style="width:15%">題組名稱</th>
 						<th style="width:40%">功能</th>
+						@else
+						<th>科目</th>
+						<th>年級</th>
+						<th>題組名稱</th>
+						<th>作答紀錄</th>
+						<th>功能</th>
+						@endif
 					</tr>
 				</thead>
 				<tbody>
 					@foreach($groups as $group)
 						<tr data-id="{{ $group->id }}">
+							@if(Auth::user()->role >=50)
 							<td>{{$group->id}}</td>
+							@endif
 							<td>{{$group->subject}}</td>
 							<td>{{$group->grade}}</td>
 							<td>{{$group->title}}</td>
+							@if(Auth::user()->role == 1)
+							<td>{{ $group->is_finish }}</td>
+							@endif
 							<td class="td-underline">
 								<a href="{{url('testing/'.$group->id)}}" style="float: left; margin-right: 10px;">開始作答</a>
 								@if(Auth::user()->role == 50)

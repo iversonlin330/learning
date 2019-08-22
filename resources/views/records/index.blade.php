@@ -64,7 +64,7 @@
 							<td>{{ $classroom->classroom }}</td>
 							<td>{{ $group->title }}</td>
 							<td>80%</td>
-							<td class="td-underline"><a href="UC2-PF16_teacher_view_single_result.html">瀏覽</a></td>
+							<td class="td-underline"><a href="{{ url('record/single/'.'?classroom_id='.$classroom->id.'&group_id='.$group->id) }}">瀏覽</a></td>
 						</tr>
 						@endforeach
 					
