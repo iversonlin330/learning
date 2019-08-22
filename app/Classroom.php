@@ -80,7 +80,8 @@ class Classroom extends Model
 	public function groups_rate($group_id)
 	{
 		//dd($this->belongsToMany('\App\Group','group_classroom','classroom_id','group_id'));
-		dd($this->groups()->where('groups.id',$group_id)->first());
+		return '80%';
+		//dd($this->groups()->where('groups.id',$group_id)->first());
 	}
 	
 	public function teacher()
