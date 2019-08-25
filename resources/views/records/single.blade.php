@@ -73,7 +73,7 @@
 						</tbody> 
 					</div>
 				</table>
-				<button type="" class="btn btn_style" onclick="history.back()">返回</button>
+				<button type="" class="btn btn_style" onclick="location.href='{{url('record/index')}}'">返回</button>
 			</div>
 		</div>
 	</div>

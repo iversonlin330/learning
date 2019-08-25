@@ -51,7 +51,7 @@ Route::group(['middleware' => ['auth']], function () {
 		
 		Route::get('record/index', 'RecordController@index');
 		Route::get('record/single', 'RecordController@single');
-		Route::get('record/mulit', 'RecordController@mulit');
+		Route::get('record/multi', 'RecordController@multi');
 		Route::get('record/export', 'RecordController@export');
 		Route::resource('group_classrooms', 'GroupClassroomController');
 	});

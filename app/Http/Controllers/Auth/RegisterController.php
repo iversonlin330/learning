@@ -90,12 +90,13 @@ class RegisterController extends Controller
 				"message" => "此Email已申請過",
 			], 200);
 		}
-		/*
+		/**/
+		$data['email'] = $data['account'];
 		Mail::to($data['account'])
 			//->subject('認證...')
 			//->send("<a href>");
 			->send(new Register($data));
-		*/
+		
 		$user = User::create([
 			'account' => $data['account'],
             'name' => $data['name'],

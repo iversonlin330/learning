@@ -34,8 +34,8 @@ class Register extends Mailable
     {
         $data = $this->data;
 		
-		return $this->to($data)
+		return $this->to($data['email'])
 			->view('mails.register',compact('data'))
-			->subject('認證...');
+			->subject('「PIRLS數位閱讀學習平台」認證信件');
     }
 }

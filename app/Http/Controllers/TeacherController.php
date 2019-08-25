@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Teacher;
 use Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AddClass;
+use App\Mail\ChangeId;
 
 class TeacherController extends Controller
 {
@@ -118,7 +121,14 @@ class TeacherController extends Controller
     {
         //
 		//Mail
+		$user = Auth::user();
+		$teacher = $user->user_info;
+		$data['id'] = $teacher->id;
+		$data['name'] = $user->name;
+		$data['number_of_classroom'] = $request->input('number_of_classroom');
 		
+		Mail::send(new AddClass($data));
+			
 		return response()->json([
 			'success' => true,
 			'message' => 'test'
@@ -135,6 +145,16 @@ class TeacherController extends Controller
     {
         //
 		//Mail
+		
+		$user = Auth::user();
+		$teacher = $user->user_info;
+		$data['id'] = $teacher->id;
+		$data['name'] = $user->name;
+		$data['old_id'] = $request->input('old_id');
+		$data['new_id'] = $request->input('new_id');
+		
+		Mail::send(new ChangeId($data));
+		
 		
 		return response()->json([
 			'success' => true,

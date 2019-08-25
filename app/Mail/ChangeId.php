@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Forgot extends Mailable
+class ChangeId extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -34,7 +34,8 @@ class Forgot extends Mailable
     {
         $data = $this->data;
 		
-		return $this->view('mails.forgot',compact('data'))
-			->subject('「PIRLS數位閱讀學習平台」密碼重設信件');
+		return $this->to(env('admin_mail'))
+			->view('mails.changeId',compact('data'))
+			->subject('「PIRLS數位閱讀學習平台」更改學生ID申請');
     }
 }

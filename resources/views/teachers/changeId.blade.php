@@ -18,11 +18,11 @@
 				<div class="row" style="margin:0;">
 					<div class="form-group">
 						<label for="original_student_id" class="lable_title">原學生ID</label>
-						<input style="width: 350px;" type="text" class="form-control" id="original_student_id" required>
+						<input style="width: 350px;" type="text" class="form-control" id="original_student_id" name="old_id" required>
 					</div>
 					<div class="new_student_id">
 						<label for="class_name" class="lable_title">新學生ID</label>
-						<input style="width: 350px;" type="text" class="form-control" id="new_student_id" required>
+						<input style="width: 350px;" type="text" class="form-control" id="new_student_id" name="new_id" required>
 					</div>
 				</div>
 			</div>

@@ -47,8 +47,8 @@ class RecordController extends Controller
     {
         //
 		$data = $request->all();
-		$classroom = Classroom::find($data['classroom_id'])->first();
-		$group = Group::find($data['group_id'])->first();
+		$classroom = Classroom::find($data['classroom_id']);
+		$group = Group::find($data['group_id']);
 		
 		$questions = $group->questions;
 		$user_ids = $classroom->students->pluck('user_id')->toArray();
@@ -120,9 +120,77 @@ class RecordController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function mulit($id)
+    public function multi(Request $request)
     {
         //
+		$data = $request->all();
+		$multi_result = [];
+		foreach($data['data'] as $v){
+			$temp = explode(',',$v);
+			$classroom_id = $temp[0];
+			$group_id = $temp[1];
+			
+			$classroom = Classroom::find($classroom_id);
+			$group = Group::find($group_id);
+			
+			$questions = $group->questions;
+			$user_ids = $classroom->students->pluck('user_id')->toArray();
+			$question_ids = $group->questions->pluck('id')->toArray();
+			
+			$user_answers = UserAnswer::whereIn('question_id',$question_ids)
+				->whereIn('user_id',$user_ids)
+				->get();
+			$result = [];
+			foreach($questions as $question){
+				$answers = $user_answers->where('question_id',$question->id);
+				if($question->type == 1){
+					foreach($answers as $index => $answer){
+						$result[$question->id][] = $answer->answer;
+					}
+				}elseif($question->type == 2){
+					$A = $this->cal_count($answers,$question->id,'A');
+					$B = $this->cal_count($answers,$question->id,'B');
+					$C = $this->cal_count($answers,$question->id,'C');
+					$D = $this->cal_count($answers,$question->id,'D');
+					$result[$question->id] = [$A,$B,$C,$D];
+					/*
+					foreach($answers as $index => $answer){
+						$result[$question->id][] = $A;
+					}
+					*/
+				}elseif($question->type == 3){
+					$total = $A = $B = $C = $D = 0;
+					foreach($answers as $index => $answer){
+						$temp = json_decode($answer->answer,true);
+						$total = $total + count($temp);
+						foreach($temp as $v){
+							if($v == 'A') $A++;
+							elseif($v == 'B') $B++;
+							elseif($v == 'C') $C++;
+							elseif($v == 'D') $D++;
+						}
+					}
+					$result[$question->id] = [
+						round($A/$total*100),
+						round($B/$total*100),
+						round($C/$total*100),
+						round($D/$total*100),
+					];
+				}
+				
+			}
+			
+			$multi_result[] = [
+				'group' => $group,
+				'questions' => $questions,
+				'result' => $result
+			];
+			
+		}
+		
+		//$groups = ['1','2','3'];
+		
+		return view('records.multi',compact('multi_result'));
     }
 
     /**
