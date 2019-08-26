@@ -51,8 +51,10 @@
 							@if($question->item)
 							<br>
 							選項範例：
-							<?php $item = explode('@',$question->item); ?>
+							<?php $item = json_decode($question->item,true); ?>
+							@if(count($item) >= 4)
 							<br>A:{{ $item[0] }}<br>B:{{ $item[1] }}<br>C:{{ $item[2] }}<br>D:{{ $item[3] }}
+							@endif
 							@endif
 						</td>
 						<td>{{ $question->correct_answer }}</td>   

@@ -65,11 +65,51 @@ class GroupController extends Controller
     public function store(Request $request)
     {
         //
-		Group::create([
-			'title' => 'test',
-			'subject' => '自然',
-			'grade' => '二上',
-		]);
+		//$data = $request->all();
+		//dd($data);
+		
+		$path = $request->file('file')->getRealPath();
+		$data = array_map('str_getcsv', file($path));
+		
+		//dd($data);
+		foreach($data as $k => $v){
+			if($k == 0){
+				$group = Group::create([
+					'title' => $v[0],
+					'subject' => $v[2],
+					'grade' => $v[1],
+				]);
+			}else{
+				if(count($v) <= 6)
+					continue;
+				//dd($v[6],explode('@',$v[6]),json_encode(explode('@',$v[6])));
+				Question::create([
+					'no' => $v[0],
+					'name' => $v[4],
+					'item' => json_encode(explode('@',$v[6]),JSON_UNESCAPED_UNICODE),
+					'type' => $v[1],
+					'group_id' => $group->id,
+					'correct_answer' => $v[5],
+					'grade' => $v[2],
+					'history' => $v[3],
+					'goal' => $v[3],
+				]);
+			}
+		}
+		/*
+		foreach($data as $k => $v){
+			dd(array_map("utf8_encode", $v));
+		}
+		*/
+		//dd(utf8_encode($data[0][0]),mb_convert_encoding($data[0][0], 'UTF-8'));
+		
+		/*
+		foreach($data as $k => $v){
+			$data[$k] = $v
+		}
+		*/
+		
+		return redirect('/groups');
     }
 
     /**

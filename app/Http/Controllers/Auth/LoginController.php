@@ -60,8 +60,13 @@ class LoginController extends Controller
 				return redirect('students/create');
 			}
 		}elseif($user->role == 50){
-			$credentials = $request->only('account', 'password');
-			if(Auth::attempt($credentials)){
+			//$credentials = $request->only('account', 'password');
+			//if(Auth::attempt($credentials)){
+			$credentials = User::where('account',$data['account'])
+				->where('password',$data['password'])
+				->first();
+			if($credentials){
+				Auth::login($credentials);
 				$user = Auth::user();
 				if($user->user_info){
 					return redirect('groups');
@@ -72,8 +77,13 @@ class LoginController extends Controller
 				return back();
 			}
 		}elseif($user->role == 99){
-			$credentials = $request->only('account', 'password');
-			if(Auth::attempt($credentials)){
+			//$credentials = $request->only('account', 'password');
+			//if(Auth::attempt($credentials)){
+			$credentials = User::where('account',$data['account'])
+				->where('password',$data['password'])
+				->first();
+			if($credentials){
+				Auth::login($credentials);
 				return redirect('groups');
 			}else{
 				return back();

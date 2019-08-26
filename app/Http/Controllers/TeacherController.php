@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 use App\Teacher;
 use Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AddClass;
 use App\Mail\ChangeId;
+use Crypt;
 
 class TeacherController extends Controller
 {
@@ -19,6 +21,13 @@ class TeacherController extends Controller
     public function index()
     {
         //
+		$users = User::where('role',50)->get();
+		
+		//foreach($users as $k =>$v){
+			//$users[$k]->password = Crypt::decrypt($v->password);
+		//}
+		
+		return view('teachers.index',compact('users'));
     }
 
     /**
@@ -41,7 +50,10 @@ class TeacherController extends Controller
     public function store(Request $request)
     {
         //
+		/*
+		
 		$data = $request->all();
+		dd($data);
 		$user = Auth::user();
 		
 		$data = [
@@ -62,8 +74,56 @@ class TeacherController extends Controller
 			'subject' => $data['subject'],
 			'classroom_create' => json_encode([]),
 		]);
+		*/
+		
+		$data = $request->all();
+		$token = str_random(32);
+		$data['url'] = url('/verify?account='.$data['account'].'&remember_token='.$token);
+		
+		$is_exist = User::where('account', $data['account'])->first();
+		if($is_exist){
+			return response()->json([
+				'success' => false,
+				"message" => "此Email已申請過",
+			], 200);
+		}
+		/**/
+		$data['email'] = $data['account'];
+		/*
+		Mail::to($data['account'])
+			//->subject('認證...')
+			//->send("<a href>");
+			->send(new Register($data));
+		*/
+		$user = User::create([
+			'account' => $data['account'],
+            'name' => $data['name'],
+			'gender' => $data['gender'],
+            //'password' => Hash::make($data['password']),
+			'password' => $data['password'],
+			'role' => 50,
+			'remember_token' => $token,
+			'email' => $data['account'],
+        ]);
+		
+		Teacher::create([
+			'user_id' => $user->id,
+            'city_id' => $data['city_id'],
+			'school_id' => $data['school_id'],
+            'grade' => $data['grade'],
+			'classroom' => $data['classroom'],
+			'subject' => json_encode($data['subject']),
+        ]);
+		
+		return redirect('teachers');
+		/*
+		return response()->json([
+			'success' => true,
+			"message" => "新增成功",
+		], 200);
 		
 		return redirect('groups');
+		*/
     }
 
     /**

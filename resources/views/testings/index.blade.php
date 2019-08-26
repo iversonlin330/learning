@@ -140,7 +140,7 @@
 					@foreach($questions as $index => $question)
 						<div id="q_{{$question->no}}" class="question_each">
 							<div class="question_each_title">
-								{{$new_question_no[$question->no]}}. {{$question->name}}
+								{{array_key_exists($question->no,$new_question_no)? $new_question_no[$question->no] : ''}}. {{$question->name}}
 							</div>
 							<div class="question_each_content">
 								<div class="question_each_content_img">
@@ -152,17 +152,21 @@
 									@if($question->type == 1)
 										<textarea name="answer[{{$question->id}}]"></textarea>
 									@elseif($question->type == 2)
-										<?php $item = explode('@',$question->item) ?>
+										<?php $item = json_decode($question->item,true) ?>
+										@if(count($item) >= 4)
 										<div class="answer_choose"><input type="radio" name="answer[{{$question->id}}]" value="A">{{ $item[0] }}</div>
 										<div class="answer_choose"><input type="radio" name="answer[{{$question->id}}]" value="B">{{ $item[1] }}</div>
 										<div class="answer_choose"><input type="radio" name="answer[{{$question->id}}]" value="C">{{ $item[2] }}</div>
 										<div class="answer_choose"><input type="radio" name="answer[{{$question->id}}]" value="D">{{ $item[3] }}</div>
+										@endif
 									@elseif($question->type == 3)
-										<?php $item = explode('@',$question->item) ?>
+										<?php $item = json_decode($question->item,true) ?>
+										@if(count($item) >= 4)
 										<div class="answer_choose"><input type="checkbox" name="answer[{{$question->id}}][]" value="A">{{ $item[0] }}</div>
 										<div class="answer_choose"><input type="checkbox" name="answer[{{$question->id}}][]" value="B">{{ $item[1] }}</div>
 										<div class="answer_choose"><input type="checkbox" name="answer[{{$question->id}}][]" value="C">{{ $item[2] }}</div>
 										<div class="answer_choose"><input type="checkbox" name="answer[{{$question->id}}][]" value="D">{{ $item[3] }}</div>
+										@endif
 									@endif
 									@if(array_key_exists($index+1,$question_step))
 									<div id="change_step">

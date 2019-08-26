@@ -24,12 +24,14 @@
 			<div class="dropdown" style="float:right;">
                 <button class="dropbtn"><img src="{{ asset('img/nav_settings.png') }}" alt=""></button>
                 <div class="dropdown-content">
+					@if(Auth::user()->role == 50)
 					<a href="{{url('classrooms')}}">學生資料設定</a>
-                    @if(Auth::user()->role == 99)
-					<a href="UC3-PF13_admin_teacherList_edit.html">教師資料維護</a>
-                    <a href="UC3-PF15_admin_studentList_edit.html">學生資料維護</a>
-                    <a href="UC3-PF8_admin_view_exam_record.html">作答記錄查看</a>
-                    <a href="UC3-PF18_view_ad.html">廣告點擊報告</a>
+                    @endif
+					@if(Auth::user()->role == 99)
+					<a href="{{url('teachers')}}">教師資料維護</a>
+                    <a href="{{url('students')}}">學生資料維護</a>
+                    <a href="{{url('records')}}">作答記錄查看</a>
+                    <a href="{{url('ads')}}">廣告點擊報告</a>
 					@endif
                 </div>
             </div>

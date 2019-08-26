@@ -1,32 +1,124 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>數位閱讀學習平台</title>
+@extends('layouts.master')
+ 
+@section('title', 'index')
+ 
+@section('style')
+@parent
+<style>
+</style>
+@endsection
+ 
+@section('content')
+<div class="container mb-5">
+	<div class="col-12">
+		<div class="admin_import_exam">
+			<p style="margin-bottom: 15px; font-weight: bold;" class="title-20 text-center">匯入題組</p>
+			<form action="{{ url('groups') }}" method="post" enctype="multipart/form-data">
+			<div class="admin_import_exam_main white_box_bg mb-30">
+				<div class="row" style="margin:0;">
+					<div class="form-group mr-30">
+						<div>
+							<div><label for="quantity" class="lable_title">檔案上傳</label></div>
+							<div class="custom-file">
+								<input type="file" class="custom-file-input" id="customFileLang" lang="zh-TW" style="width:350px;" name="file">
+								<label class="custom-file-label" for="customFileLang">選擇文件</label>
+							</div>
+							<div class="status_text">*檔案上傳成功!</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="text-center">
+				<div class="btn-group">
+					<button type="submit" class="btn btn_style">上傳</button>
+					<button type="" class="btn btn_cancel" onclick="history.back()">取消</button>
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+@endsection
+ 
+@section('script')
+@parent
+<script>
+function sort_group_table(type){
+    var $tbody = $('#group_table tbody');
+	$tbody.find('tr').sort(function(a,b){ 
+		var tda = $(a).find('td:eq(2)').text(); // can replace 1 with the column you want to sort on
+		var tdb = $(b).find('td:eq(2)').text(); // this will sort on the second column
+				// if a < b return 1
+		if(type == 'desc'){
+			return tda < tdb ? 1 
+			   // else if a > b return -1
+			   : tda > tdb ? -1 
+			   // else they are equal - return 0    
+			   : 0;  
+		}else{
+			return tda > tdb ? 1 
+			   // else if a > b return -1
+			   : tda < tdb ? -1 
+			   // else they are equal - return 0    
+			   : 0;  
+		}
+		         
+	}).appendTo($tbody);
+}
+sort_group_table('desc');
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+$("#sort_grade").change(function(){
+	var type = $(this).val();
+	sort_group_table(type);
+});
 
-        <!-- Styles -->
-        <style>
-        </style>
-    </head>
-    <body>
-	<span>Hello, {{Auth::user()->name}} <a href="{{url('logout')}}">登出</a></span>
-	<br>
-	<span>班級資料建立</a>
-		<form action="{{url('groups')}}" method="post">
-		@csrf
-			<select name="grade">
-				<option>年級</option>
-			</select>
-			<select name="class">
-				<option>班級</option>
-			</select>
-			<input name="class_id"/>
-			<input type="number" name="number_of poeple"/>
-			<input type="submit">
-		</form>
-    </body>
-</html>
+
+$("#filter_subject").change(function () {
+    //split the current value of searchInput
+    var data = this.value.split(" ");
+    //create a jquery object of the rows
+    var jo = $('#group_table tbody').find("tr");
+    if (this.value == "") {
+        jo.show();
+        return;
+    }
+    //hide all the rows
+    jo.hide();
+
+    //Recusively filter the jquery object to get results.
+    jo.filter(function (i, v) {
+        var $t = $(this);
+        for (var d = 0; d < data.length; ++d) {
+            if ($t.is(":contains('" + data[d] + "')")) {
+                return true;
+            }
+        }
+        return false;
+    })
+    //show the rows that match.
+    .show();
+});
+
+$(".assign").click(function(){
+	var group_id = $(this).closest('tr').data('id');
+	$("#group_id").val(group_id);
+	$("#assignation_exam").modal('show');
+});
+/*
+$("form").submit(function(e) {
+	e.preventDefault();
+	$.ajax({
+	  type: 'POST',
+	  url: $(this).attr('action'),
+	  data: $("form").serialize(),
+	}).done(function(data) {
+	  if(data.success){
+		  $("#teacher_signup").modal('show');
+	  }else{
+		  alert(data.message);
+	  }
+	});
+});
+*/
+</script>
+@endsection

@@ -29,7 +29,7 @@
 			<button class="btn btn_function" onclick="location.href='{{ url('record/index') }}'" >作答記錄查看</button>
 			@endif
 			@if(Auth::user()->role == 99)
-			<button class="btn btn_function" onclick="location.href=' UC3-PF12_import_exam.html'">題組匯入</button>
+			<button class="btn btn_function" onclick="location.href='{{ url('groups/create') }}'">題組匯入</button>
 			@endif
 		</div>
 		<div class="exam_table">
