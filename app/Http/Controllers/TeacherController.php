@@ -146,6 +146,13 @@ class TeacherController extends Controller
     public function edit($id)
     {
         //
+		$user = User::find($id);
+		
+		$teacher = $user->user_info;
+		
+		//$teacher['subject'] = json_decode($teacher['subject'],true); 
+		
+		return view('teachers.create',compact('id','user','teacher'));
     }
 
     /**
@@ -158,6 +165,29 @@ class TeacherController extends Controller
     public function update(Request $request, $id)
     {
         //
+		$data = $request->all();
+		$user = User::find($id);
+		$user->update([
+			'account' => $data['account'],
+            'name' => $data['name'],
+			'gender' => $data['gender'],
+            //'password' => Hash::make($data['password']),
+			'password' => $data['password'],
+			//'role' => 50,
+			//'remember_token' => $token,
+			'email' => $data['account'],
+        ]);
+		
+		$user->user_info->update([
+			//'user_id' => $user->id,
+            'city_id' => $data['city_id'],
+			'school_id' => $data['school_id'],
+            'grade' => $data['grade'],
+			'classroom' => $data['classroom'],
+			'subject' => $data['subject'],
+        ]);
+		
+		return redirect('teachers');
     }
 
     /**

@@ -38,24 +38,26 @@
 				</thead>
 				<tbody id="teacher_date">
 				@foreach($users as $user)
-				<tr>
+				<tr data-id="{{$user->id}}">
 					<td>{{$user->user_info->id}}</td>
 					<td>{{$user->name}}</td>
 					<td>{{$user->gender}}</td>
 					<td>{{$user->city_id}}</td>
 					<td>{{$user->user_info->school_id}}</td>
 					<td>{{$user->user_info->grade}}</td>
-					<td>{{$user->user_info->classrooom}}</td>
-					<td>{{ implode(',',json_decode($user->user_info->subject,true)) }}</td>
+					<td>{{$user->user_info->classroom}}</td>
+					<td>{{ implode(',',$user->user_info->subject) }}</td>
 					<td>{{$user->account}}</td>
 					<td>{{$user->password}}</td>
 					<td class="td-underline">
-						<a href="" style="float: left; margin-right: 10px;">編輯</a>
-						<a href="" data-toggle="modal" data-target="#delete">刪除</a>
+						<a href="{{ url('teachers/'.$user->id.'/edit') }}" style="float: left; margin-right: 10px;">編輯</a>
+						@if(0)
+						<a class="delete" href="#">刪除</a>
+						@endif
 					</td>
 				</tr>
 				@endforeach
-					<tr>
+					<!--tr>
 						<td>A001</td>
 						<td>王大明</td>
 						<td>男</td>
@@ -101,7 +103,7 @@
 							<a href="" style="float: left; margin-right: 10px;">編輯</a>
 							<a href="" data-toggle="modal" data-target="#delete">刪除</a>
 						</td>
-					</tr>
+					</tr-->
 				</tbody>
 			</table>
 		</div>
@@ -111,12 +113,13 @@
 				<div class="modal-content">
 					<div class="modal-body pop-up text-center">
 						<p>確認刪除此筆資料嗎？</p>
-						<button type="button" class="btn btn_style" data-dismiss="modal">確認</button>
+						<form action="{{url('classroom')}}" method="POST">
+
 					</div>
 				</div>
 			</div>
 		</div>
-		<button type="" class="btn btn_style" onclick="location.href='UC3-PF3_admin_exam_table.html'">返回</button>
+		<button type="" class="btn btn_style" onclick="location.href='{{ url('groups') }}'">返回</button>
 	</div>
 </div>
 @endsection
@@ -139,5 +142,12 @@
 		});
 		//$('form').submit();
 	});
+	
+	$(".delete").click(function(){
+		$("#delete form").attr('action',"{{url('teachers/')}}/"+$(this).closest('tr').data('id'));
+		$("#delete").modal('show');
+	})
+	
+	
 </script>
 @endsection

@@ -12,8 +12,13 @@
 <div class="container mb-5">
 	<div class="col-12">
 		<div class="teacher_signup">
-			<p style="margin-bottom: 15px;" class="title-20 text-center">新增教師資料</p>
-			<form action="{{url('teachers')}}" method="POST">
+			<p style="margin-bottom: 15px;" class="title-20 text-center">@if(isset($user))修改@else新增@endif教師資料</p>
+			@if(isset($user))
+				<form action="{{url('teachers/'.$id)}}" method="POST">
+				@method('PUT')
+			@else
+				<form action="{{url('teachers')}}" method="POST">
+			@endif
 			<div class="teacher_signup_main mb-30">
 					<div class="row" style="margin:0;">
 						<div class="form-group mr-30">
@@ -60,7 +65,8 @@
 						<div class="mb-15">
 							<div class="form-group">
 								<label for="teacher_class" class="lable_title">任教班級</label>
-								<input type="text" class="form-control" name="classroom" id="teacher_class" style="width: 300px;" required>
+								<input type="text" class="form-control" name="classroom" id="teacher_class" style="width: 280px;" required>
+								<span class="input-group-addon" style="line-height: 35px; margin-left:5px;">班</span>
 							</div>
 						</div>
 					</div>
@@ -102,7 +108,7 @@
 			</div>
 			<div class="text-center">
 				<div class="btn-group">
-					<button type="submit" class="btn btn_style">新增</button>
+					<button type="submit" class="btn btn_style">@if(isset($user))修改@else新增@endif</button>
 					<button type="" class="btn btn_cancel" onclick="history.back()">返回</button>
 				</div>
 			</div>
@@ -115,6 +121,23 @@
 @section('script')
 @parent
 <script>
+@if(isset($user))
+	var user = {!! json_encode($user) !!};
+	var teacher = {!! json_encode($teacher) !!};
+	$("[name='name']").val(user.name);
+	$("[name='gender']").filter('[value='+user.gender+']').prop('checked', true);
+	$("[name='city_id']").val(teacher.city_id);
+	$("[name='school_id']").val(teacher.school_id);
+	$("[name='grade']").val(teacher.grade);
+	$("[name='classroom']").val(teacher.classroom);
+	$("[name='account']").val(user.account);
+	$("[name='password']").val(user.password);
+	$("#teacher_password_again").val(user.password);
+	
+	for(x in teacher.subject){
+		$("[name^='subject']").filter('[value='+teacher.subject[x]+']').prop('checked', true);
+	}
+@endif
 /*
 	$("form").submit(function(e) {
 		e.preventDefault();

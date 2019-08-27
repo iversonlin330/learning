@@ -34,6 +34,7 @@ class Teacher extends Model
      */
     protected $casts = [
         //'email_verified_at' => 'datetime',
+		'subject' => 'array'
     ];
 	
 	public function classrooms()

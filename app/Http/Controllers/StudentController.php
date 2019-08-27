@@ -7,6 +7,7 @@ use Auth;
 use App\Classroom;
 use App\Student;
 use App\User;
+use App\Teacher;
 
 class StudentController extends Controller
 {
@@ -18,6 +19,9 @@ class StudentController extends Controller
     public function index()
     {
         //
+		$users = User::with('user_info')->where('role',1)->get();
+		//dd($users);
+		return view('students.index',compact('users'));
     }
 
     /**
@@ -85,6 +89,65 @@ class StudentController extends Controller
 		dd($data);
 		*/
     }
+	
+	public function getAdminCreate()
+    {
+        //
+		$teachers = User::where('role',50)->get();
+		$class_map = [];
+		
+		foreach($teachers as $teacher){
+			foreach($teacher->user_info->classrooms as $classroom){
+				$class_map[$teacher->user_info->id][] = [
+					'id' => $classroom->id,
+					'val' =>$classroom->class_number
+				];
+			}
+		}
+		return view('students.adminCreate',compact('teachers','class_map'));
+    }
+	
+	public function postAdminCreate(Request $request)
+    {
+        //
+		$user = Auth::user();
+		$data = $request->all();
+		
+		$classroom = Classroom::find($data['class_id']);
+		$new_user = User::create([
+			'account' => str_pad($data['teacher_id'],3,'0',STR_PAD_LEFT) . $classroom->class_number . str_pad($data['student_id'],3,'0',STR_PAD_LEFT),
+			'name' => $data['name'],
+			'role' => 1,
+			'gender' => $data['gender'],
+		]);
+		
+		Student::create([
+			'user_id' => $new_user->id,
+			'classroom_id' => $data['class_id'],
+			'computer' =>$data['stu_question_1'],
+			'search_time' =>$data['stu_question_2'],
+			'typing' =>$data['stu_question_3'],
+			'search_easy' =>$data['stu_question_4'],
+		]);
+		/*
+		
+		User::where('id',$user->id)
+			->create([
+				'name' =>$data['name'],
+				'gender' =>$data['gender']
+			]);
+			
+		Student::where('user_id',$user->id)
+			->update([
+				'computer' =>$data['stu_question_1'],
+				'search_time' =>$data['stu_question_2'],
+				'typing' =>$data['stu_question_3'],
+				'search_easy' =>$data['stu_question_4'],
+			]);
+		*/
+		return redirect('students');
+    }
+
 
     /**
      * Display the specified resource.

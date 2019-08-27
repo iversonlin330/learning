@@ -114,7 +114,7 @@ class RegisterController extends Controller
 			'school_id' => $data['school_id'],
             'grade' => $data['grade'],
 			'classroom' => $data['classroom'],
-			'subject' => json_encode($data['subject']),
+			'subject' => $data['subject'],
         ]);
 		
 		return response()->json([

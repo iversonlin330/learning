@@ -59,16 +59,20 @@
 				<thead>
 					<tr>
 						<th style="width:75%;">學生ID</th>
+						@if(0)
 						<th style="width:25%;">功能</th>
+						@endif
 					</tr>
 				</thead>
 				<tbody>
 				@foreach($classroom->students as $student)
 					<tr data-id="{{$student->user->id}}">
 						<td>{{$student->user->account}}</td>
+						@if(0)
 						<td class="td-underline">
 							<a class="delete" href="#">刪除</a>
 						</td>
+						@endif
 					</tr>
 				@endforeach
 				</tbody>

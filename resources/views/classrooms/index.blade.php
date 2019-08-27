@@ -34,7 +34,9 @@
 							<td>{{ $classroom->number_student() }}</td>
 							<td class="td-underline">
 								<a href="{{url('classrooms/'.$classroom->id.'/edit')}}" style="float: left; margin-right: 10px;">編輯</a>
+								@if(0)
 								<a class="delete" href="#">刪除</a>
+								@endif
 							</td>
 						</tr>
 					@endforeach

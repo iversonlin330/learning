@@ -39,6 +39,10 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('change-id', 'TeacherController@postChangeId');
 	Route::resource('teachers', 'TeacherController');
 	Route::get('/logout', 'Auth\LoginController@getLogout');
+	
+	Route::get('students/admin-create', 'StudentController@getAdminCreate');
+	Route::post('students/admin-create', 'StudentController@postAdminCreate');
+	
 	Route::group(['middleware' => ['user.info']], function () {
 		Route::resource('groups', 'GroupController');
 		Route::resource('questions', 'QuestionController');

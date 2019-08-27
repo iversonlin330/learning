@@ -62,7 +62,8 @@
 						<div class="mb-15">
 							<div class="form-group">
 								<label for="teacher_class" class="lable_title">任教班級</label>
-								<input type="text" class="form-control" name="classroom" id="teacher_class" style="width: 300px;" required>
+								<input type="text" class="form-control" name="classroom" id="teacher_class" style="width: 280px;" required>
+								<span class="input-group-addon" style="line-height: 35px; margin-left:5px;">班</span>
 							</div>
 						</div>
 					</div>
