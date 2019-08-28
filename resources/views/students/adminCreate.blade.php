@@ -12,8 +12,13 @@
 <div class="container mb-5">
 	<div class="col-12">
 		<div class="student_questionaire">
-			<p style="margin-bottom: 15px;" class="title-20 text-center">新增學生資料</p>
-			<form action="{{url('students/admin-create')}}" method="post">
+			<p style="margin-bottom: 15px;" class="title-20 text-center">@if(isset($user))修改@else新增@endif學生資料</p>
+			@if(isset($user))
+				<form action="{{url('students/'.$id)}}" method="POST">
+				@method('PUT')
+			@else
+				<form action="{{url('students')}}" method="POST">
+			@endif
 			<div class="student_questionaire_main mb-30">
 				<!--question form-->
 				
@@ -141,7 +146,7 @@
 			</div>
 			<div class="text-center">
 				<div class="btn-group">
-					<button type="submit" class="btn btn_style">新增</button>
+					<button type="submit" class="btn btn_style">@if(isset($user))修改@else新增@endif</button>
 					<button type="" class="btn btn_cancel" onclick="history.back()">返回</button>
 				</div>
 			</div>
@@ -166,6 +171,26 @@ $("#teacher_id").change(function(){
 		$("#class_id").append("<option value='"+id+"'>"+val+"</option>");
 	}
 });
+
+@if(isset($user))
+	var user = {!! json_encode($user) !!};
+	var student = {!! json_encode($student) !!};
+	
+	$("[name='teacher_id']").val(parseInt(user.account.slice(0, 3))).change();
+	$("[name='class_id']").val(student.classroom_id);
+	$("[name='student_id']").val(parseInt(user.account.slice(4, 7)));
+	
+	$("[name='name']").val(user.name);
+	$("[name='gender']").filter('[value='+user.gender+']').prop('checked', true);
+	
+	$("[name='stu_question_1']").filter('[value='+student.computer+']').prop('checked', true);
+	$("[name='stu_question_2']").filter('[value='+student.search_time+']').prop('checked', true);
+	$("[name='stu_question_3']").filter('[value='+student.typing+']').prop('checked', true);
+	$("[name='stu_question_4']").filter('[value='+student.search_easy+']').prop('checked', true);
+
+@endif
+
+
 </script>
 @endsection
 

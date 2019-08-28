@@ -52,7 +52,7 @@
 					<td>{{ Config::get('map.typing')[$user->user_info->typing] }}</td>
 					<td>{{ Config::get('map.search_easy')[$user->user_info->search_easy] }}</td>
 					<td class="td-underline">
-						<a href="{{url('studetns/'.$user->id.'/edit')}}" style="float: left; margin-right: 10px;">編輯</a>
+						<a href="{{url('students/'.$user->id.'/edit')}}" style="float: left; margin-right: 10px;">編輯</a>
 						@if(0)
 						 <a href="" data-toggle="modal" data-target="#delete">刪除</a>
 						@endif

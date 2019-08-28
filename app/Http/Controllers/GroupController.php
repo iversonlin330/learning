@@ -137,6 +137,12 @@ class GroupController extends Controller
     public function edit($id)
     {
         //
+		$user = Auth::user();
+		$group = Group::find($id);
+		$questions = $group->questions;
+		$templates = $group->templates;
+		
+		return view('groups.edit',compact('group','templates','questions','user'));
     }
 
     /**

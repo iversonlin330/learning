@@ -12,6 +12,7 @@
 		<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
 	@show
     <title>數位閱讀學習平台</title>
+	<script type="text/javascript" src="{{ asset('js/ckeditor.js') }}"></script>
 </head>
 
 <body class="gradient">
@@ -46,9 +47,11 @@
         </section>
 		@section('script')
         <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('js/jquery-ui.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
+		
         @show
 </body>
 </html>

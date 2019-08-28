@@ -169,6 +169,21 @@ class StudentController extends Controller
     public function edit($id)
     {
         //
+		$user = User::find($id);
+		$student = $user->user_info; 
+		$teachers = User::where('role',50)->get();
+		$class_map = [];
+		
+		foreach($teachers as $teacher){
+			foreach($teacher->user_info->classrooms as $classroom){
+				$class_map[$teacher->user_info->id][] = [
+					'id' => $classroom->id,
+					'val' =>$classroom->class_number
+				];
+			}
+		}
+		
+		return view('students.adminCreate',compact('id','user','student','teachers','class_map'));
     }
 
     /**
@@ -181,6 +196,27 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         //
+		$user = Auth::user();
+		$data = $request->all();
+		
+		$classroom = Classroom::find($data['class_id']);
+		$new_user = User::find($id);
+		$new_user->update([
+			'account' => str_pad($data['teacher_id'],3,'0',STR_PAD_LEFT) . $classroom->class_number . str_pad($data['student_id'],3,'0',STR_PAD_LEFT),
+			'name' => $data['name'],
+			'gender' => $data['gender'],
+		]);
+		
+		$new_user->user_info->update([
+			//'user_id' => $new_user->id,
+			'classroom_id' => $classroom->id,
+			'computer' =>$data['stu_question_1'],
+			'search_time' =>$data['stu_question_2'],
+			'typing' =>$data['stu_question_3'],
+			'search_easy' =>$data['stu_question_4'],
+		]);
+
+		return redirect('students');
     }
 
     /**

@@ -21,7 +21,11 @@ class RecordController extends Controller
     {
         //
 		$user = Auth::user();
-		$classrooms = $user->user_info->classrooms;
+		if($user->role == 50){
+			$classrooms = $user->user_info->classrooms;
+		}elseif($user->role == 99){
+			$classrooms = Classroom::all();
+		}
 		
 		return view('records.index',compact('classrooms'));
     }
