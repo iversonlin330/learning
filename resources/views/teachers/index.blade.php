@@ -42,7 +42,7 @@
 					<td>{{$user->user_info->id}}</td>
 					<td>{{$user->name}}</td>
 					<td>{{$user->gender}}</td>
-					<td>{{$user->city_id}}</td>
+					<td>{{$user->user_info->city_id}}</td>
 					<td>{{$user->user_info->school_id}}</td>
 					<td>{{$user->user_info->grade}}</td>
 					<td>{{$user->user_info->classroom}}</td>

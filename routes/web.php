@@ -42,6 +42,7 @@ Route::group(['middleware' => ['auth']], function () {
 	
 	Route::get('students/admin-create', 'StudentController@getAdminCreate');
 	Route::post('students/admin-create', 'StudentController@postAdminCreate');
+	Route::get('students/export', 'StudentController@export');
 	
 	Route::resource('templates', 'TemplateController');
 	Route::resource('ads', 'AdsController');

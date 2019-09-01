@@ -38,7 +38,22 @@ class TeacherController extends Controller
     public function create()
     {
         //
-		return view('teachers.create');
+		
+		$schools = array_map('str_getcsv', file('e1_new.csv'));
+		unset($schools[0]);
+		
+		$citys = [];
+		/*
+		foreach($schools as $school){
+			$citys[] = substr($school[3], 4 , 9);
+		}
+		$citys = array_values(array_unique($citys));
+		*/
+		foreach($schools as $school){
+			$citys[substr($school[3], 4 , 9)][] = $school[1];
+		}
+		
+		return view('teachers.create',compact('citys','schools'));
     }
 
     /**
@@ -112,7 +127,7 @@ class TeacherController extends Controller
 			'school_id' => $data['school_id'],
             'grade' => $data['grade'],
 			'classroom' => $data['classroom'],
-			'subject' => json_encode($data['subject']),
+			'subject' => $data['subject'],
         ]);
 		
 		return redirect('teachers');

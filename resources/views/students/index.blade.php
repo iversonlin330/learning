@@ -17,7 +17,7 @@
 		</div>
 		<div class="top_right_button">
 			<button class="btn btn_function" onclick="location.href='{{url('students/admin-create')}}'">新增資料</button>
-			<button class="btn btn_function">資料匯出</button>
+			<button class="btn btn_function" onclick="location.href='{{url('students/export')}}'">資料匯出</button>
 		</div>
 		<div class="student_edit_table">
 			<table class="table table-bordered">
@@ -46,7 +46,7 @@
 					<td>{{ Config::get('map.gender')[$user->gender] }}</td>
 					<td>{{ $user->user_info->classroom->teacher->school_id }}</td>
 					<td>{{ $user->user_info->classroom->grade }}</td>
-					<td>{{ $user->user_info->classroom->class_number }}</td>
+					<td>{{ $user->user_info->classroom->classroom }}</td>
 					<td>{{ Config::get('map.computer')[$user->user_info->computer] }}</td>
 					<td>{{ Config::get('map.search_time')[$user->user_info->search_time] }}</td>
 					<td>{{ Config::get('map.typing')[$user->user_info->typing] }}</td>

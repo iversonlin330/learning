@@ -8,6 +8,8 @@ use App\Classroom;
 use App\Student;
 use App\User;
 use App\Teacher;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\StudentsExport;
 
 class StudentController extends Controller
 {
@@ -228,5 +230,11 @@ class StudentController extends Controller
     public function destroy($id)
     {
         //
+    }
+	
+	public function export()
+    {
+        //
+		return Excel::download(new StudentsExport, '學生.xlsx');
     }
 }
