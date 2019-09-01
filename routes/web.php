@@ -37,6 +37,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('add-class', 'TeacherController@postAddClass');
 	Route::get('change-id', 'TeacherController@getChangeId');
 	Route::post('change-id', 'TeacherController@postChangeId');
+	Route::get('teachers/export', 'TeacherController@export');
+	
 	Route::resource('teachers', 'TeacherController');
 	Route::get('/logout', 'Auth\LoginController@getLogout');
 	

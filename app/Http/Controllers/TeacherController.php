@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\AddClass;
 use App\Mail\ChangeId;
 use Crypt;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\TeachersExport;
 
 class TeacherController extends Controller
 {
@@ -265,6 +267,12 @@ class TeacherController extends Controller
 			'success' => true,
 			'message' => 'test'
 		]);
+    }
+	
+	public function export()
+    {
+        //
+		return Excel::download(new TeachersExport, '老師.xlsx');
     }
 	
 }

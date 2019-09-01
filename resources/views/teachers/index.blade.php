@@ -17,7 +17,7 @@
 		</div>
 		<div class="top_right_button">
 			<button class="btn btn_function" onclick="location.href='{{url('teachers/create')}}'">新增資料</button>
-			<button class="btn btn_function">資料匯出</button>
+			<button class="btn btn_function" onclick="location.href='{{url('teachers/export')}}'">資料匯出</button>
 		</div>
 		<div class="teacher_edit_table">
 			<table class="table table-bordered">
