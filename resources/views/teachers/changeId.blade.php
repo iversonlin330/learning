@@ -44,7 +44,7 @@
 							<p>已申請成功<br>
 							請待2至3個工作天，或主動聯絡管理員<br>
 							ling0611@tea.ntue.edu.tw</p>
-							<button type="button" class="btn btn_style" data-dismiss="modal" onclick="location.href='UC2-PF10_class_list.html'">確認</button>
+							<button type="button" class="btn btn_style" data-dismiss="modal" onclick="location.href='{{ url('classrooms') }}'">確認</button>
 						</div>
 					</div>
 				</div>

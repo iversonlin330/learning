@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Question;
 
 class QuestionController extends Controller
 {
@@ -21,9 +22,12 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+		$data = $request->all();
+		$group_id = $data['group_id'];
+		return view('questions.create',compact('group_id'));
     }
 
     /**
@@ -35,6 +39,21 @@ class QuestionController extends Controller
     public function store(Request $request)
     {
         //
+		$data = $request->all();
+		Question::create([
+			'no' => 1,
+			'name' => $data['name'],
+			//'item' => json_encode(explode('@',$v[7]),JSON_UNESCAPED_UNICODE),
+			'item' => '',
+			'type' => $data['type'],
+			'group_id' => $data['group_id'],
+			'correct_answer' => $data['correct_answer'],
+			'grade' => $data['grade'],
+			'history' => $data['history'],
+			'goal' => $data['goal'],
+		]);
+		
+		return redirect('/groups/'.$data['group_id']);
     }
 
     /**

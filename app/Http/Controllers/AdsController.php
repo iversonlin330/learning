@@ -8,16 +8,17 @@ use App\UserAnswer;
 use App\Question;
 use Auth;
 
-class GroupController extends Controller
+class AdsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+		return view('ads.index');
 		$user = Auth::user();
 		$groups = $user->groups();
 		if($user->role == 50){
@@ -53,7 +54,7 @@ class GroupController extends Controller
     public function create()
     {
         //
-		return view('groups.create');
+		return view('templates.create');
     }
 
     /**
@@ -145,6 +146,18 @@ class GroupController extends Controller
     public function edit($id)
     {
         //
+		/*
+		$template = [
+			'id' =>1,
+			'type' => $id,
+		];
+		*/
+		$template = collect();
+		$template->id = 1;
+		$template->type = $id;
+		$questions = [];
+		return view('templates.edit',compact('id','template','questions'));
+		
 		$user = Auth::user();
 		$group = Group::find($id);
 		$questions = $group->questions;

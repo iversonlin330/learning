@@ -43,6 +43,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('students/admin-create', 'StudentController@getAdminCreate');
 	Route::post('students/admin-create', 'StudentController@postAdminCreate');
 	
+	Route::resource('templates', 'TemplateController');
+	Route::resource('ads', 'AdsController');
 	Route::group(['middleware' => ['user.info']], function () {
 		Route::resource('groups', 'GroupController');
 		Route::resource('questions', 'QuestionController');

@@ -11,7 +11,7 @@
 @section('content')
 <div class="container mb-5">
 	<div class="teacher_exam_table">
-		<div class="filter">
+		<!--div class="filter">
 			<select id="filter_subject" class="browser-default custom-select small_filter">
 				<option value="" selected>科目</option>
 				<option value="國語">國語</option>
@@ -23,35 +23,27 @@
 				<option value="asc">年級排列：由低到高</option>
 			</select>
 			<button class="btn btn_filter">篩選</button>
-		</div>
+		</div-->
 		<div class="top_right_button">
 			@if(Auth::user()->role == 50)
 			<button class="btn btn_function" onclick="location.href='{{ url('record/index') }}'" >作答記錄查看</button>
 			@endif
 			@if(Auth::user()->role == 99)
-			<button class="btn btn_function" onclick="location.href='{{ url('groups/create') }}'">題組匯入</button>
+			<button class="btn btn_function" data-toggle="modal" data-target="#order">排序</button>
 			@endif
 		</div>
 		<div class="exam_table">
 			<table id="group_table" class="table table-bordered">
 				<thead>
 					<tr>
-						@if(Auth::user()->role >=50)
-						<th style="width:15%">ID</th>
-						<th style="width:15%">科目</th>
-						<th style="width:15%">年級</th>
-						<th style="width:15%">題組名稱</th>
+						<th style="width:15%">模板名稱</th>
+						<th style="width:15%">模板類型</th>
+						<th style="width:15%">是否啟用廣告</th>
 						<th style="width:40%">功能</th>
-						@else
-						<th>科目</th>
-						<th>年級</th>
-						<th>題組名稱</th>
-						<th>作答紀錄</th>
-						<th>功能</th>
-						@endif
 					</tr>
 				</thead>
 				<tbody>
+				@if(0)
 					@foreach($groups as $group)
 						<tr data-id="{{ $group->id }}">
 							@if(Auth::user()->role >=50)
@@ -71,13 +63,24 @@
 								@endif
 								@if(Auth::user()->role == 99)
 								<a href="{{url('groups/'.$group->id)}}" style="float: left; margin-right: 10px;">查看詳細資訊</a>
-								<!--a href="{{url('groups/'.$group->id.'/edit')}}" style="float: left; margin-right: 10px;">編輯題組內容</a-->
-								<a href="{{url('groups/'.$group->id.'/edit')}}" style="float: left; margin-right: 10px;">編輯題組資訊</a>
-								<a href="{{url('templates/?group_id='.$group->id)}}" style="float: left; margin-right: 10px;">編輯題組內容</a>
+								<a href="{{url('groups/'.$group->id.'/edit')}}" style="float: left; margin-right: 10px;">編輯題組內容</a>
 								@endif
 							</td>
 						</tr>
 					@endforeach
+				@endif
+				<tr>
+					<td>第一大題</td>
+					<td>模板一</td>
+					<td>否</td>
+					<td class="td-underline"><a href="{{url('templates/1/edit')}}" style="float: left; margin-right: 10px;">編輯</a></td>
+				</tr>
+				<tr>
+					<td>第二大題</td>
+					<td>模板二</td>
+					<td>是</td>
+					<td class="td-underline"><a href="{{url('templates/2/edit')}}" style="float: left; margin-right: 10px;">編輯</a></td>
+				</tr>
 					<!--tr>
 						<td>A001</td>
 						<td>自然</td>
@@ -125,12 +128,13 @@
 				</tbody>
 			</table>
 			<!-- 指定班級作答彈跳視窗 -->
-			<div class="modal fade" id="assignation_exam" tabindex="-1" role="dialog" aria-labelledby="assignation_exam"
+			<div class="modal fade" id="order" tabindex="-1" role="dialog" aria-labelledby="assignation_exam"
 				aria-hidden="true">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<form action="{{ url('group_classrooms') }}" method="post">
 						<div class="modal-body pop-up text-center" style="width:350px;">
+						@if(0)
 							<div class="exam_table">
 								<table class="table table-bordered">
 									<thead>
@@ -140,6 +144,7 @@
 										</tr>
 									</thead>
 									<tbody>
+									@if(0)
 									@foreach($classrooms as $classroom)
 									<tr>
 										<td>{{ $classroom->grade }}年{{ $classroom->classroom }}班</td>
@@ -151,6 +156,15 @@
 										</td>
 									</tr>
 									@endforeach
+									@endif
+									<tr>
+										<td>第一大題</td>
+										<td>模板一</td>
+									</tr>
+									<tr>
+										<td>第二大題</td>
+										<td>模板二</td>
+									</tr>
 									<input id="group_id" name="group_id" value=""  hidden />
 										<!--tr>
 											<td>二年甲班</td>
@@ -164,6 +178,11 @@
 									</tbody>
 								</table>
 							</div>
+							@endif
+							<ul id="sortable">
+								<li class="btn btn_editor" style="display: block;float: none;">第一大題</li>
+								<li class="btn btn_editor" style="display: block;float: none;">第二大題</li>
+							</ul>
 							<button type="submit" class="btn btn_style">確認</button>
 						</div>
 						</form>
@@ -172,12 +191,15 @@
 			</div>
 		</div>
 	</div>
+	<button type="" class="btn btn_style" onclick="location.href='{{ url('groups') }}'">返回</button>
 </div>
 @endsection
  
 @section('script')
 @parent
 <script>
+$("#sortable").sortable();
+
 function sort_group_table(type){
     var $tbody = $('#group_table tbody');
 	$tbody.find('tr').sort(function(a,b){ 
