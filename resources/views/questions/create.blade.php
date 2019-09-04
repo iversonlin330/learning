@@ -12,8 +12,15 @@
 <div class="container mb-5">
 	<div class="col-12">
 		<div class="admin_add_question">
-			<p style="margin-bottom: 15px; font-weight: bold;" class="title-20 text-center">新增題目</p>
-			<form action="{{ url('questions') }}" method="post">
+			<p style="margin-bottom: 15px; font-weight: bold;" class="title-20 text-center">@if(isset($question))修改@else新增@endif題目</p>
+			
+			@if(isset($questions))
+				<form action="{{url('questions/'.$id)}}" method="POST">
+				@method('PUT')
+			@else
+				<form action="{{ url('questions') }}" method="post">
+			@endif
+			
 			<input name="group_id" value="{{$group_id}}" hidden>
 			<div class="admin_add_question_main white_box_bg mb-30">
 				
@@ -41,6 +48,10 @@
 							<textarea style="width: 390px; height: 170px;" type="text" class="form-control" id="que_content"  name="name"></textarea>
 						</div>
 						<div class="form-group">
+							<label for="que_content" class="lable_title">選項</label>
+							<textarea style="width: 390px; height: 170px;" type="text" class="form-control" id="que_item"  name="item" placeholder="A@B@C@D"></textarea>
+						</div>
+						<div class="form-group">
 							<label for="que_answer" class="lable_title">參考答案</label>
 							<textarea style="width: 390px; height: 100px;" type="text" class="form-control" id="que_answer" name="correct_answer"></textarea>
 						</div>
@@ -66,82 +77,31 @@
 @section('script')
 @parent
 <script>
-function sort_group_table(type){
-    var $tbody = $('#group_table tbody');
-	$tbody.find('tr').sort(function(a,b){ 
-		var tda = $(a).find('td:eq(2)').text(); // can replace 1 with the column you want to sort on
-		var tdb = $(b).find('td:eq(2)').text(); // this will sort on the second column
-				// if a < b return 1
-		if(type == 'desc'){
-			return tda < tdb ? 1 
-			   // else if a > b return -1
-			   : tda > tdb ? -1 
-			   // else they are equal - return 0    
-			   : 0;  
-		}else{
-			return tda > tdb ? 1 
-			   // else if a > b return -1
-			   : tda < tdb ? -1 
-			   // else they are equal - return 0    
-			   : 0;  
-		}
-		         
-	}).appendTo($tbody);
-}
-sort_group_table('desc');
-
-$("#sort_grade").change(function(){
-	var type = $(this).val();
-	sort_group_table(type);
-});
-
-
-$("#filter_subject").change(function () {
-    //split the current value of searchInput
-    var data = this.value.split(" ");
-    //create a jquery object of the rows
-    var jo = $('#group_table tbody').find("tr");
-    if (this.value == "") {
-        jo.show();
-        return;
-    }
-    //hide all the rows
-    jo.hide();
-
-    //Recusively filter the jquery object to get results.
-    jo.filter(function (i, v) {
-        var $t = $(this);
-        for (var d = 0; d < data.length; ++d) {
-            if ($t.is(":contains('" + data[d] + "')")) {
-                return true;
-            }
-        }
-        return false;
-    })
-    //show the rows that match.
-    .show();
-});
-
-$(".assign").click(function(){
-	var group_id = $(this).closest('tr').data('id');
-	$("#group_id").val(group_id);
-	$("#assignation_exam").modal('show');
-});
-/*
-$("form").submit(function(e) {
-	e.preventDefault();
-	$.ajax({
-	  type: 'POST',
-	  url: $(this).attr('action'),
-	  data: $("form").serialize(),
-	}).done(function(data) {
-	  if(data.success){
-		  $("#teacher_signup").modal('show');
-	  }else{
-		  alert(data.message);
-	  }
-	});
-});
-*/
+@if(isset($question))
+	var question = {!! json_encode($question) !!};
+	$("[name='name']").val(question.name);
+	$("[name='item']").val(question.item);
+	$("[name='type']").val(question.type);
+	$("[name='correct_answer']").val(question.correct_answer);
+	$("[name='grade']").val(question.grade);
+	$("[name='history']").val(question.history);
+	$("[name='goal']").val(question.goal);
+	/*
+	
+	$("[name='gender']").filter('[value='+user.gender+']').prop('checked', true);
+	
+	
+	$("[name='school_id']").val(teacher.school_id);
+	$("[name='grade']").val(teacher.grade);
+	$("[name='classroom']").val(teacher.classroom);
+	$("[name='account']").val(user.account);
+	$("[name='password']").val(user.password);
+	$("#teacher_password_again").val(user.password);
+	
+	for(x in teacher.subject){
+		$("[name^='subject']").filter('[value='+teacher.subject[x]+']').prop('checked', true);
+	}
+	*/
+@endif
 </script>
 @endsection

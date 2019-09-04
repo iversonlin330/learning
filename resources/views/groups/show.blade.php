@@ -61,7 +61,7 @@
 						@if($user->role == 99)
 						<td>{{ $question->goal }}</td>
 						<td class="td-underline">
-							<a href="" style="float: left; margin-right: 10px;">編輯</a>
+							<a href="{{ url('questions/'.$question->id.'/edit') }}" style="float: left; margin-right: 10px;">編輯</a>
 							@if(0)
 							<a href="" data-toggle="modal" data-target="#delete">刪除</a>
 							@endif

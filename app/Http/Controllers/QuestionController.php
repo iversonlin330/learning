@@ -43,8 +43,8 @@ class QuestionController extends Controller
 		Question::create([
 			'no' => 1,
 			'name' => $data['name'],
-			//'item' => json_encode(explode('@',$v[7]),JSON_UNESCAPED_UNICODE),
-			'item' => '',
+			'item' => json_encode(explode('@',$data['item']),JSON_UNESCAPED_UNICODE),
+			//'item' => '',
 			'type' => $data['type'],
 			'group_id' => $data['group_id'],
 			'correct_answer' => $data['correct_answer'],
@@ -76,6 +76,11 @@ class QuestionController extends Controller
     public function edit($id)
     {
         //
+		$question = Question::find($id);
+		$group_id = $question->group_id;
+		$question->item = implode('@',json_decode($question->item,true));
+		//dd($question->item);
+		return view('questions.create',compact('question','group_id'));
     }
 
     /**
@@ -88,6 +93,26 @@ class QuestionController extends Controller
     public function update(Request $request, $id)
     {
         //
+		
+		$data = $request->all();
+		
+		$question = Question::find($id);
+		
+		$question->update([
+			//'no' => 1,
+			'name' => $data['name'],
+			'item' => json_encode(explode('@',$data['item']),JSON_UNESCAPED_UNICODE),
+			//'item' => '',
+			'type' => $data['type'],
+			//'group_id' => $data['group_id'],
+			'correct_answer' => $data['correct_answer'],
+			'grade' => $data['grade'],
+			'history' => $data['history'],
+			'goal' => $data['goal'],
+		]);
+		
+		return redirect('/groups/'.$question->group_id);
+		
     }
 
     /**
