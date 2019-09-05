@@ -31,7 +31,7 @@
 					@if(Auth::user()->role == 99)
 					<a href="{{url('teachers')}}">教師資料維護</a>
                     <a href="{{url('students')}}">學生資料維護</a>
-                    <a href="{{url('records')}}">作答記錄查看</a>
+                    <a href="{{url('record/index')}}">作答記錄查看</a>
                     <a href="{{url('ads')}}">廣告點擊報告</a>
 					@endif
                 </div>

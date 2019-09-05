@@ -150,7 +150,7 @@ class GroupController extends Controller
 		$questions = $group->questions;
 		$templates = $group->templates;
 		
-		return view('groups.edit',compact('group','templates','questions','user'));
+		return view('groups.edit',compact('id','group','templates','questions','user'));
     }
 
     /**
@@ -163,6 +163,16 @@ class GroupController extends Controller
     public function update(Request $request, $id)
     {
         //
+		$data = $request->all();
+		
+		$group = Group::find($id);
+		$group->update([
+			'subject' => $data['subject'],
+			'grade' => $data['grade'],
+			'title' => $data['title'],
+		]);
+		
+		return redirect('groups');
     }
 
     /**

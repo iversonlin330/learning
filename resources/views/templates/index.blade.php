@@ -25,12 +25,8 @@
 			<button class="btn btn_filter">篩選</button>
 		</div-->
 		<div class="top_right_button">
-			@if(Auth::user()->role == 50)
-			<button class="btn btn_function" onclick="location.href='{{ url('record/index') }}'" >作答記錄查看</button>
-			@endif
-			@if(Auth::user()->role == 99)
+			<button class="btn btn_function" onclick="location.href='{{ url('templates/create?group_id='.$group_id) }}'" >建立模板</button>
 			<button class="btn btn_function" data-toggle="modal" data-target="#order">排序</button>
-			@endif
 		</div>
 		<div class="exam_table">
 			<table id="group_table" class="table table-bordered">
@@ -38,7 +34,6 @@
 					<tr>
 						<th style="width:15%">模板名稱</th>
 						<th style="width:15%">模板類型</th>
-						<th style="width:15%">是否啟用廣告</th>
 						<th style="width:40%">功能</th>
 					</tr>
 				</thead>
@@ -69,18 +64,13 @@
 						</tr>
 					@endforeach
 				@endif
+				@foreach($templates as $template)
 				<tr>
-					<td>第一大題</td>
-					<td>模板一</td>
-					<td>否</td>
-					<td class="td-underline"><a href="{{url('templates/1/edit')}}" style="float: left; margin-right: 10px;">編輯</a></td>
+					<td>{{ isset($template->content['name'])? $template->content['name'] : '' }}</td>
+					<td>{{ $template->type }}</td>
+					<td class="td-underline"><a href="{{url('templates/'.$template->id.'/edit')}}" style="float: left; margin-right: 10px;">編輯</a></td>
 				</tr>
-				<tr>
-					<td>第二大題</td>
-					<td>模板二</td>
-					<td>是</td>
-					<td class="td-underline"><a href="{{url('templates/2/edit')}}" style="float: left; margin-right: 10px;">編輯</a></td>
-				</tr>
+				@endforeach
 					<!--tr>
 						<td>A001</td>
 						<td>自然</td>
@@ -132,56 +122,14 @@
 				aria-hidden="true">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
-						<form action="{{ url('group_classrooms') }}" method="post">
+						<form action="{{ url('templates') }}" method="post">
 						<div class="modal-body pop-up text-center" style="width:350px;">
-						@if(0)
-							<div class="exam_table">
-								<table class="table table-bordered">
-									<thead>
-										<tr>
-											<th>班級</th>
-											<th>選取</th>
-										</tr>
-									</thead>
-									<tbody>
-									@if(0)
-									@foreach($classrooms as $classroom)
-									<tr>
-										<td>{{ $classroom->grade }}年{{ $classroom->classroom }}班</td>
-										<td class="text-center">
-											<div class="form-check form-check-inline">
-												<input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="classroom_id[]" value="{{ $classroom->id }}">
-												<label class="form-check-label" for=""></label>
-											</div>
-										</td>
-									</tr>
-									@endforeach
-									@endif
-									<tr>
-										<td>第一大題</td>
-										<td>模板一</td>
-									</tr>
-									<tr>
-										<td>第二大題</td>
-										<td>模板二</td>
-									</tr>
-									<input id="group_id" name="group_id" value=""  hidden />
-										<!--tr>
-											<td>二年甲班</td>
-											<td class="text-center">
-												<div class="form-check form-check-inline">
-													<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-													<label class="form-check-label" for=""></label>
-												</div>
-											</td>
-										</tr-->
-									</tbody>
-								</table>
-							</div>
-							@endif
 							<ul id="sortable">
-								<li class="btn btn_editor" style="display: block;float: none;">第一大題</li>
-								<li class="btn btn_editor" style="display: block;float: none;">第二大題</li>
+								@foreach($templates as $template)
+								<li class="btn btn_editor" style="display: block;float: none;">{{ $template->name }}
+									<input name="order[]" value="{{ $template->id }}" hidden>
+								</li>
+								@endforeach
 							</ul>
 							<button type="submit" class="btn btn_style">確認</button>
 						</div>
