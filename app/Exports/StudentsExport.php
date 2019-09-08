@@ -14,9 +14,10 @@ class StudentsExport implements FromArray
     {
         //
 		$users = User::with('user_info')->where('role',1)->get();
-		$result[] = ['學生ID','姓名','性別','就讀學校',',就讀年級','就讀班級','任課教師',	'使用電腦時間','尋找資訊','很會打字','很會搜尋資訊'];
+		$result[] = ['ID','學生ID','姓名','性別','就讀學校',',就讀年級','就讀班級','任課教師',	'使用電腦時間','尋找資訊','很會打字','很會搜尋資訊'];
 		foreach($users as $user){
 			$result[] = [
+				$user->user_info->s_id,
 				$user->account,
 				$user->name,
 				Config('map.gender')[$user->gender],

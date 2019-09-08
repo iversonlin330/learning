@@ -37,6 +37,9 @@ class TestingController extends Controller
 				$new_question_no[$val] = $index+1;
 			}
 		}
+		
+		//dd($question_map,$question_step,$new_question_no);
+		
 		return view('testings.index',compact('group','templates','questions','question_map','question_step','new_question_no'));
 	}
 	
@@ -80,8 +83,10 @@ class TestingController extends Controller
 		foreach($questions as $question){
 			if($question->type == 1)
 				continue;
-			if($question->correct_answer == $user_answers[$question->id]){
-				$correct++;
+			if(array_key_exists($question->id,$user_answers)){
+				if($question->correct_answer == $user_answers[$question->id]){
+					$correct++;
+				}
 			}
 			$total++;
 		}

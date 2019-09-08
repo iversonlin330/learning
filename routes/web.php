@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('students/export', 'StudentController@export');
 	
 	Route::resource('templates', 'TemplateController');
+	Route::get('ads/export', 'AdsController@export');
 	Route::resource('ads', 'AdsController');
 	Route::group(['middleware' => ['user.info']], function () {
 		Route::resource('groups', 'GroupController');
@@ -61,7 +62,8 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('record/index', 'RecordController@index');
 		Route::get('record/single', 'RecordController@single');
 		Route::get('record/multi', 'RecordController@multi');
-		Route::get('record/export', 'RecordController@export');
+		Route::get('record/single-export', 'RecordController@singleExport');
+		Route::get('record/multi-export', 'RecordController@multiExport');
 		Route::resource('group_classrooms', 'GroupClassroomController');
 	});
 });

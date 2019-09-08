@@ -50,8 +50,9 @@
 				</div>
 				@foreach($templates as $template)
 					@if($template->type == 1)
+					<?php $content = $template->content ?>
 					<div id="template_{{ $template->order }}" class="main_view_content">
-						<img src="{{ asset('img/exam_type_img.jpg') }}" alt="">
+						<img src="{{ $content['picture'][0] }}" alt="">
 					</div>
 					@elseif($template->type == 2)
 					<?php $content = $template->content ?>
@@ -97,14 +98,14 @@
 							@if($content['ads_type'] == 'right')
 							<!--right-ad-->
                             <div class="ad_img_right">
-                                <img src="{{ $content['ads_pic'] }}" alt="">
+                                <img src="{{ $content['ads_pic'] }}" alt="" onclick="show_ads(this,{{$template->id}})">
                             </div>
 							@endif
                         </div>
 						@if($content['ads_type'] == 'bottom')
 						<!--bottom-ad-->
                         <div class="ad_img_bottom">
-                            <img src="{{ $content['ads_pic'] }}" alt="">
+                            <img src="{{ $content['ads_pic'] }}" alt="" onclick="show_ads(this,{{$template->id}})">
                         </div>
 						@endif
                     </div>
@@ -121,7 +122,7 @@
 						<div class="text-center">
 							<div class="btn-group">
 								<button type="submit" class="btn btn_style">送出答案</button>
-								<button type="" class="btn btn_cancel" onclick="change_template(1)">修改答案</button>
+								<button type="button" class="btn btn_cancel" onclick="change_template(1)">修改答案</button>
 							</div>
 						</div>
 					</div>
@@ -138,9 +139,9 @@
 				</div>
 				<div class="question_content">
 					@foreach($questions as $index => $question)
-						<div id="q_{{$question->no}}" class="question_each">
+						<div id="q_{{$question->id}}" class="question_each">
 							<div class="question_each_title">
-								{{array_key_exists($question->no,$new_question_no)? $new_question_no[$question->no] : ''}}. {{$question->name}}
+								{{array_key_exists($question->id,$new_question_no)? $new_question_no[$question->id] : ''}}. {{$question->name}}
 							</div>
 							<div class="question_each_content">
 								<div class="question_each_content_img">
@@ -168,11 +169,11 @@
 										<div class="answer_choose"><input type="checkbox" name="answer[{{$question->id}}][]" value="D">{{ $item[3] }}</div>
 										@endif
 									@endif
-									@if(array_key_exists($index+1,$question_step))
+									@if(array_key_exists($question->id,$question_step))
 									<div id="change_step">
-										<div class="save_btn" onclick="change_template({{$question_step[$index+1]+1}})">下一步</div>
-										@if($question_step[$index+1]-1 != 0)
-                                        <div class="save_btn" style="margin-right:5px;" onclick="change_template({{$question_step[$index+1]-1}})">上一步</div>
+										<div class="save_btn" onclick="change_template({{$question_step[$question->id]+1}})">下一步</div>
+										@if($question_step[$question->id]-1 != 0)
+                                        <div class="save_btn" style="margin-right:5px;" onclick="change_template({{$question_step[$question->id]-1}})">上一步</div>
 										@endif
 									</div>
 									@endif
@@ -187,6 +188,19 @@
 		</div>
 	</div>
 </form>
+<div class="modal fade" id="assignation_exam" tabindex="-1" role="dialog" aria-labelledby="assignation_exam"
+				aria-hidden="true">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<form action="{{ url('group_classrooms') }}" method="post">
+						<div class="modal-body pop-up text-center">
+						<img src="">
+							<button type="button" class="btn btn_style" data-dismiss="modal">關閉</button>
+						</div>
+						</form>
+					</div>
+				</div>
+			</div>
 @endsection
  
 @section('script')
@@ -222,6 +236,17 @@ function change_template(num){
 	}
 }
 
+function show_ads(obj,template_id){
+	$.ajax({
+	  type: 'POST',
+	  url: "{{url('/ads')}}",
+	  data: {template_id:template_id},
+	}).done(function(data) {
+		console.log(data);
+	});
+	$("#assignation_exam img").attr('src',$(obj).attr('src'));
+	$("#assignation_exam").modal('show');
+}
 
 
 </script>

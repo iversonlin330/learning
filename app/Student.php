@@ -55,4 +55,9 @@ class Student extends Model
     {
 		return $this->hasOne('App\User','id','user_id');
     }
+	
+	public function getSIdAttribute()
+    {
+        return 'S'.str_pad($this->id,5,'0',STR_PAD_LEFT);
+    }
 }

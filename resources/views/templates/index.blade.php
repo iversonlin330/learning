@@ -67,7 +67,7 @@
 				@foreach($templates as $template)
 				<tr>
 					<td>{{ isset($template->content['name'])? $template->content['name'] : '' }}</td>
-					<td>{{ $template->type }}</td>
+					<td>{{ ($template->type == 1)? '模板一' : '模板二' }}</td>
 					<td class="td-underline"><a href="{{url('templates/'.$template->id.'/edit')}}" style="float: left; margin-right: 10px;">編輯</a></td>
 				</tr>
 				@endforeach
@@ -126,7 +126,7 @@
 						<div class="modal-body pop-up text-center" style="width:350px;">
 							<ul id="sortable">
 								@foreach($templates as $template)
-								<li class="btn btn_editor" style="display: block;float: none;">{{ $template->name }}
+								<li class="btn btn_editor" style="display: block;float: none;">{{ isset($template->content['name'])? $template->content['name'] : '' }}
 									<input name="order[]" value="{{ $template->id }}" hidden>
 								</li>
 								@endforeach

@@ -13,10 +13,10 @@ class CreateAdsRecordTable extends Migration
      */
     public function up()
     {
-        Schema::create('ads_record', function (Blueprint $table) {
+        Schema::create('ads_records', function (Blueprint $table) {
             $table->bigIncrements('id');
 			$table->string('student_id');
-			$table->string('ads_id');
+			$table->string('template_id');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateAdsRecordTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ads_record');
+        Schema::dropIfExists('ads_records');
     }
 }

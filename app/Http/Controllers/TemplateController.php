@@ -25,31 +25,6 @@ class TemplateController extends Controller
 		$templates = $group->templates;
 		
 		return view('templates.index',compact('group_id','group','templates'));
-		$user = Auth::user();
-		$groups = $user->groups();
-		if($user->role == 50){
-			$classrooms = $user->user_info->classrooms;
-		}else{
-			$classrooms = [];
-			
-			$question_ids = UserAnswer::where('user_id',$user->id)
-				->pluck('id')
-				->toArray();
-			
-			$is_finish_array = array_unique(Question::whereIn('id',$question_ids)
-				->pluck('group_id')
-				->toArray());
-			
-			foreach($groups as $key => $group){
-				if(in_array($group->id,$is_finish_array)){
-					$groups[$key]['is_finish'] = '已完成';
-				}else{
-					$groups[$key]['is_finish'] = '未完成';
-				}
-			}
-		}
-		
-		return view('groups.index',compact('groups','classrooms'));
     }
 
     /**
@@ -65,7 +40,6 @@ class TemplateController extends Controller
 		$group = Group::find($group_id );
 		$questions = $group->questions;
 		
-		
 		return view('templates.create',compact('group_id','questions'));
     }
 
@@ -79,8 +53,15 @@ class TemplateController extends Controller
     {
         //
 		$data = $request->all();
-		$data['order'] = 99;
-		Template::Create($data);
+		if(array_key_exists('order',$data)){
+			foreach($data['order'] as $index => $template_id){
+				Template::find($template_id)->update(['order' => $index]);
+			}
+			return back();
+		}else{
+			$data['order'] = 99;
+			Template::Create($data);
+		}
 		
 		return redirect('/templates?group_id='.$data['group_id']);
     }
@@ -109,25 +90,12 @@ class TemplateController extends Controller
      */
     public function edit($id)
     {
-        //
-		/*
-		$template = [
-			'id' =>1,
-			'type' => $id,
-		];
-		*/
-		$template = collect();
-		$template->id = 1;
-		$template->type = $id;
-		$questions = [];
-		return view('templates.edit',compact('id','template','questions'));
-		
-		$user = Auth::user();
-		$group = Group::find($id);
+		$template = Template::find($id);
+		$group_id = $template->group_id;
+		$group = Group::find($group_id );
 		$questions = $group->questions;
-		$templates = $group->templates;
 		
-		return view('groups.edit',compact('group','templates','questions','user'));
+		return view('templates.create',compact('id','template','questions','group_id')); 
     }
 
     /**
@@ -140,6 +108,12 @@ class TemplateController extends Controller
     public function update(Request $request, $id)
     {
         //
+		$data = $request->all();
+		$template = Template::find($id);
+		$template->update($data);
+		
+		return redirect('/templates?group_id='.$template->group_id);
+		
     }
 
     /**

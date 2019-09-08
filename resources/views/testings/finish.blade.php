@@ -41,11 +41,19 @@
 										<tr>
 											<td>{{ $index+1 }}</td>
 											@if($question->type == 3)
-											<td>{{ implode(',',json_decode($user_answers[$question->id])) }}</td>
+												@if(array_key_exists($question->id,$user_answers))
+													<td>{{ implode(',',json_decode($user_answers[$question->id])) }}</td>
+												@else
+													<td></td>
+												@endif
 											<td>{{ implode(',',json_decode($question->correct_answer)) }}</td>
 											@else
-											<td>{{ $user_answers[$question->id] }}</td>
-											<td>{{ $question->correct_answer }}</td>
+												@if(array_key_exists($question->id,$user_answers))
+													<td>{{ $user_answers[$question->id] }}</td>
+												@else
+													<td></td>
+												@endif
+												<td>{{ $question->correct_answer }}</td>
 											@endif
 										</tr>
 									@endforeach

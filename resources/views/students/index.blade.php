@@ -40,7 +40,7 @@
 				<tbody id="student_date">
 				@foreach($users as $user)
 				<tr>
-					<td>{{ 'S'.str_pad($user->id,5,'0',STR_PAD_LEFT) }}</td>
+					<td>{{ $user->user_info->s_id }}</td>
 					<td>{{ $user->account }}</td>
 					<td>{{ $user->name }}</td>
 					<td>{{ Config::get('map.gender')[$user->gender] }}</td>

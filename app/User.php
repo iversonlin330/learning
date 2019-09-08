@@ -64,6 +64,16 @@ class User extends Authenticatable
 			return $this->user_info->classroom->groups;
 		}
     }
+	
+	public function ads_record()
+    {
+		return $this->hasMany('App\AdsRecord','student_id','id');
+    }
+	
+	public function getAdCountAttribute()
+    {
+		return $this->ads_record->count();
+    }
 	/*
 	public function getAvailabilityAttribute()
     {

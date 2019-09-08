@@ -11,7 +11,12 @@
 @section('content')
  <div class="container mb-5">
 	<div class="top_right_button">
-		<button class="btn btn_function">資料匯出</button>
+		@if(Auth::user()->role == 99)
+			<button class="btn btn_function" onclick="location.href='{{url('record/multi-export?'.$url)}}'">圖表匯出</button>
+			<button class="btn btn_function" onclick="location.href='{{url('students/admin-create')}}'">詳細資料匯出</button>
+		@else
+			<button class="btn btn_function" onclick="location.href='{{url('record/multi-export?'.$url)}}'">資料匯出</button>
+		@endif
 	</div>
 	<div class="teacher_view_all_result mb-5">
 		<div class="row">
@@ -33,9 +38,11 @@
 								<td style="width:20%">{{ $question->no }}</td>
 								<td style="width:80%">
 									@if($question->type==1)
+										@if(array_key_exists($question->id,$result))
 										@foreach($result[$question->id] as $v)
 											・{{$v}}<br>
 										@endforeach
+										@endif
 									@elseif($question->type==2)
 									<div style="width: 220px; height: 220px">
 									  <canvas class="canvasPie" data-rate="{{ implode(',',$result[$question->id]) }}"></canvas>

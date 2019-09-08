@@ -46,4 +46,9 @@ class Teacher extends Model
     {
 		return $this->hasOne('App\User','id','user_id');
     }
+	
+	public function getTIdAttribute()
+    {
+        return 'T'.str_pad($this->id,3,'0',STR_PAD_LEFT);
+    }
 }

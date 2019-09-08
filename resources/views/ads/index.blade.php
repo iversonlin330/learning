@@ -25,7 +25,7 @@
 			<button class="btn btn_filter">篩選</button>
 		</div>
 		<div class="top_right_button">
-			<button class="btn btn_function">匯出總資料</button>
+			<button class="btn btn_function" onclick="location.href='{{ url('ads/export/?group_id=All') }}'">匯出總資料</button>
 		</div>
 		<div class="exam_table mb-5">
 			<table class="table table-bordered">
@@ -40,18 +40,20 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>A001</td>
-						<td>自然</td>
-						<td>二上</td>
-						<td>題組A</td>
-						<td>1,000</td>
-						<td class="td-underline"><a href="">匯出此廣告資料</a></td>
-					</tr>
+				@foreach($groups as $group)
+				<tr>
+					<td>{{ $group->g_id }}</td>
+					<td>{{ $group->subject }}</td>
+					<td>{{ $group->grade }}</td>
+					<td>{{ $group->title }}</td>
+					<td>{{ $group->ad_count }}</td>
+					<td class="td-underline"><a href="{{ url('ads/export/?group_id='.$group->id) }}">匯出此廣告資料</a></td>
+				</tr>
+				@endforeach
 				</tbody>
 			</table>
 		</div>
-		<button type="" class="btn btn_style" onclick="location.href='UC3-PF3_admin_exam_table.html'">返回</button>
+		<button type="" class="btn btn_style" onclick="location.href='{{ url('groups') }}'">返回</button>
 	</div>
 </div>
 @endsection

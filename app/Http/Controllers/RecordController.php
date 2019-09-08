@@ -9,6 +9,8 @@ use App\Group;
 use App\Student;
 use App\User;
 use App\UserAnswer;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\RecordsExport;
 
 class RecordController extends Controller
 {
@@ -92,30 +94,36 @@ class RecordController extends Controller
 					}
 				}
 				$result[$question->id] = [
-					round($A/$total*100),
-					round($B/$total*100),
-					round($C/$total*100),
-					round($D/$total*100),
+					($A == 0)? '0%' : round($A/$total*100),
+					($B == 0)? '0%' : round($B/$total*100),
+					($C == 0)? '0%' : round($C/$total*100),
+					($D == 0)? '0%' : round($D/$total*100),
 				];
 			}
 			
 		}
 		
-		return view('records.single',compact('group','classroom','questions','user_answers','result'));
+		return view('records.single',compact('data','group','classroom','questions','user_answers','result'));
     }
 	
 	private function cal_count($data,$question_id,$item){
-		$total = $data->count();
-		return round($data->where('question_id',$question_id)
+		$correct = $data->where('question_id',$question_id)
 			->where('answer',$item)
-			->count()/$total*100);
+			->count();
+		if($correct == 0)
+			return 0;
+		$total = $data->count();
+		return round($correct/$total*100);
 	}
 	
 	private function cal_multi_count($data,$question_id,$item){
-		$total = $data->count();
-		return round($data->where('question_id',$question_id)
+		$correct = $data->where('question_id',$question_id)
 			->where('answer',$item)
-			->count()/$total*100);
+			->count();
+		if($correct == 0)
+			return 0;
+		$total = $data->count();
+		return round($correct/$total*100);
 	}
 	
     /**
@@ -175,10 +183,10 @@ class RecordController extends Controller
 						}
 					}
 					$result[$question->id] = [
-						round($A/$total*100),
-						round($B/$total*100),
-						round($C/$total*100),
-						round($D/$total*100),
+						($A == 0)? '0%' : round($A/$total*100),
+						($B == 0)? '0%' : round($B/$total*100),
+						($C == 0)? '0%' : round($C/$total*100),
+						($D == 0)? '0%' : round($D/$total*100),
 					];
 				}
 				
@@ -194,7 +202,11 @@ class RecordController extends Controller
 		
 		//$groups = ['1','2','3'];
 		
-		return view('records.multi',compact('multi_result'));
+		$url = '';
+		foreach($data['data'] as $p){
+			$url = $url . '&data[]='.$p;
+		}
+		return view('records.multi',compact('multi_result','url'));
     }
 
     /**
@@ -203,10 +215,73 @@ class RecordController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function export($id)
+    public function singleExport(Request $request)
     {
         //
+		$data = $request->all();
+		$classroom = Classroom::find($data['classroom_id']);
+		$group = Group::find($data['group_id']);
+		
+		return Excel::download(new RecordsExport([[$group->id,$classroom->id]]), '題組.xlsx');
+		
+		
+		
+		$questions = $group->questions;
+		$user_ids = $classroom->students->pluck('user_id')->toArray();
+		$question_ids = $group->questions->pluck('id')->toArray();
+		
+		$user_answers = UserAnswer::whereIn('question_id',$question_ids)
+			->whereIn('user_id',$user_ids)
+			->get();
+		//$result = [];
+		$result = ['ID','題組名稱','科目','年級','題號','閱讀歷程','數位閱讀指標','平均答對率'];
+		foreach($questions as $question){
+			
+			$answers = $user_answers->where('question_id',$question->id);
+			if($question->type == 1){
+				$rate = '';
+			}elseif(in_array($question->type,[2,3])){
+				$total = $answers->count();
+				$correct = $answers->where('answer',$question->correct_answer)->count();
+				if($correct == 0){
+					$rate = '0%';
+				}else{
+					$rate = round($correct/$total*100).'%';
+				}
+			}
+			
+			$result[] = [
+				$group->g_id,
+				$group->title,
+				$group->subject,
+				$group->grade,
+				$question->no,
+				$question->history,
+				$question->goal,
+				$rate
+			];
+			
+		}
+		
+		dd($result);
+		
     }
+	
+	 public function multiExport(Request $request)
+    {
+        //
+		$data = $request->all();
+		$result = []; 
+		foreach($data['data'] as $v){
+			$temp = explode(',',$v);
+			$result[] =[
+				$temp[1],
+				$temp[0],
+			];
+		}
+		
+		return Excel::download(new RecordsExport($result), '題組.xlsx');
+	}
 
     /**
      * Update the specified resource in storage.
