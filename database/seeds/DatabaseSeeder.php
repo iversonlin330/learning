@@ -13,12 +13,12 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
 		DB::table('users')->insert([
-			'account' => 'Admin@gmail.com',
+			'account' => 'twpirls2021@gmail.com',
             'name' => "Admin",
 			'role' => 99,
 			'gender' => 1,
-            'email' => 'Admin@gmail.com',
-            'password' => 'admin',
+            'email' => 'twpirls2021@gmail.com',
+            'password' => '66396688',
         ]);
     }
 }
