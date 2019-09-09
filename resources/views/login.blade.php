@@ -23,7 +23,7 @@
 					<div class="login_box">
 						<div class="login_header">
 							<a href="#" class="active" id="student_login">學生登入</a>
-							<a href="#" id="teacher_login">老師/管理員登入</a>
+							<a href="#" id="teacher_login" style="margin-left: 0px;">老師/管理員登入</a>
 						</div>
 						<form class="student_login mt-5" action="{{url('login')}}" method="post">
 						@csrf

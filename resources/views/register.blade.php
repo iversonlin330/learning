@@ -74,16 +74,20 @@
 						<div class="mr-30">
 							<div><label for="teacher_grade" class="lable_title">任教年級</label></div>
 							<select class="browser-default custom-select" name="grade" style="width: 300px;" required>
-								<option value="1">二</option>
-								<option value="2">三</option>
-								<option value="3">四</option>
+								<option value="二">二</option>
+								<option value="三">三</option>
+								<option value="四">四</option>
+								<option value="五">五</option>
+								<option value="六">六</option>
 							</select>
 						</div>
 						<div class="mb-15">
 							<div class="form-group">
 								<label for="teacher_class" class="lable_title">任教班級</label>
-								<input type="text" class="form-control" name="classroom" id="teacher_class" style="width: 280px;" required>
-								<span class="input-group-addon" style="line-height: 35px; margin-left:5px;">班</span>
+								<div class="input-group">
+									<input type="text" class="form-control" name="classroom" id="teacher_class" style="width: 280px;" required>
+									<span class="input-group-addon" style="line-height: 35px; margin-left:5px;">班</span>
+								</div>
 							</div>
 						</div>
 					</div>
