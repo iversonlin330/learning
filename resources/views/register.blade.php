@@ -32,7 +32,7 @@
 							<label class="form-check-label" for="teacher_gender">女</label>
 						</div>
 					</div>
-					<div class="row" style="margin:0;">
+					<!--div class="row" style="margin:0;">
 						<div class="mr-30">
 						   <div><label for="teacher_city" class="lable_title">所屬縣市</label></div>
 							<select class="browser-default custom-select"  name="city_id" style="width: 300px;" required>
@@ -47,6 +47,26 @@
 								<option value="1">XX國民小學</option>
 								<option value="2">XX國民小學</option>
 								<option value="3">XX國民小學</option>
+							</select>
+						</div>
+					</div-->
+					<div class="row" style="margin:0;">
+						<div class="mr-30">
+						   <div><label for="teacher_city" class="lable_title">所屬縣市</label></div>
+							<select class="browser-default custom-select"  name="city_id" style="width: 300px;" required>
+							@foreach($citys as $city=>$school)
+								<option value="{{ $city }}">{{ $city }}</option>
+							@endforeach
+							</select>  
+						</div>
+						<div class="mb-15">
+							<div><label for="teacher_school" class="lable_title">服務學校</label></div>
+							<select class="browser-default custom-select" name="school_id" style="width: 300px;" required>
+								@if(0)
+								@foreach($schools as $school)
+									<option data-city="{{ substr($school[3], 4 , 9) }}" value="{{ $school[1] }}">{{ $school[1] }}</option>
+								@endforeach
+								@endif
 							</select>
 						</div>
 					</div>
@@ -126,6 +146,17 @@
 @section('script')
 @parent
 <script>
+var citys = {!! json_encode($citys) !!};
+$("[name='city_id']").change(function(){
+	var city_val = $(this).val();
+	$("[name='school_id']").empty();
+	var html = '';
+	for(x in citys[city_val]){
+		html = html + "<option value='"+citys[city_val][x]+"'>"+citys[city_val][x]+"</option>";
+	}
+	$("[name='school_id']").append(html);
+});
+$("[name='city_id']").trigger('change');
 	$("form").submit(function(e) {
 		if($('input:checkbox:checked[name="subject[]"]').length == 0){
 			alert('請填選任教科目');

@@ -62,7 +62,15 @@ class RegisterController extends Controller
 
 	protected function index()
     {
-		return view('register');
+		$schools = array_map('str_getcsv', file('e1_new.csv'));
+		unset($schools[0]);
+		
+		$citys = [];
+		foreach($schools as $school){
+			$citys[substr($school[3], 4 , 9)][] = $school[1];
+		}
+		
+		return view('register',compact('citys','schools'));
     }
 
     /**
@@ -73,7 +81,15 @@ class RegisterController extends Controller
      */
     protected function create()
     {
-		return view('register');
+		$schools = array_map('str_getcsv', file('e1_new.csv'));
+		unset($schools[0]);
+		
+		$citys = [];
+		foreach($schools as $school){
+			$citys[substr($school[3], 4 , 9)][] = $school[1];
+		}
+		
+		return view('register',compact('citys','schools'));
     }
 	
 	protected function store(Request $request)
