@@ -88,7 +88,7 @@ class RegisterController extends Controller
 		foreach($schools as $school){
 			$citys[substr($school[3], 4 , 9)][] = $school[1];
 		}
-		
+		//
 		return view('register',compact('citys','schools'));
     }
 	
