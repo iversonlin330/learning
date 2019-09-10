@@ -124,7 +124,7 @@
 				</div>
 			</div>
 		</div>
-		<button type="" class="btn btn_style" onclick="location.href='UC3-PF3_admin_exam_table.html'">返回</button>
+		<button type="" class="btn btn_style" onclick="location.href='{{ url('groups') }}'">返回</button>
 	</div>
 </div>
 @endsection

@@ -17,7 +17,7 @@
 				<form action="{{url('students/'.$id)}}" method="POST">
 				@method('PUT')
 			@else
-				<form action="{{url('students')}}" method="POST">
+				<form action="{{url('students/admin-create')}}" method="POST">
 			@endif
 			<div class="student_questionaire_main mb-30">
 				<!--question form-->

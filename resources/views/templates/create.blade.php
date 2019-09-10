@@ -193,7 +193,7 @@
 			<div class="text-center">
 				<div class="btn-group">
 					<button type="submit" class="btn btn_style">@if(isset($template))修改@else新增@endif</button>
-					<button type="" class="btn btn_cancel" onclick="history.back()">返回</button>
+					<button type="button" class="btn btn_cancel" onclick="history.back()">返回</button>
 				</div>
 			</div>
 		</div>

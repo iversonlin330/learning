@@ -169,7 +169,16 @@ class TeacherController extends Controller
 		
 		//$teacher['subject'] = json_decode($teacher['subject'],true); 
 		
-		return view('teachers.create',compact('id','user','teacher'));
+		$schools = array_map('str_getcsv', file('e1_new.csv'));
+		unset($schools[0]);
+		
+		$citys = [];
+		foreach($schools as $school){
+			$citys[substr($school[3], 4 , 9)][] = $school[1];
+		}
+		
+		
+		return view('teachers.create',compact('id','user','teacher','citys'.'schools'));
     }
 
     /**

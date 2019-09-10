@@ -55,7 +55,7 @@ class TemplateController extends Controller
 		$data = $request->all();
 		if(array_key_exists('order',$data)){
 			foreach($data['order'] as $index => $template_id){
-				Template::find($template_id)->update(['order' => $index]);
+				Template::find($template_id)->update(['order' => $index+1]);
 			}
 			return back();
 		}else{

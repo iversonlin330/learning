@@ -114,7 +114,7 @@
 				<div id="template_finish" class="main_view_content">
 					<!--banner-->
 					<div class="exam_banner">
-						<img src="img/exam-banner.jpg" alt="">
+						<img src="{{ asset('img/exam-banner.jpg') }}" alt="">
 					</div>
 					<div class="exam_finish">
 						<div><p class="title-20">你已完成全部題目，要修改答案嗎？</p>
