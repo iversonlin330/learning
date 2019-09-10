@@ -25,9 +25,9 @@
 						<div class="mr-30">
 							<div><label for="class_grade" class="lable_title">年級</label></div>
 							<select class="browser-default custom-select" name="grade" style="width: 350px;" required>
-								<option value="1">二</option>
-								<option value="2">三</option>
-								<option value="3">四</option>
+								<option value="二">二</option>
+								<option value="三">三</option>
+								<option value="四">四</option>
 							</select>
 						</div>
 					</div>
