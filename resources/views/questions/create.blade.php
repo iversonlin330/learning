@@ -14,7 +14,7 @@
 		<div class="admin_add_question">
 			<p style="margin-bottom: 15px; font-weight: bold;" class="title-20 text-center">@if(isset($question))修改@else新增@endif題目</p>
 			
-			@if(isset($questions))
+			@if(isset($question))
 				<form action="{{url('questions/'.$id)}}" method="POST">
 				@method('PUT')
 			@else
