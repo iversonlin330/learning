@@ -178,7 +178,7 @@ class TeacherController extends Controller
 		}
 		
 		
-		return view('teachers.create',compact('id','user','teacher','citys'.'schools'));
+		return view('teachers.create',compact('id','user','teacher','citys','schools'));
     }
 
     /**
@@ -211,6 +211,7 @@ class TeacherController extends Controller
             'grade' => $data['grade'],
 			'classroom' => $data['classroom'],
 			'subject' => $data['subject'],
+			'number_of_class' => $data['number_of_class'],
         ]);
 		
 		return redirect('teachers');

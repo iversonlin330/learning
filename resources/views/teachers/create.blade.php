@@ -59,9 +59,9 @@
 						<div class="mr-30">
 							<div><label for="teacher_grade" class="lable_title">任教年級</label></div>
 							<select class="browser-default custom-select" name="grade" style="width: 300px;" required>
-								<option value="1">二</option>
-								<option value="2">三</option>
-								<option value="3">四</option>
+								<option value="二">二</option>
+								<option value="三">三</option>
+								<option value="四">四</option>
 							</select>
 						</div>
 						<div class="mb-15">
@@ -95,6 +95,14 @@
 							<input type="email" class="form-control" id="teacher_email" name="account" style="width: 300px;" required>
 						</div>
 					</div>
+					@if(isset($user))
+					<div class="row" style="margin:0;">
+						<div class="form-group mr-30">
+							<label for="number_of_class" class="lable_title">班級數量</label>
+							<input type="number" class="form-control" id="number_of_class" name="number_of_class" style="width: 300px;" required>
+						</div>
+					</div>
+					@endif
 					<div class="row" style="margin:0;">
 						<div class="form-group mr-30">
 							<label for="teacher_password" class="lable_title">密碼</label>
@@ -135,6 +143,7 @@
 	$("[name='account']").val(user.account);
 	$("[name='password']").val(user.password);
 	$("#teacher_password_again").val(user.password);
+	$("[name='number_of_class']").val(teacher.number_of_class);
 	
 	for(x in teacher.subject){
 		$("[name^='subject']").filter('[value='+teacher.subject[x]+']').prop('checked', true);
