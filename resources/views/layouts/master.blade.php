@@ -15,7 +15,7 @@
 	<script type="text/javascript" src="{{ asset('js/ckeditor.js') }}"></script>
 </head>
 
-<body class="gradient">
+<body class="">
     @if(Auth::check() && Auth::user()->name != 'student' && !Request::is('reset'))
 	<header>
         <nav class="nav-bar">

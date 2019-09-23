@@ -46,7 +46,7 @@
 					</div>
 					<div class="form-group">
 						<label for="class_people" class="lable_title">班級人數</label>
-						<input style="width: 350px;" type="text" class="form-control" id="class_people" name="number_of_poeple" maxlength='2' required>
+						<input style="width: 350px;" type="number" class="form-control" id="class_people" name="number_of_poeple" min="1" max="99" required>
 					</div>
 				</div>
 			</div>

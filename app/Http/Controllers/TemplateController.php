@@ -65,7 +65,8 @@ class TemplateController extends Controller
 			}
 			return back();
 		}else{
-			$data['order'] = 99;
+			//dd($data);
+			$data['order'] = Template::where('group_id',$data['group_id'])->max('order') + 1;
 			Template::Create($data);
 		}
 		

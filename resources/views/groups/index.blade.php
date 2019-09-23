@@ -55,7 +55,7 @@
 					@foreach($groups as $group)
 						<tr data-id="{{ $group->id }}">
 							@if(Auth::user()->role >=50)
-							<td>{{$group->id}}</td>
+							<td>{{$group->g_id}}</td>
 							@endif
 							<td>{{$group->subject}}</td>
 							<td>{{$group->grade}}</td>

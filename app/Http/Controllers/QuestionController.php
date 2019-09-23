@@ -80,7 +80,7 @@ class QuestionController extends Controller
 		$group_id = $question->group_id;
 		$question->item = implode('@',json_decode($question->item,true));
 		//dd($question->item);
-		return view('questions.create',compact('question','group_id'));
+		return view('questions.create',compact('id','question','group_id'));
     }
 
     /**

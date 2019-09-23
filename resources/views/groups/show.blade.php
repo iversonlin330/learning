@@ -44,7 +44,7 @@
 				@foreach($questions as $question)
 					<tr>
 						<td>{{ $question->no }}</td>
-						<td>{{ $question->type }}</td>
+						<td>{{ Config::get('map.question_type')[$question->type] }}</td>
 						<td>{{ $question->grade }}</td>
 						<td>{{ $question->history }}</td>
 						<td>{{ $question->name }}

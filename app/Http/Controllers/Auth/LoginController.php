@@ -145,7 +145,7 @@ class LoginController extends Controller
 			->first();
 		if($user){
 			Auth::login($user);
-			return view('reset');
+			return view('reset',compact('data'));
 		}else{
 			return false;
 		}
@@ -158,7 +158,7 @@ class LoginController extends Controller
 		
 		$user = User::where('account',$data['email'])
 			->update([
-				'password' => Hash::make($data['password']),
+				'password' => $data['password'],
 			]);
 		
 		

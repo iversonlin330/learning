@@ -38,6 +38,9 @@
 				</thead>
 				<tbody id="teacher_date">
 				@foreach($users as $user)
+				@if(!$user->user_info)
+					@continue
+				@endif
 				<tr data-id="{{$user->id}}">
 					<td>{{$user->user_info->t_id}}</td>
 					<td>{{$user->name}}</td>

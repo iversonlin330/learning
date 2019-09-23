@@ -52,7 +52,8 @@
 					@if($template->type == 1)
 					<?php $content = $template->content ?>
 					<div id="template_{{ $template->order }}" class="main_view_content">
-						<img src="{{ $content['picture'][0] }}" alt="" style="width: 810px;height: 585px;">
+						<img src="{{ $content['picture'][0] }}" alt="" style="width: 810px;height: auto;">
+						<img src="{{ $content['picture'][1] }}" alt="" style="width: 810px;height: auto;display:none;">
 					</div>
 					@elseif($template->type == 2)
 					<?php $content = $template->content ?>
