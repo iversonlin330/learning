@@ -42,7 +42,14 @@ class GroupClassroomController extends Controller
         
 		$user = Auth::user();
 		$data = $request->all();
+		$classrooms = $user->user_info->classrooms;
 		
+		$classroom_ids = $classrooms->pluck('id')->toArray();
+		GroupClassroom::where('group_id' , $data['group_id'])
+				->whereIn('classroom_id',$classroom_ids)
+				->delete();
+		if(!array_key_exists('classroom_id',$data))
+			return back();
 		foreach($data['classroom_id'] as $classroom_id){
 			$is_exist = GroupClassroom::where('group_id' , $data['group_id'])
 				->where('classroom_id',$classroom_id)

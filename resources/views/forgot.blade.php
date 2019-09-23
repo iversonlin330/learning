@@ -33,8 +33,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-body pop-up text-center">
-					<p>已經傳送郵件至您的信箱<br>
-						請至信箱點擊連結完成認證</p>
+					<p>已經傳送郵件至您的信箱<br>請至信箱點擊連結重新設定密碼。</p>
 					<button type="button" class="btn btn_style" data-dismiss="modal"onclick="location.href='{{url('/')}}'">確認</button>
 				</div>
 			</div>

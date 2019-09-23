@@ -40,7 +40,13 @@ class TemplateController extends Controller
 		$group = Group::find($group_id );
 		$questions = $group->questions;
 		
-		return view('templates.create',compact('group_id','questions'));
+		$disable_array = $group->templates->pluck('question_map')->toArray();
+		$disable = [];
+		foreach($disable_array as $v){
+			$disable = array_merge($disable,$v);
+		}
+		
+		return view('templates.create',compact('group_id','questions','disable'));
     }
 
     /**
@@ -95,7 +101,13 @@ class TemplateController extends Controller
 		$group = Group::find($group_id );
 		$questions = $group->questions;
 		
-		return view('templates.create',compact('id','template','questions','group_id')); 
+		$disable_array = $group->templates->pluck('question_map')->toArray();
+		$disable = [];
+		foreach($disable_array as $v){
+			$disable = array_merge($disable,$v);
+		}
+		
+		return view('templates.create',compact('id','template','questions','group_id','disable')); 
     }
 
     /**

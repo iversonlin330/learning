@@ -178,7 +178,7 @@ class TeacherController extends Controller
 		}
 		
 		
-		return view('teachers.create',compact('id','user','teacher','citys'.'schools'));
+		return view('teachers.create',compact('id','user','teacher','citys','schools'));
     }
 
     /**

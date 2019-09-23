@@ -42,7 +42,7 @@
 								</select>
 							</div>
 							<div class="mr-3 float-left">
-								<input type="text" class="form-control" id="student_id" name="student_id" placeholder="編號" style="width: 150px;" required>
+								<input type="number" class="form-control" id="student_id" name="student_id" placeholder="編號" style="width: 150px;" min="1" max="99" required>
 							</div>
 						</div>
 						<div class="form-group mr-3">

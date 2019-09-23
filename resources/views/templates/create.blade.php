@@ -205,7 +205,10 @@
 @section('script')
 @parent
 <script>
-
+var disable = {!! json_encode($disable) !!};
+for(x in disable){
+	$("[name^='question_map']").filter('[value='+disable[x]+']').prop('disabled', true);
+}
 $("#template_type").change(function(){
 	$("#template_1,#template_2").hide();
 	var type = $(this).val();
@@ -245,6 +248,7 @@ for (var i = 0; i < allEditors.length; ++i) {
 	$("[name='content[tab_content][3]']").val(template.content.tab_content[3]);
 	
 	for(x in template.question_map){
+		$("[name^='question_map']").filter('[value='+template.question_map[x]+']').prop('disabled', false);
 		$("[name^='question_map']").filter('[value='+template.question_map[x]+']').prop('checked', true);
 	}
 	
