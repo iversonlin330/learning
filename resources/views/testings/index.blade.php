@@ -21,7 +21,10 @@
 					</div>
 				</div>
 				<div class="question_no">
-					<div class="question_no_default question_no_now">1</div>
+				@foreach($questions as $index => $question)
+					<div id="no_{{ $question->id }}" class="question_no_default">{{ $index+1 }}</div>
+				@endforeach
+					<!--div class="question_no_default question_no_now">1</div>
 					<div class="question_no_default">2</div>
 					<div class="question_no_default">3</div>
 					<div class="question_no_default">4</div>
@@ -41,7 +44,7 @@
 					<div class="question_no_default">18</div>
 					<div class="question_no_default">19</div>
 					<div class="question_no_default">20</div>
-					<div class="question_no_default">21</div>
+					<div class="question_no_default">21</div-->
 				</div>
 			</div>
 			<div class="main_view">
@@ -140,7 +143,7 @@
 				</div>
 				<div class="question_content">
 					@foreach($questions as $index => $question)
-						<div id="q_{{$question->id}}" class="question_each">
+						<div id="q_{{$question->id}}" data-index="{{array_key_exists($question->id,$new_question_no)? $new_question_no[$question->id] : ''}}" class="question_each">
 							<div class="question_each_title">
 								{{array_key_exists($question->id,$new_question_no)? $new_question_no[$question->id] : ''}}. {{$question->name}}
 							</div>
@@ -255,6 +258,15 @@ $(".tab-content a").click(function(event){
 	$("#assignation_exam img").attr('src',img_url);
 	$("#assignation_exam").modal('show');
 })
+
+$("[name^='answer']").change(function(){
+	//console.log('123');
+	//if($(this).val()){
+	var q_id = $(this).closest('.question_each').data('index');
+	//console.log(q_id.slice(2, 4));
+	$("#no_"+q_id).addClass('question_no_now');
+	//}
+});
 
 </script>
 @endsection
