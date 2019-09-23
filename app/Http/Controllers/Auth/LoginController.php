@@ -114,7 +114,7 @@ class LoginController extends Controller
 		$user = User::where('account',$data['email'])->first();
 		if($user){
 			$data = $user;
-			$data['url'] = url('/reset?account='.$data['email'].'&remember_token='.$user->remember_token);
+			$data['url'] = url('/reset?email='.$data['email'].'&remember_token='.$user->remember_token);
 			Mail::to($data['email'])
 			->send(new Forgot($data));
 			/*

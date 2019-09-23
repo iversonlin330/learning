@@ -28,16 +28,25 @@
 								<option value="二">二</option>
 								<option value="三">三</option>
 								<option value="四">四</option>
+								<option value="五">五</option>
+								<option value="六">六</option>
 							</select>
 						</div>
 					</div>
-					<div class="form-group">
+					<!--div class="form-group">
 						<label for="class_name" class="lable_title">班級</label>
 						<input style="width: 350px;" type="text" class="form-control" id="class_name" name="classroom" required>
+					</div-->
+					<div class="form-group">
+						<label for="class_name" class="lable_title">班級</label>
+						<div class="input-group">
+							<input style="width: 320px;" type="text" class="form-control" id="class_name" name="classroom" required>
+							<span class="input-group-addon" style="line-height: 35px; margin-left:5px;">班</span>
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="class_people" class="lable_title">班級人數</label>
-						<input style="width: 350px;" type="text" class="form-control" id="class_people" name="number_of_poeple" required>
+						<input style="width: 350px;" type="text" class="form-control" id="class_people" name="number_of_poeple" maxlength='2' required>
 					</div>
 				</div>
 			</div>

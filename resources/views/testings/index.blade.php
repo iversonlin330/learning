@@ -52,11 +52,11 @@
 					@if($template->type == 1)
 					<?php $content = $template->content ?>
 					<div id="template_{{ $template->order }}" class="main_view_content">
-						<img src="{{ $content['picture'][0] }}" alt="">
+						<img src="{{ $content['picture'][0] }}" alt="" style="width: 810px;height: 585px;">
 					</div>
 					@elseif($template->type == 2)
 					<?php $content = $template->content ?>
-					<div id="template_{{ $template->order }}" class="main_view_content">
+					<div id="template_{{ $template->order }}" class="main_view_content" data-img="{{ $content['popup'] }}">
                         <!--banner-->
                         <div class="exam_banner">
                             <img src="{{ $content['banner'] }}" alt="">
@@ -190,17 +190,17 @@
 </form>
 <div class="modal fade" id="assignation_exam" tabindex="-1" role="dialog" aria-labelledby="assignation_exam"
 				aria-hidden="true">
-				<div class="modal-dialog modal-lg" role="document">
-					<div class="modal-content">
-						<form action="{{ url('group_classrooms') }}" method="post">
-						<div class="modal-body pop-up text-center">
-						<img src="">
-							<button type="button" class="btn btn_style" data-dismiss="modal">關閉</button>
-						</div>
-						</form>
-					</div>
-				</div>
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<form action="{{ url('group_classrooms') }}" method="post">
+			<div class="modal-body pop-up text-center">
+			<img src="">
+				<button type="button" class="btn btn_style" data-dismiss="modal">關閉</button>
 			</div>
+			</form>
+		</div>
+	</div>
+</div>
 @endsection
  
 @section('script')
@@ -248,6 +248,12 @@ function show_ads(obj,template_id){
 	$("#assignation_exam").modal('show');
 }
 
+$(".tab-content a").click(function(event){
+	event.preventDefault();
+	var img_url = $(this).closest('.main_view_content').data('img');
+	$("#assignation_exam img").attr('src',img_url);
+	$("#assignation_exam").modal('show');
+})
 
 </script>
 @endsection

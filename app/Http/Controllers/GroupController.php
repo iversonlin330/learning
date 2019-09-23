@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Group;
 use App\UserAnswer;
 use App\Question;
+use App\GroupClassroom;
 use Auth;
 
 class GroupController extends Controller
@@ -20,8 +21,14 @@ class GroupController extends Controller
         //
 		$user = Auth::user();
 		$groups = $user->groups();
+		$result = [];
 		if($user->role == 50){
 			$classrooms = $user->user_info->classrooms;
+			$group_classrooms = GroupClassroom::all();
+			foreach($group_classrooms as $group_classroom){
+				$result[$group_classroom->group_id][] = $group_classroom->classroom_id;
+			}
+			//->pluck('group_id','classroom_id')->toArray();
 		}else{
 			$classrooms = [];
 			
@@ -42,7 +49,7 @@ class GroupController extends Controller
 			}
 		}
 		
-		return view('groups.index',compact('groups','classrooms'));
+		return view('groups.index',compact('groups','classrooms','result'));
     }
 
     /**

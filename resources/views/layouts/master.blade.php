@@ -8,8 +8,8 @@
 	@section('style')
 		<!--link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/bootstrap.css"-->
-		<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 		<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+		<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 	@show
     <title>數位閱讀學習平台</title>
 	<script type="text/javascript" src="{{ asset('js/ckeditor.js') }}"></script>

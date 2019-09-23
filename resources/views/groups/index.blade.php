@@ -145,7 +145,7 @@
 										<td>{{ $classroom->grade }}年{{ $classroom->classroom }}班</td>
 										<td class="text-center">
 											<div class="form-check form-check-inline">
-												<input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="classroom_id[]" value="{{ $classroom->id }}">
+												<input class="form-check-input" type="checkbox" name="classroom_id[]" value="{{ $classroom->id }}">
 												<label class="form-check-label" for=""></label>
 											</div>
 										</td>
@@ -234,9 +234,15 @@ $("#filter_subject").change(function () {
     .show();
 });
 
+var group_classrooms = {!! json_encode($result,true) !!};
+
 $(".assign").click(function(){
 	var group_id = $(this).closest('tr').data('id');
+	$('[name^="classroom_id"]').prop('checked',false);
 	$("#group_id").val(group_id);
+	for(x in group_classrooms[group_id]){
+		$('[name^="classroom_id"][value="'+group_classrooms[group_id][x]+'"]').prop('checked',true);
+	}
 	$("#assignation_exam").modal('show');
 });
 /*
