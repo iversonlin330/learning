@@ -24,7 +24,11 @@
 				
 					<div class="row" style="margin:0;">
 						<div class="form-group float-left">
-							<div><label for="edit_student_id" class="lable_title">學生ID</label></div>
+							<div><label for="edit_student_id" class="lable_title">學生ID
+							@if($errors->any())
+							<span style="color:red">學生ID重複</span>
+							@endif
+							</label></div>
 							<div class="mr-3 float-left">
 								<select id="teacher_id" name="teacher_id" class="browser-default custom-select" style="width: 200px;" required>
 									<option value="" disabled selected hidden>任課教師</option>

@@ -17,9 +17,10 @@
 			<div class="teacher_resetPassword_main white_box_bg mb-30">
 				<form>
 					<div class="row" style="margin:0;">
+						<input type="text" name="email" value="{{ $data['email'] }}" hidden>
 						<div class="form-group">
 							<label for="resetPassword" class="lable_title">輸入新密碼</label>
-							<input style="width: 300px;" type="password" class="form-control" id="resetPassword">
+							<input style="width: 300px;" type="password" name="password" class="form-control" id="resetPassword">
 						</div>
 						<div class="form-group mr-30">
 							<label for="resetPassword_confirm" class="lable_title">密碼再次確認</label>
@@ -28,7 +29,7 @@
 					</div>
 				</form>
 			</div>
-			<button type="submit" class="btn btn_style" onclick="location.href='login.html'">確認</button>
+			<button id="submit_btn" type="submit" class="btn btn_style">確認</button>
 		</div>
 	</div>
 </div>
@@ -40,13 +41,14 @@
 	$("#submit_btn").click(function(){
 		$.ajax({
 		  type: 'POST',
-		  url: "{{url('/forgot')}}",
+		  url: "{{url('/reset')}}",
 		  data: $("form").serialize(),
 		}).done(function(data) {
 		  if(data.status == 'Fail'){
 			  alert(data.message);
 		  }else{
-			  $("#forget_password").modal('show');
+			  location.href="{{url('/')}}";
+			  //$("#forget_password").modal('show');
 		  }
 		});
 		//$('form').submit();

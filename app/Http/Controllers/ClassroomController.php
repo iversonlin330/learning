@@ -19,9 +19,13 @@ class ClassroomController extends Controller
     {
         //
 		$user = Auth::user();
+		$teacher = $user->user_info;
 		//$classrooms = Classroom::where('teacher_id',$user->info_id)->get();
 		$classrooms = $user->user_info->classrooms;
-		return view('classrooms.index',compact('classrooms'));
+		
+		$is_add = $teacher->number_of_class >= $teacher->classrooms->count();
+		
+		return view('classrooms.index',compact('classrooms','is_add'));
     }
 
     /**
@@ -32,6 +36,7 @@ class ClassroomController extends Controller
     public function create()
     {
         //
+		$user = Auth::user();
 		
 		return view('classrooms.create');
     }

@@ -31,7 +31,7 @@
 			<div class="text-center">
 				<div class="btn-group">
 					<button type="submit" class="btn btn_style">申請</button>
-					<button type="" class="btn btn_cancel" onclick="location.href='{{ url('groups') }}'">取消</button>
+					<button type="" class="btn btn_cancel" onclick="location.href='{{ url('classrooms') }}'">取消</button>
 				</div>
 			</div>
 			</form>

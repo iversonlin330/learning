@@ -12,7 +12,11 @@
 <div class="container mb-5">
 	<div class="teacher_class_list">
 		<div class="top_right_button">
+		@if($is_add)
 			<a class="btn btn_function" href="{{url('classrooms/create')}}">建立新班級</a>
+		@else
+			班級數量已達上限，請點選下方【班級數量增加申請】，以提高班級數量上限
+		@endif
 		</div>
 		<div class="class_list_table">
 			<table class="table table-bordered">

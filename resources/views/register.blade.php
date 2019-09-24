@@ -95,15 +95,15 @@
 						<div class="mb-15" id="teacher_subject">
 							<div><label for="teacher_subject" class="lable_title">任教科目</label></div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" name="subject[]" id="inlineCheckbox1" value="chinese">
+								<input class="form-check-input" type="checkbox" name="subject[]" id="inlineCheckbox1" value="國語">
 								<label class="form-check-label" for="teacher_subject">國語</label>
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" name="subject[]" id="inlineCheckbox2" value="science">
+								<input class="form-check-input" type="checkbox" name="subject[]" id="inlineCheckbox2" value="自然">
 								<label class="form-check-label" for="teacher_subject">自然</label>
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" name="subject[]" id="inlineCheckbox3" value="social">
+								<input class="form-check-input" type="checkbox" name="subject[]" id="inlineCheckbox3" value="社會">
 								<label class="form-check-label" for="teacher_subject">社會</label>
 							</div>
 						</div>

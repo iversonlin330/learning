@@ -101,7 +101,7 @@
 							<label class="form-check-label" for="inlineRadio1">非常同意</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="stu_question_4" id="inlineRadio12" value="option2">
+							<input class="form-check-input" type="radio" name="stu_question_4" id="inlineRadio12" value="2">
 							<label class="form-check-label" for="inlineRadio2">有點同意</label>
 						</div>
 						<div class="form-check form-check-inline">

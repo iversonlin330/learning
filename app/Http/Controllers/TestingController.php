@@ -32,9 +32,12 @@ class TestingController extends Controller
 			$question_step[end($val)] = $key;
 		}
 		
+		$no = 0;
+		
 		foreach($question_map as $temp => $q_no){
 			foreach($q_no as $index => $val){
-				$new_question_no[$val] = $index+1;
+				$no++;
+				$new_question_no[$val] = $no;
 			}
 		}
 		

@@ -116,8 +116,17 @@ class StudentController extends Controller
 		$data = $request->all();
 		
 		$classroom = Classroom::find($data['class_id']);
+		
+		$account = str_pad($data['teacher_id'],3,'0',STR_PAD_LEFT) . $classroom->class_number . str_pad($data['student_id'],3,'0',STR_PAD_LEFT);
+		
+		$is_exist = User::where('account',$account)->first();
+		
+		if($is_exist){
+			return back()->withErrors(['msg', '重複']);
+		}
+		
 		$new_user = User::create([
-			'account' => str_pad($data['teacher_id'],3,'0',STR_PAD_LEFT) . $classroom->class_number . str_pad($data['student_id'],3,'0',STR_PAD_LEFT),
+			'account' => $account,
 			'name' => $data['name'],
 			'role' => 1,
 			'gender' => $data['gender'],
@@ -203,8 +212,18 @@ class StudentController extends Controller
 		
 		$classroom = Classroom::find($data['class_id']);
 		$new_user = User::find($id);
+		
+		$account = str_pad($data['teacher_id'],3,'0',STR_PAD_LEFT) . $classroom->class_number . str_pad($data['student_id'],3,'0',STR_PAD_LEFT);
+		
+		$is_exist = User::where('account',$account)->where('id','!=',$id)->first();
+		
+		if($is_exist){
+			return back()->withErrors(['msg', '重複']);
+		}
+		
+		
 		$new_user->update([
-			'account' => str_pad($data['teacher_id'],3,'0',STR_PAD_LEFT) . $classroom->class_number . str_pad($data['student_id'],3,'0',STR_PAD_LEFT),
+			'account' => $account,
 			'name' => $data['name'],
 			'gender' => $data['gender'],
 		]);

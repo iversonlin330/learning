@@ -21,7 +21,7 @@ class CreateTeachersTable extends Migration
 			$table->string('grade');
 			$table->string('classroom');
 			$table->string('subject');
-			//$table->string('classroom_create');
+			$table->integer('number_of_class')->default(3);
 			$table->timestamps();
         });
     }
