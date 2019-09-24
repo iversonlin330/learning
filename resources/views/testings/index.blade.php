@@ -53,7 +53,10 @@
 				</div>
 				@foreach($templates as $template)
 					@if($template->type == 1)
-					<?php $content = $template->content ?>
+					<?php 
+						$content = $template->content; 
+						$img_auto_change[] = $template->order; 
+					?>
 					<div id="template_{{ $template->order }}" class="main_view_content">
 						<img src="{{ $content['picture'][0] }}" alt="" style="width: 810px;height: auto;">
 						<img src="{{ $content['picture'][1] }}" alt="" style="width: 810px;height: auto;display:none;">
@@ -211,7 +214,9 @@
 @parent
 <script>
 var question_map = {!! json_encode($question_map) !!}
+var img_auto_change = {!! json_encode($img_auto_change) !!}
 console.log(question_map);
+console.log(img_auto_change);
 function question_no_change(num){
 	$(".question_no div").removeClass('question_no_now');
 	
@@ -228,7 +233,18 @@ function change_template(num){
 	$(".main_view_content").hide();
 	$(".question_content .question_each").hide();
 	$('#template_'+num).show();
-	console.log(Object.keys(question_map).length);
+	
+	if(img_auto_change.indexOf(String(num)) > -1){
+		$('#template_'+num).find('img:eq(0)').show();
+		$('#template_'+num).find('img:eq(1)').hide();
+		
+		setTimeout(function (){
+			$('#template_'+num).find('img:eq(0)').hide();
+			$('#template_'+num).find('img:eq(1)').show();
+		},3000);
+	}
+	
+	
 	if(num > Object.keys(question_map).length){
 		//Final
 		$('#template_finish').show();
