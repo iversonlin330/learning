@@ -20,9 +20,9 @@
 						<div class="mr-30">
 							<div><label for="quantity" class="lable_title">欲申請數量</label></div>
 							<select name="number_of_classroom" class="browser-default custom-select" style="width: 400px;">
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
+							@for($i =1; $i<= $mount;$i++)
+								<option value="{{$i}}">{{$i}}</option>
+							@endfor
 							</select>
 						</div>
 					</div>

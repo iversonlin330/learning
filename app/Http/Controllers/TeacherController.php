@@ -231,7 +231,11 @@ class TeacherController extends Controller
 	public function getAddClass()
     {
         //
-		return view('teachers.addClass');
+		$user = Auth::user();
+		
+		$mount = 26 - $user->user_info->number_of_class;
+		
+		return view('teachers.addClass',compact('mount'));
     }
 	
 	public function postAddClass(Request $request)
