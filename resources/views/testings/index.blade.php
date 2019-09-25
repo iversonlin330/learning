@@ -5,6 +5,13 @@
 @section('style')
 @parent
 <style>
+	#assignation_exam button{
+		margin-top:15px;
+	}
+	
+	#assignation_exam img{
+		width:100%;
+	}
 </style>
 @endsection
  
@@ -21,8 +28,8 @@
 					</div>
 				</div>
 				<div class="question_no">
-				@foreach($questions as $index => $question)
-					<div id="no_{{ $question->id }}" class="question_no_default">{{ $index+1 }}</div>
+				@foreach($new_question_no as $key => $value)
+					<div id="no_{{ $key }}" class="question_no_default">{{ $value }}</div>
 				@endforeach
 					<!--div class="question_no_default question_no_now">1</div>
 					<div class="question_no_default">2</div>
@@ -217,6 +224,16 @@ var question_map = {!! json_encode($question_map) !!}
 var img_auto_change = {!! json_encode($img_auto_change) !!}
 console.log(question_map);
 console.log(img_auto_change);
+
+var sec = 0;
+function pad ( val ) { return val > 9 ? val : "0" + val; }
+setInterval( function(){
+	$("#seconds").html(pad(++sec%60));
+	//$("#minutes").html(pad(parseInt(sec/60,10)));
+	$("#minutes").html(pad(parseInt((sec/60)%60,10)));
+	$("#hours").html(pad(parseInt(sec/3600,10)));
+}, 1000);
+
 function question_no_change(num){
 	$(".question_no div").removeClass('question_no_now');
 	

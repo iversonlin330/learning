@@ -78,7 +78,7 @@ class GroupController extends Controller
 		$path = $request->file('file')->getRealPath();
 		$data = array_map('str_getcsv', file($path));
 		
-		//dd($data);
+		dd($data);
 		foreach($data as $k => $v){
 			if($k == 0){
 				$group = Group::create([
@@ -92,11 +92,11 @@ class GroupController extends Controller
 				//dd($v[6],explode('@',$v[6]),json_encode(explode('@',$v[6])));
 				if($v[1] == '簡答'){
 					$type = 1;
-					$v[6] =  json_encode(explode('@',$v[6]),JSON_UNESCAPED_UNICODE);
 				}elseif($v[1] == '單選'){
 					$type = 2;
 				}elseif($v[1] == '多選'){
 					$type = 3;
+					$v[6] =  json_encode(explode('@',$v[6]),JSON_UNESCAPED_UNICODE);
 				}
 				
 				Question::create([

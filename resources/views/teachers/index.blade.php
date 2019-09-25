@@ -12,7 +12,7 @@
 <div class="container mb-5">
 	<div class="teacher_edit">
 		<div class="filter">
-			<input class="form-control large_filter" id="teacher_date_search" type="text" placeholder="Search.." style="margin-right: 0;">
+			<input class="form-control large_filter" id="filter_subject" type="text" placeholder="Search.." style="margin-right: 0;">
 			<div class="btn"><img src="img/search.png" alt=""></div>
 		</div>
 		<div class="top_right_button">
@@ -20,7 +20,7 @@
 			<button class="btn btn_function" onclick="location.href='{{url('teachers/export')}}'">資料匯出</button>
 		</div>
 		<div class="teacher_edit_table">
-			<table class="table table-bordered">
+			<table id="group_table" class="table table-bordered">
 				<thead>
 					<tr>
 						<th style="width:5%;vertical-align:middle;">ID</th>
@@ -130,6 +130,34 @@
 @section('script')
 @parent
 <script>
+
+	$("#filter_subject").on('keyup',function () {
+		//split the current value of searchInput
+		var data = this.value.split(" ");
+		//create a jquery object of the rows
+		var jo = $('#group_table tbody').find("tr");
+		if (this.value == "") {
+			jo.show();
+			return;
+		}
+		//hide all the rows
+		jo.hide();
+
+		//Recusively filter the jquery object to get results.
+		jo.filter(function (i, v) {
+			var $t = $(this);
+			for (var d = 0; d < data.length; ++d) {
+				if ($t.is(":contains('" + data[d] + "')")) {
+					return true;
+				}
+			}
+			return false;
+		})
+		//show the rows that match.
+		.show();
+	});
+	
+	
 	$("form").submit(function(e) {
 		e.preventDefault();
 		$.ajax({

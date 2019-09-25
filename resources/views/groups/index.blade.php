@@ -64,7 +64,9 @@
 							<td>{{ $group->is_finish }}</td>
 							@endif
 							<td class="td-underline">
+								@if($group->templates->count() > 0)
 								<a href="{{url('testing/'.$group->id)}}" style="float: left; margin-right: 10px;">開始作答</a>
+								@endif
 								@if(Auth::user()->role == 50)
 								<a href="{{url('groups/'.$group->id)}}" style="float: left; margin-right: 10px;">瀏覽題目</a>
 								<a class="assign" href="#" style="float: left; margin-right: 10px;">指定班級作答</a>

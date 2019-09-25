@@ -19,7 +19,7 @@
     @if(Auth::check() && Auth::user()->name != 'student' && !Request::is('reset'))
 	<header>
         <nav class="nav-bar">
-            <a class="brand">數位閱讀學習平台</a>
+            <a class="brand" href="{{url('groups')}}">數位閱讀學習平台</a>
             <a type="submit" class="btn btn_logout" href="{{url('logout')}}">登出</a>
             @if(Auth::user()->role >=50)
 			<div class="dropdown" style="float:right;">

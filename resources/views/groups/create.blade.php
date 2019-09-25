@@ -43,6 +43,17 @@
 @section('script')
 @parent
 <script>
+
+$(".status_text").hide();
+
+$('#customFileLang').on('change',function(e){
+	//get the file name
+	var fileName = e.target.files[0].name;
+	//replace the "Choose a file" label
+	$(this).next('.custom-file-label').html(fileName);
+	$(".status_text").show();
+})
+
 function sort_group_table(type){
     var $tbody = $('#group_table tbody');
 	$tbody.find('tr').sort(function(a,b){ 

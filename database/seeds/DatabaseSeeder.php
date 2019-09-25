@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
 		DB::table('users')->insert([
 			'account' => 'twpirls2021@gmail.com',
-            'name' => "Admin",
+            'name' => "管理員",
 			'role' => 99,
 			'gender' => 1,
             'email' => 'twpirls2021@gmail.com',
