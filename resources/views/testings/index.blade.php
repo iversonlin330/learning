@@ -153,7 +153,7 @@
 				</div>
 				<div class="question_content">
 					@foreach($questions as $index => $question)
-						<div id="q_{{$question->id}}" data-index="{{array_key_exists($question->id,$new_question_no)? $new_question_no[$question->id] : ''}}" class="question_each">
+						<div id="q_{{$question->id}}" data-index="{{$question->id}}" class="question_each">
 							<div class="question_each_title">
 								{{array_key_exists($question->id,$new_question_no)? $new_question_no[$question->id] : ''}}. {{$question->name}}
 							</div>
