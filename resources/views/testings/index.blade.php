@@ -208,7 +208,7 @@
 		<div class="modal-content">
 			<form action="{{ url('group_classrooms') }}" method="post">
 			<div class="modal-body pop-up text-center">
-			<img src="">
+			<img src="" style="max-height: 100vh;">
 				<button type="button" class="btn btn_style" data-dismiss="modal">關閉</button>
 			</div>
 			</form>

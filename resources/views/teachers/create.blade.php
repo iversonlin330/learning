@@ -103,6 +103,7 @@
 						<div class="form-group mr-30">
 							<label for="teacher_email" class="lable_title">E-mail</label>
 							<input type="email" class="form-control" id="teacher_email" name="account" style="width: 300px;" required>
+							<p id="duplicate">信箱重複</p>
 						</div>
 					</div>
 					@if(isset($user))
@@ -128,7 +129,7 @@
 			</div>
 			<div class="text-center">
 				<div class="btn-group">
-					<button type="submit" class="btn btn_style">@if(isset($user))修改@else新增@endif</button>
+					<button id="modal_submit" type="submit" class="btn btn_style">@if(isset($user))修改@else新增@endif</button>
 					<button type="" class="btn btn_cancel" onclick="history.back()">返回</button>
 				</div>
 			</div>
@@ -171,6 +172,18 @@ $("[name='city_id']").change(function(){
 	$("[name='school_id']").append(html);
 });
 $("[name='city_id']").trigger('change');
+
+$("#duplicate").hide();
+var emails = {!! json_encode($emails) !!};
+	$("[name='account']").change(function(){
+		if(emails.indexOf($(this).val()) > -1){
+			$("#duplicate").show();
+			$("#modal_submit").prop('disabled',true);
+		}else{
+			$("#duplicate").hide();
+			$("#modal_submit").prop('disabled',false);
+		}
+	});
 /*
 	$("form").submit(function(e) {
 		e.preventDefault();

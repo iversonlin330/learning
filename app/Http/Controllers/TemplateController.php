@@ -67,6 +67,9 @@ class TemplateController extends Controller
 		}else{
 			//dd($data);
 			$data['order'] = Template::where('group_id',$data['group_id'])->max('order') + 1;
+			if(!array_key_exists('question_map',$data)){
+				$data['question_map'] = [];
+			}
 			Template::Create($data);
 		}
 		

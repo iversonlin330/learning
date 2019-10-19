@@ -55,7 +55,9 @@ class TeacherController extends Controller
 			$citys[substr($school[3], 4 , 9)][] = $school[1];
 		}
 		
-		return view('teachers.create',compact('citys','schools'));
+		$emails = User::where('role',50)->get()->pluck('email')->toArray();
+		
+		return view('teachers.create',compact('citys','schools','emails'));
     }
 
     /**
@@ -177,8 +179,9 @@ class TeacherController extends Controller
 			$citys[substr($school[3], 4 , 9)][] = $school[1];
 		}
 		
+		$emails = User::where('role',50)->get()->pluck('email')->toArray();
 		
-		return view('teachers.create',compact('id','user','teacher','citys','schools'));
+		return view('teachers.create',compact('id','user','teacher','citys','schools','emails'));
     }
 
     /**

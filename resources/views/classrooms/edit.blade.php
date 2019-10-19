@@ -42,9 +42,10 @@
 									</tbody>
 								</table>
 							</div>
+							<p id="duplicate">Id重複</p>
 							<div class="text-center">
 								<div class="btn-group">
-									<button type="submit" class="btn btn_style">新增</button>
+									<button id="modal_submit" type="submit" class="btn btn_style" disabled>新增</button>
 									<button type="" class="btn btn_cancel" data-dismiss="modal" >取消</button>
 								</div>
 							</div>
@@ -123,9 +124,22 @@
 		});
 	});
 	*/
+	$("#duplicate").hide();
+	$("#modal_submit").prop('disabled',false);
 	$(".delete").click(function(){
 		$("#delete form").attr('action',"{{url('users/')}}/"+$(this).closest('tr').data('id'));
 		$("#delete").modal('show');
-	})
+	});
+	var student_id = {!! json_encode($student->user->pluck('account')->toArray()) !!}
+	$("[name='student_id']").change(function(){
+		var account = "{{ str_pad($classroom->teacher->id,3,'0',STR_PAD_LEFT) }}{{ $classroom->class_number }}"+$(this).val().padStart(3, '0');
+		if(student_id.indexOf(account) > -1){
+			$("#duplicate").show();
+			$("#modal_submit").prop('disabled',true);
+		}else{
+			$("#duplicate").hide();
+			$("#modal_submit").prop('disabled',false);
+		}
+	});
 </script>
 @endsection

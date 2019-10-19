@@ -78,7 +78,7 @@ class GroupController extends Controller
 		$path = $request->file('file')->getRealPath();
 		$data = array_map('str_getcsv', file($path));
 		
-		dd($data);
+		//dd($data);
 		foreach($data as $k => $v){
 			if($k == 0){
 				$group = Group::create([
