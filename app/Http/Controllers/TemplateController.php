@@ -141,5 +141,8 @@ class TemplateController extends Controller
     public function destroy($id)
     {
         //
+		$template = Template::find($id);
+		$template->delete();
+		return back();
     }
 }

@@ -68,7 +68,13 @@
 				<tr>
 					<td>{{ isset($template->content['name'])? $template->content['name'] : '' }}</td>
 					<td>{{ ($template->type == 1)? '模板一' : '模板二' }}</td>
-					<td class="td-underline"><a href="{{url('templates/'.$template->id.'/edit')}}" style="float: left; margin-right: 10px;">編輯</a></td>
+					<td class="td-underline">
+						<a href="{{url('templates/'.$template->id.'/edit')}}" style="float: left; margin-right: 10px;">編輯</a>
+						<form class="delete_form" action="{{url('templates/'.$template->id)}}" method="POST">
+						{{ method_field('DELETE') }}
+						<a href="#" style="float: left; margin-right: 10px;" onclick="delete_form(this)">刪除</a>
+						</form>
+					</td>
 				</tr>
 				@endforeach
 					<!--tr>
@@ -225,5 +231,11 @@ $("form").submit(function(e) {
 	});
 });
 */
+function delete_form(obj){
+	if (confirm('確定要刪除?')) {
+		// Post the form
+		$(obj).closest('form').submit() // Post the surrounding form
+	}
+}
 </script>
 @endsection

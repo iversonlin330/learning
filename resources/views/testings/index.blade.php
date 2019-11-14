@@ -58,6 +58,9 @@
 				<div class="main_view_header">
 					數位閱讀學習平台
 				</div>
+				<?php 
+					$img_auto_change = []; 
+				?>
 				@foreach($templates as $template)
 					@if($template->type == 1)
 					<?php 
@@ -66,7 +69,9 @@
 					?>
 					<div id="template_{{ $template->order }}" class="main_view_content">
 						<img src="{{ $content['picture'][0] }}" alt="" style="width: 810px;height: auto;">
+						@if(0)
 						<img src="{{ $content['picture'][1] }}" alt="" style="width: 810px;height: auto;display:none;">
+						@endif
 					</div>
 					@elseif($template->type == 2)
 					<?php $content = $template->content ?>
@@ -128,7 +133,7 @@
 				<div id="template_finish" class="main_view_content">
 					<!--banner-->
 					<div class="exam_banner">
-						<img src="{{ asset('img/exam-banner.jpg') }}" alt="">
+						<img src="{{ asset('img/template3_banner.png') }}" alt="">
 					</div>
 					<div class="exam_finish">
 						<div><p class="title-20">你已完成全部題目，要修改答案嗎？</p>
@@ -250,7 +255,7 @@ function change_template(num){
 	$(".main_view_content").hide();
 	$(".question_content .question_each").hide();
 	$('#template_'+num).show();
-	
+	/*
 	if(img_auto_change.indexOf(String(num)) > -1){
 		$('#template_'+num).find('img:eq(0)').show();
 		$('#template_'+num).find('img:eq(1)').hide();
@@ -260,7 +265,7 @@ function change_template(num){
 			$('#template_'+num).find('img:eq(1)').show();
 		},3000);
 	}
-	
+	*/
 	
 	if(num > Object.keys(question_map).length){
 		//Final

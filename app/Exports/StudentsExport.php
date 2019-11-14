@@ -25,10 +25,10 @@ class StudentsExport implements FromArray
 				$user->user_info->classroom->grade,
 				$user->user_info->classroom->classroom,
 				$user->user_info->classroom->teacher->user->name,
-				Config('map.computer')[$user->computer],
-				Config('map.search_time')[$user->search_time],
-				Config('map.typing')[$user->typing],
-				Config('map.search_easy')[$user->search_easy],
+				Config('map.computer')[$user->user_info->computer],
+				Config('map.search_time')[$user->user_info->search_time],
+				Config('map.typing')[$user->user_info->typing],
+				Config('map.search_easy')[$user->user_info->search_easy],
 			];
 		}
 		return $result;

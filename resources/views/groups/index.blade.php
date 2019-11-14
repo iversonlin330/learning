@@ -58,7 +58,7 @@
 							<td>{{$group->g_id}}</td>
 							@endif
 							<td>{{$group->subject}}</td>
-							<td>{{$group->grade}}</td>
+							<td data-number="{{ Config('map.class_number')[$group->grade] }}">{{$group->grade}}</td>
 							<td>{{$group->title}}</td>
 							@if(Auth::user()->role == 1)
 							<td>{{ $group->is_finish }}</td>
@@ -183,8 +183,10 @@
 function sort_group_table(type){
     var $tbody = $('#group_table tbody');
 	$tbody.find('tr').sort(function(a,b){ 
-		var tda = $(a).find('td:eq(2)').text(); // can replace 1 with the column you want to sort on
-		var tdb = $(b).find('td:eq(2)').text(); // this will sort on the second column
+		//var tda = $(a).find('td:eq(2)').text(); // can replace 1 with the column you want to sort on
+		//var tdb = $(b).find('td:eq(2)').text(); // this will sort on the second column
+		var tda = $(a).find('td:eq(2)').data('number'); // can replace 1 with the column you want to sort on
+		var tdb = $(b).find('td:eq(2)').data('number'); // this will sort on the second column
 				// if a < b return 1
 		if(type == 'desc'){
 			return tda < tdb ? 1 
@@ -202,7 +204,7 @@ function sort_group_table(type){
 		         
 	}).appendTo($tbody);
 }
-sort_group_table('desc');
+//sort_group_table('desc');
 
 $("#sort_grade").change(function(){
 	var type = $(this).val();

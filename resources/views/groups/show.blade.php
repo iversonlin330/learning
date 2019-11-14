@@ -57,7 +57,13 @@
 							@endif
 							@endif
 						</td>
-						<td>{{ $question->correct_answer }}</td>   
+						<td>
+						@if($question->type == 3)
+							{{ implode('、',json_decode($question->correct_answer)) }}
+						@else
+							{{ $question->correct_answer }}
+						@endif
+						</td>   
 						@if($user->role == 99)
 						<td>{{ $question->goal }}</td>
 						<td class="td-underline">
@@ -99,7 +105,7 @@
 					</div>
 				</div>
 			</div>
-			<button type="" class="btn btn_style" onclick="history.back()">返回</button>
+			<button type="" class="btn btn_style" onclick="location.href='{{  url('groups') }}'">返回</button>
 		</div>
 	</div>
 </div>

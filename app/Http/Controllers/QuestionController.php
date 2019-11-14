@@ -41,7 +41,7 @@ class QuestionController extends Controller
         //
 		$data = $request->all();
 		Question::create([
-			'no' => 1,
+			'no' => Question::where('group_id',$data['group_id'])->max('no')+1,
 			'name' => $data['name'],
 			'item' => json_encode(explode('@',$data['item']),JSON_UNESCAPED_UNICODE),
 			//'item' => '',

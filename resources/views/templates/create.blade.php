@@ -49,10 +49,12 @@
 									<label for="type1_img1" class="lable_title">圖片一</label>
 									<input style="width: 100%;" type="text" class="form-control" id="type1_img1" placeholder="連結" name="content[picture][0]">
 								</div>
+								@if(0)
 								<div class="form-group">
 									<label for="type1_img2" class="lable_title">圖片二</label>
 									<input style="width: 100%;" type="text" class="form-control" id="type1_img2"placeholder="連結" name="content[picture][1]">
 								</div>
+								@endif
 							</div>
 							<div id="template_2" class="edit_content_left">
 								<!--button class="btn btn_editor" data-toggle="modal" data-target="#delete_exam" style="float: right; font-size: 14px; background-color: #B8B8B8!important; margin:0!important; ">刪除模組</button>
@@ -233,7 +235,7 @@ for (var i = 0; i < allEditors.length; ++i) {
 	$("[name='type']").val(template.type);
 	
 	$("[name='content[picture][0]']").val(template.content.picture[0]);
-	$("[name='content[picture][1]']").val(template.content.picture[1]);
+	//$("[name='content[picture][1]']").val(template.content.picture[1]);
 	$("[name='content[banner]']").val(template.content.banner);
 	$("[name='content[ads_type]']").val(template.content.ads_type);
 	$("[name='content[ads_pic]']").val(template.content.ads_pic);
@@ -246,6 +248,8 @@ for (var i = 0; i < allEditors.length; ++i) {
 	$("[name='content[tab_content][1]']").val(template.content.tab_content[1]);
 	$("[name='content[tab_content][2]']").val(template.content.tab_content[2]);
 	$("[name='content[tab_content][3]']").val(template.content.tab_content[3]);
+	
+	$("[name^='content[tab_title]']").trigger('change');
 	
 	for(x in template.question_map){
 		$("[name^='question_map']").filter('[value='+template.question_map[x]+']').prop('disabled', false);
