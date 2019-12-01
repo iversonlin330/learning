@@ -11,6 +11,7 @@ use App\User;
 use App\UserAnswer;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\RecordsExport;
+use App\Exports\RecordsExport2;
 
 class RecordController extends Controller
 {
@@ -42,19 +43,9 @@ class RecordController extends Controller
         //
 		return view('students.create');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function single(Request $request)
-    {
-        //
-		$data = $request->all();
-		$classroom = Classroom::find($data['classroom_id']);
-		$group = Group::find($data['group_id']);
+	private function cal_rate($classroom_id,$group_id){
+		$classroom = Classroom::find($classroom_id);
+		$group = Group::find($group_id);
 		
 		$questions = $group->questions;
 		$user_ids = $classroom->students->pluck('user_id')->toArray();
@@ -63,7 +54,6 @@ class RecordController extends Controller
 		$user_answers = UserAnswer::whereIn('question_id',$question_ids)
 			->whereIn('user_id',$user_ids)
 			->get();
-		$result = [];
 		foreach($questions as $question){
 			$answers = $user_answers->where('question_id',$question->id);
 			if($question->type == 1){
@@ -100,8 +90,31 @@ class RecordController extends Controller
 					($D == 0)? '0%' : round($D/$total*100),
 				];
 			}
-			
 		}
+		return $result;
+	}
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function single(Request $request)
+    {
+        //
+		$data = $request->all();
+		$classroom = Classroom::find($data['classroom_id']);
+		$group = Group::find($data['group_id']);
+		
+		$questions = $group->questions;
+		$user_ids = $classroom->students->pluck('user_id')->toArray();
+		$question_ids = $group->questions->pluck('id')->toArray();
+		
+		$user_answers = UserAnswer::whereIn('question_id',$question_ids)
+			->whereIn('user_id',$user_ids)
+			->get();
+		$result = [];
+		$result = $this->cal_rate($data['classroom_id'],$data['group_id']);
 		
 		return view('records.single',compact('data','group','classroom','questions','user_answers','result'));
     }
@@ -153,44 +166,7 @@ class RecordController extends Controller
 				->whereIn('user_id',$user_ids)
 				->get();
 			$result = [];
-			foreach($questions as $question){
-				$answers = $user_answers->where('question_id',$question->id);
-				if($question->type == 1){
-					foreach($answers as $index => $answer){
-						$result[$question->id][] = $answer->answer;
-					}
-				}elseif($question->type == 2){
-					$A = $this->cal_count($answers,$question->id,'A');
-					$B = $this->cal_count($answers,$question->id,'B');
-					$C = $this->cal_count($answers,$question->id,'C');
-					$D = $this->cal_count($answers,$question->id,'D');
-					$result[$question->id] = [$A,$B,$C,$D];
-					/*
-					foreach($answers as $index => $answer){
-						$result[$question->id][] = $A;
-					}
-					*/
-				}elseif($question->type == 3){
-					$total = $A = $B = $C = $D = 0;
-					foreach($answers as $index => $answer){
-						$temp = json_decode($answer->answer,true);
-						$total = $total + count($temp);
-						foreach($temp as $v){
-							if($v == 'A') $A++;
-							elseif($v == 'B') $B++;
-							elseif($v == 'C') $C++;
-							elseif($v == 'D') $D++;
-						}
-					}
-					$result[$question->id] = [
-						($A == 0)? '0%' : round($A/$total*100),
-						($B == 0)? '0%' : round($B/$total*100),
-						($C == 0)? '0%' : round($C/$total*100),
-						($D == 0)? '0%' : round($D/$total*100),
-					];
-				}
-				
-			}
+			$result = $this->cal_rate($classroom_id,$group_id);
 			
 			$multi_result[] = [
 				'group' => $group,
@@ -267,6 +243,16 @@ class RecordController extends Controller
 		
     }
 	
+	public function singleExport2(Request $request)
+    {
+        //
+		$data = $request->all();
+		$classroom = Classroom::find($data['classroom_id']);
+		$group = Group::find($data['group_id']);
+		
+		return Excel::download(new RecordsExport2([[$group->id,$classroom->id]]), '題組.xlsx');
+    }
+	
 	 public function multiExport(Request $request)
     {
         //
@@ -281,6 +267,22 @@ class RecordController extends Controller
 		}
 		
 		return Excel::download(new RecordsExport($result), '題組.xlsx');
+	}
+	
+	public function multiExport2(Request $request)
+    {
+        //
+		$data = $request->all();
+		$result = []; 
+		foreach($data['data'] as $v){
+			$temp = explode(',',$v);
+			$result[] =[
+				$temp[1],
+				$temp[0],
+			];
+		}
+		
+		return Excel::download(new RecordsExport2($result), '題組.xlsx');
 	}
 
     /**

@@ -5,11 +5,64 @@
 @section('style')
 @parent
 <style>
+.tab1,.tab2{
+	float:left;
+}
+.tab1_off, .tab1:hover .tab1_on{
+   display:none
+}
+.tab1_on, .tab1:hover .tab1_off{
+   display:block
+}
+
+.tab2_off, .tab2:hover .tab2_on{
+   display:none
+}
+.tab2_on, .tab2:hover .tab2_off{
+   display:block
+}
+
+#tea_btn a {
+	background: url("img/teacher_btn.png");/*預設顯示圖片*/
+	background-repeat:no-repeat;
+	display: block;
+	font-size: 0; 
+	height: 76px;/*圖片高度*/
+	width: 80px;/*圖片寬度*/
+}
+#tea_btn a:hover {
+	background: url("img/teacher_btn_hover.png"); /*滑鼠移過顯示圖片*/
+}
+
+#stu_btn a {
+	background: url("img/student_btn.png");/*預設顯示圖片*/
+	background-repeat:no-repeat;
+	display: block;
+	font-size: 0; 
+	height: 75px;/*圖片高度*/
+	width: 80px;/*圖片寬度*/
+}
+#stu_btn a:hover {
+	background: url("img/student_btn_hover.png"); /*滑鼠移過顯示圖片*/
+}
+
 </style>
 @endsection
  
 @section('content')
 <div class="container mb-5">
+@if(0)
+	@if(Auth::user()->role < 50)
+	<div class="tab1" onclick="tab_show(1)">
+		<img class="tab1_on" style="width: 80px;" src="img/student_btn.png">
+		<img class="tab1_off" style="width: 80px;" src="img/student_btn_hover.png">
+	</div>
+	<div class="tab2" onclick="tab_show(2)">
+		<img class="tab2_on" style="width: 80px;" src="img/teacher_btn.png">
+		<img class="tab2_off" style="width: 80px;" src="img/teacher_btn_hover.png">
+	</div>
+	@endif
+@endif
 	<div class="teacher_exam_table">
 		<div class="filter">
 			<select id="filter_subject" class="browser-default custom-select small_filter">
@@ -33,6 +86,12 @@
 			@endif
 		</div>
 		<div class="exam_table">
+		@if(Auth::user()->role < 50)
+			<div class="tab_btn" style="position: absolute; left:-95px;">
+				<div id="tea_btn" class="mb-1"><a href="#"></a></div>
+				<div id="stu_btn"><a href="#"></a></div>
+			</div>
+		@endif
 			<table id="group_table" class="table table-bordered">
 				<thead>
 					<tr>
@@ -80,50 +139,55 @@
 							</td>
 						</tr>
 					@endforeach
-					<!--tr>
-						<td>A001</td>
-						<td>自然</td>
-						<td>二上</td>
-						<td>題組A</td>
-						<td class="td-underline">
-							<a href="exam_question_example.html" style="float: left; margin-right: 10px;">開始作答</a>
-							<a href="UC2-PF8_teacher_view_detial.html" style="float: left; margin-right: 10px;">瀏覽題目</a>
-							<a href="" data-toggle="modal" data-target="#assignation_exam" >指定班級作答</a>
-						</td>
-					</tr>
+				</tbody>
+			</table>
+			<table id="group_table_2" class="table table-bordered">
+				<thead>
 					<tr>
-						<td>A001</td>
-						<td>自然</td>
-						<td>二上</td>
-						<td>題組A</td>
-						<td class="td-underline">
-							<a href="exam_question_example.html" style="float: left; margin-right: 10px;">開始作答</a>
-							<a href="UC2-PF8_teacher_view_detial.html" style="float: left; margin-right: 10px;">瀏覽題目</a>
-							<a href="" data-toggle="modal" data-target="#assignation_exam" >指定班級作答</a>
-						</td>
+						@if(Auth::user()->role >=50)
+						<th style="width:15%">ID</th>
+						<th style="width:15%">科目</th>
+						<th style="width:15%">年級</th>
+						<th style="width:15%">題組名稱</th>
+						<th style="width:40%">功能</th>
+						@else
+						<th>科目</th>
+						<th>年級</th>
+						<th>題組名稱</th>
+						<th>作答紀錄</th>
+						<th>功能</th>
+						@endif
 					</tr>
-					<tr>
-						<td>A001</td>
-						<td>自然</td>
-						<td>二上</td>
-						<td>題組A</td>
-						<td class="td-underline">
-							<a href="exam_question_example.html" style="float: left; margin-right: 10px;">開始作答</a>
-							<a href="UC2-PF8_teacher_view_detial.html" style="float: left; margin-right: 10px;">瀏覽題目</a>
-							<a href="" data-toggle="modal" data-target="#assignation_exam" >指定班級作答</a>
-						</td>
-					</tr>
-					<tr>
-						<td>A001</td>
-						<td>自然</td>
-						<td>四上</td>
-						<td>題組A</td>
-						<td class="td-underline">
-							<a href="exam_question_example.html" style="float: left; margin-right: 10px;">開始作答</a>
-							<a href="UC2-PF8_teacher_view_detial.html" style="float: left; margin-right: 10px;">瀏覽題目</a>
-							<a href="" data-toggle="modal" data-target="#assignation_exam" >指定班級作答</a>
-						</td>
-					</tr-->
+				</thead>
+				<tbody>
+					@foreach($teacher_not_group as $group)
+						<tr data-id="{{ $group->id }}">
+							@if(Auth::user()->role >=50)
+							<td>{{$group->g_id}}</td>
+							@endif
+							<td>{{$group->subject}}</td>
+							<td data-number="{{ Config('map.class_number')[$group->grade] }}">{{$group->grade}}</td>
+							<td>{{$group->title}}</td>
+							@if(Auth::user()->role == 1)
+							<td>{{ $group->is_finish }}</td>
+							@endif
+							<td class="td-underline">
+								@if($group->templates->count() > 0)
+								<a href="{{url('testing/'.$group->id)}}" style="float: left; margin-right: 10px;">開始作答</a>
+								@endif
+								@if(Auth::user()->role == 50)
+								<a href="{{url('groups/'.$group->id)}}" style="float: left; margin-right: 10px;">瀏覽題目</a>
+								<a class="assign" href="#" style="float: left; margin-right: 10px;">指定班級作答</a>
+								@endif
+								@if(Auth::user()->role == 99)
+								<a href="{{url('groups/'.$group->id)}}" style="float: left; margin-right: 10px;">查看詳細資訊</a>
+								<!--a href="{{url('groups/'.$group->id.'/edit')}}" style="float: left; margin-right: 10px;">編輯題組內容</a-->
+								<a href="{{url('groups/'.$group->id.'/edit')}}" style="float: left; margin-right: 10px;">編輯題組資訊</a>
+								<a href="{{url('templates/?group_id='.$group->id)}}" style="float: left; margin-right: 10px;">編輯題組內容</a>
+								@endif
+							</td>
+						</tr>
+					@endforeach
 				</tbody>
 			</table>
 			<!-- 指定班級作答彈跳視窗 -->
@@ -154,15 +218,6 @@
 									</tr>
 									@endforeach
 									<input id="group_id" name="group_id" value=""  hidden />
-										<!--tr>
-											<td>二年甲班</td>
-											<td class="text-center">
-												<div class="form-check form-check-inline">
-													<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-													<label class="form-check-label" for=""></label>
-												</div>
-											</td>
-										</tr-->
 									</tbody>
 								</table>
 							</div>
@@ -180,6 +235,7 @@
 @section('script')
 @parent
 <script>
+$("#group_table_2").hide();
 function sort_group_table(type){
     var $tbody = $('#group_table tbody');
 	$tbody.find('tr').sort(function(a,b){ 
@@ -265,5 +321,16 @@ $("form").submit(function(e) {
 	});
 });
 */
+
+function tab_show(num){
+	if(num == 1){
+		$("#group_table").show();
+		$("#group_table_2").hide();
+	}else{
+		$("#group_table").hide();
+		$("#group_table_2").show();
+	}
+}
+
 </script>
 @endsection

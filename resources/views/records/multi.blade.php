@@ -11,11 +11,12 @@
 @section('content')
  <div class="container mb-5">
 	<div class="top_right_button">
+		
+			<button class="btn btn_function" onclick="location.href='{{url('record/multi-export?'.$url)}}'">匯出題組資料</button>
+			<button class="btn btn_function" onclick="location.href='{{url('record/multi-export2?'.$url)}}'">匯出詳細資料</button>
 		@if(Auth::user()->role == 99)
-			<button class="btn btn_function" onclick="location.href='{{url('record/multi-export?'.$url)}}'">圖表匯出</button>
-			<button class="btn btn_function" onclick="location.href='{{url('students/admin-create')}}'">詳細資料匯出</button>
 		@else
-			<button class="btn btn_function" onclick="location.href='{{url('record/multi-export?'.$url)}}'">資料匯出</button>
+			<!--button class="btn btn_function" onclick="location.href='{{url('record/multi-export?'.$url)}}'">資料匯出</button-->
 		@endif
 	</div>
 	<div class="teacher_view_all_result mb-5">

@@ -8,7 +8,7 @@ use App\Classroom;
 use App\Group;
 use App\UserAnswer;
 
-class RecordsExport implements FromArray
+class RecordsExport2 implements FromArray
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -35,10 +35,11 @@ class RecordsExport implements FromArray
 				->whereIn('user_id',$user_ids)
 				->get();
 			//$result = [];
-			$result[] = ['ID','題組名稱','科目','適合年級','班級','題號','閱讀歷程','數位閱讀指標','平均答對率','A選項','B選項',	'C選項','D選項','E選項','F選項','G選項','H選項','正確答案','服務學校','班級人數'];
+			$result[] = ['ID','題組名稱','科目','適合年級','題號','閱讀歷程','數位閱讀指標','平均答對率','ID(學生)','學生ID',	'學生答案','性別','就讀學校','就讀年級','就讀班級','任課教師','作答時間','登錄時間'];
 			foreach($questions as $question){
 				$A = $B = $C = $D = $E = $F = $G = $H = "";
 				$answers = $user_answers->where('question_id',$question->id);
+				
 				if($question->type == 1){
 					$rate = '';
 					foreach($answers as $answer){
@@ -63,28 +64,44 @@ class RecordsExport implements FromArray
 					
 				}
 				
-				$result[] = [
-					$group->g_id,
-					$group->title,
-					$group->subject,
-					$group->grade,
-					$classroom->grade,
-					$question->no,
-					$question->history,
-					$question->goal,
-					$rate,
-					$A,
-					$B,
-					$C,
-					$D,
-					$E,
-					$F,
-					$G,
-					$H,
-					$question->correct_answer,
-					$classroom->teacher->school_id,
-					$classroom->students->count()
-				];
+				foreach($answers as $answer){
+					$user = $answer->user;
+					//$user->user_info->s_id
+					//$user->account
+					//$answer->answer
+					//$user->gender
+					//$classroom->teacher->school_id
+					//$classroom->grade
+					//$classroom->classroom
+					//$classroom->teacher->user->name
+					//$answer->updated_at
+					//$user->updated_at
+					
+					$result[] = [
+						$group->g_id,
+						$group->title,
+						$group->subject,
+						$group->grade,
+						//$classroom->grade,
+						$question->no,
+						$question->history,
+						$question->goal,
+						$rate,
+						$user->user_info->s_id,
+						$user->account,
+						$answer->answer,
+					    Config('map.gender')[$user->gender],
+					    $classroom->teacher->school_id,
+					    $classroom->grade,
+					    $classroom->classroom,
+					    $classroom->teacher->user->name,
+					    $answer->updated_at,
+						$user->updated_at,
+					];
+					
+				}
+				
+				
 				
 			}
 		}

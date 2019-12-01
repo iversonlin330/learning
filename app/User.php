@@ -61,7 +61,8 @@ class User extends Authenticatable
 		}else if($this->role == 50){
 			return Group::all();
 		}{
-			return $this->user_info->classroom->groups;
+			return Group::all();
+			//return $this->user_info->classroom->groups;
 		}
     }
 	

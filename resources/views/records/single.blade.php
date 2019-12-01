@@ -13,11 +13,11 @@
 	<div class="teacher_view_single_result mb-60">
 		<p class="title-brown">{{ $group->subject }}/{{ $group->grade }}/{{ $group->title }}</p>
 		<div class="top_right_button">
+				<button class="btn btn_function" onclick="location.href='{{url('record/single-export?classroom_id='.$data['classroom_id'].'&group_id='.$data['group_id'])}}'">匯出題組資料</button>
+				<button class="btn btn_function" onclick="location.href='{{url('record/single-export2?classroom_id='.$data['classroom_id'].'&group_id='.$data['group_id'])}}'">匯出詳細資料</button>
 			@if(Auth::user()->role == 99)
-				<button class="btn btn_function" onclick="location.href='{{url('record/single-export?classroom_id='.$data['classroom_id'].'&group_id='.$data['group_id'])}}'">圖表匯出</button>
-				<button class="btn btn_function" onclick="location.href='{{url('students/admin-create')}}'">詳細資料匯出</button>
 			@else
-				<button class="btn btn_function" onclick="location.href='{{url('record/single-export?classroom_id='.$data['classroom_id'].'&group_id='.$data['group_id'])}}'">資料匯出</button>
+				<!--button class="btn btn_function" onclick="location.href='{{url('record/single-export?classroom_id='.$data['classroom_id'].'&group_id='.$data['group_id'])}}'">資料匯出</button-->
 			@endif
 		</div>
 		<div class="single_result_table">

@@ -22,6 +22,7 @@ class GroupController extends Controller
 		$user = Auth::user();
 		$groups = $user->groups();
 		$result = [];
+		$teacher_not_group = [];
 		if($user->role == 50){
 			$classrooms = $user->user_info->classrooms;
 			$group_classrooms = GroupClassroom::all();
@@ -29,6 +30,8 @@ class GroupController extends Controller
 				$result[$group_classroom->group_id][] = $group_classroom->classroom_id;
 			}
 			//->pluck('group_id','classroom_id')->toArray();
+		}elseif($user->role == 99){
+			$classrooms = [];
 		}else{
 			$classrooms = [];
 			
@@ -47,9 +50,15 @@ class GroupController extends Controller
 					$groups[$key]['is_finish'] = '未完成';
 				}
 			}
+			
+			$teacher_group_id = $user->user_info->classroom->groups->pluck('id')->toArray();
+			//dd($groups,$teacher_group_id);
+			$teacher_not_group = $groups->whereNotIn('id',$teacher_group_id);
+			$groups = $groups->whereIn('id',$teacher_group_id);
+			
 		}
 		
-		return view('groups.index',compact('groups','classrooms','result'));
+		return view('groups.index',compact('groups','classrooms','result','teacher_not_group'));
     }
 
     /**
