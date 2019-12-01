@@ -88,8 +88,8 @@
 		<div class="exam_table">
 		@if(Auth::user()->role < 50)
 			<div class="tab_btn" style="position: absolute; left:-95px;">
-				<div id="tea_btn" class="mb-1"><a href="#"></a></div>
-				<div id="stu_btn"><a href="#"></a></div>
+				<div id="tea_btn" class="mb-1"  onclick="tab_show(1)"><a href="#"></a></div>
+				<div id="stu_btn"  onclick="tab_show(2)"><a href="#"></a></div>
 			</div>
 		@endif
 			<table id="group_table" class="table table-bordered">
