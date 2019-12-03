@@ -96,7 +96,7 @@ class TestingController extends Controller
 		
 		$rate = round($correct/$total*100);
 		
-		return view('testings.finish',compact('data','questions','user_answers','rate'));
+		return view('testings.finish',compact('questions','user_answers','rate'));
 	}
 	
 }
