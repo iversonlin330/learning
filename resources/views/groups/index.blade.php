@@ -29,9 +29,11 @@
 	font-size: 0; 
 	height: 76px;/*圖片高度*/
 	width: 80px;/*圖片寬度*/
+	background-size:cover;
 }
 #tea_btn a:hover {
 	background: url("img/teacher_btn_hover.png"); /*滑鼠移過顯示圖片*/
+	background-size:cover;
 }
 
 #stu_btn a {
@@ -41,9 +43,19 @@
 	font-size: 0; 
 	height: 75px;/*圖片高度*/
 	width: 80px;/*圖片寬度*/
+	background-size:cover;
 }
 #stu_btn a:hover {
 	background: url("img/student_btn_hover.png"); /*滑鼠移過顯示圖片*/
+	background-size:cover;
+}
+
+.teacher_exam_table{
+	position:relative;
+}
+
+.tab_btn{
+	top:60px;
 }
 
 </style>
@@ -96,11 +108,16 @@
 				<thead>
 					<tr>
 						@if(Auth::user()->role >=50)
-						<th style="width:15%">ID</th>
-						<th style="width:15%">科目</th>
+						<th style="width:10%">ID</th>
+						<th style="width:10%">科目</th>
 						<th style="width:15%">年級</th>
 						<th style="width:15%">題組名稱</th>
 						<th style="width:40%">功能</th>
+						@if(0)
+							@if(Auth::user()->role >=99)
+								<th style="width:5%">隱藏</th>
+							@endif
+						@endif
 						@else
 						<th>科目</th>
 						<th>年級</th>
@@ -137,6 +154,11 @@
 								<a href="{{url('templates/?group_id='.$group->id)}}" style="float: left; margin-right: 10px;">編輯題組內容</a>
 								@endif
 							</td>
+							@if(0)
+							@if(Auth::user()->role >=99)
+								<td>{{ ['否','是'][$group->is_hide] }}</td>
+							@endif
+							@endif
 						</tr>
 					@endforeach
 				</tbody>

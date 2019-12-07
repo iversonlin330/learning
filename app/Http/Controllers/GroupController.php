@@ -36,13 +36,14 @@ class GroupController extends Controller
 			$classrooms = [];
 			
 			$question_ids = UserAnswer::where('user_id',$user->id)
-				->pluck('id')
+				->pluck('question_id')
 				->toArray();
-			
+				
 			$is_finish_array = array_unique(Question::whereIn('id',$question_ids)
+				->get()
 				->pluck('group_id')
 				->toArray());
-			
+				
 			foreach($groups as $key => $group){
 				if(in_array($group->id,$is_finish_array)){
 					$groups[$key]['is_finish'] = '已完成';
@@ -55,7 +56,6 @@ class GroupController extends Controller
 			//dd($groups,$teacher_group_id);
 			$teacher_not_group = $groups->whereNotIn('id',$teacher_group_id);
 			$groups = $groups->whereIn('id',$teacher_group_id);
-			
 		}
 		
 		return view('groups.index',compact('groups','classrooms','result','teacher_not_group'));
@@ -187,6 +187,7 @@ class GroupController extends Controller
 			'subject' => $data['subject'],
 			'grade' => $data['grade'],
 			'title' => $data['title'],
+			'is_hide' => $data['is_hide'],
 		]);
 		
 		return redirect('groups');
