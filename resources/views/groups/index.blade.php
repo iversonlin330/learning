@@ -129,7 +129,7 @@
 				</thead>
 				<tbody>
 					@foreach($groups as $group)
-						<tr data-id="{{ $group->id }}">
+						<tr data-id="{{ $group->id }}" data-number="{{ Config('map.class_number')[$group->grade] }}">
 							@if(Auth::user()->role >=50)
 							<td>{{$group->g_id}}</td>
 							@endif
@@ -183,7 +183,7 @@
 				</thead>
 				<tbody>
 					@foreach($teacher_not_group as $group)
-						<tr data-id="{{ $group->id }}">
+						<tr data-id="{{ $group->id }}" data-number="{{ Config('map.class_number')[$group->grade] }}">
 							@if(Auth::user()->role >=50)
 							<td>{{$group->g_id}}</td>
 							@endif
@@ -258,13 +258,15 @@
 @parent
 <script>
 $("#group_table_2").hide();
-function sort_group_table(type){
-    var $tbody = $('#group_table tbody');
+function sort_group_table(id,type){
+    var $tbody = $('#'+id+' tbody');
 	$tbody.find('tr').sort(function(a,b){ 
 		//var tda = $(a).find('td:eq(2)').text(); // can replace 1 with the column you want to sort on
 		//var tdb = $(b).find('td:eq(2)').text(); // this will sort on the second column
-		var tda = $(a).find('td:eq(2)').data('number'); // can replace 1 with the column you want to sort on
-		var tdb = $(b).find('td:eq(2)').data('number'); // this will sort on the second column
+		//var tda = $(a).find('td:eq(2)').data('number'); // can replace 1 with the column you want to sort on
+		//var tdb = $(b).find('td:eq(2)').data('number'); // this will sort on the second column
+		var tda = $(a).data('number'); // can replace 1 with the column you want to sort on
+		var tdb = $(b).data('number'); // this will sort on the second column
 				// if a < b return 1
 		if(type == 'desc'){
 			return tda < tdb ? 1 
@@ -286,7 +288,8 @@ function sort_group_table(type){
 
 $("#sort_grade").change(function(){
 	var type = $(this).val();
-	sort_group_table(type);
+	sort_group_table('group_table',type);
+	sort_group_table('group_table_2',type);
 });
 
 

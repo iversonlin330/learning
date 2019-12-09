@@ -10,7 +10,7 @@
 	}
 	
 	#assignation_exam img{
-		//width:100%;
+		width:100%;
 	}
 </style>
 @endsection
@@ -173,7 +173,11 @@
 										<textarea name="answer[{{$question->id}}]"></textarea>
 									@elseif($question->type == 2)
 										<?php $item = json_decode($question->item,true) ?>
-										@if(count($item) >= 4)
+										@foreach($item as $index=>$val)
+											<div class="answer_choose"><input type="radio" name="answer[{{$question->id}}]" value="{{chr(65+$index)}}">{{ $val }}</div>
+										@endforeach
+										
+										@if(count($item) >= 4 && 0)
 										<div class="answer_choose"><input type="radio" name="answer[{{$question->id}}]" value="A">{{ $item[0] }}</div>
 										<div class="answer_choose"><input type="radio" name="answer[{{$question->id}}]" value="B">{{ $item[1] }}</div>
 										<div class="answer_choose"><input type="radio" name="answer[{{$question->id}}]" value="C">{{ $item[2] }}</div>
@@ -181,7 +185,10 @@
 										@endif
 									@elseif($question->type == 3)
 										<?php $item = json_decode($question->item,true) ?>
-										@if(count($item) >= 4)
+										@foreach($item as $index=>$val)
+											<div class="answer_choose"><input type="checkbox" name="answer[{{$question->id}}][]" value="{{chr(65+$index)}}">{{ $val }}</div>
+										@endforeach
+										@if(count($item) >= 4 && 0)
 										<div class="answer_choose"><input type="checkbox" name="answer[{{$question->id}}][]" value="A">{{ $item[0] }}</div>
 										<div class="answer_choose"><input type="checkbox" name="answer[{{$question->id}}][]" value="B">{{ $item[1] }}</div>
 										<div class="answer_choose"><input type="checkbox" name="answer[{{$question->id}}][]" value="C">{{ $item[2] }}</div>
