@@ -295,10 +295,39 @@ $("#sort_grade").change(function(){
 
 $("#filter_subject").change(function () {
     //split the current value of searchInput
-    var data = this.value.split(" ");
+    //sort_filter(this);
+	var data = this.value.split(" ");
+    //create a jquery object of the rows
+	var array = ['group_table','group_table_2'];
+	for(x in array){
+		var jo = $('#'+array[x]+' tbody').find("tr");
+		if (this.value == "") {
+			jo.show();
+			return;
+		}
+		//hide all the rows
+		jo.hide();
+
+		//Recusively filter the jquery object to get results.
+		jo.filter(function (i, v) {
+			var $t = $(this);
+			for (var d = 0; d < data.length; ++d) {
+				if ($t.is(":contains('" + data[d] + "')")) {
+					return true;
+				}
+			}
+			return false;
+		})
+		//show the rows that match.
+		.show();
+	}
+});
+
+function sort_filter(obj){
+	var data = obj.value.split(" ");
     //create a jquery object of the rows
     var jo = $('#group_table tbody').find("tr");
-    if (this.value == "") {
+    if (obj.value == "") {
         jo.show();
         return;
     }
@@ -307,7 +336,7 @@ $("#filter_subject").change(function () {
 
     //Recusively filter the jquery object to get results.
     jo.filter(function (i, v) {
-        var $t = $(this);
+        var $t = $(obj);
         for (var d = 0; d < data.length; ++d) {
             if ($t.is(":contains('" + data[d] + "')")) {
                 return true;
@@ -317,7 +346,7 @@ $("#filter_subject").change(function () {
     })
     //show the rows that match.
     .show();
-});
+}
 
 var group_classrooms = {!! json_encode($result,true) !!};
 
