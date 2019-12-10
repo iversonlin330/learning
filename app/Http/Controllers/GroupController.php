@@ -187,7 +187,7 @@ class GroupController extends Controller
 			'subject' => $data['subject'],
 			'grade' => $data['grade'],
 			'title' => $data['title'],
-			'is_hide' => $data['is_hide'],
+			//'is_hide' => $data['is_hide'],
 		]);
 		
 		return redirect('groups');
