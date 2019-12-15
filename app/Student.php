@@ -33,6 +33,7 @@ class Student extends Model
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+		'survey' => 'array',
     ];
 	
 	public function user_info()

@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromArray;
 use App\User;
+use App\Survey;
 
 class StudentsExport implements FromArray
 {
@@ -14,9 +15,19 @@ class StudentsExport implements FromArray
     {
         //
 		$users = User::with('user_info')->where('role',1)->get();
-		$result[] = ['ID','學生ID','姓名','性別','就讀學校',',就讀年級','就讀班級','任課教師',	'使用電腦時間','尋找資訊','很會打字','很會搜尋資訊'];
+		$surveys = Survey::all();
+		$survey_array = $surveys->pluck('title')->toArray();
+		//$result[] = ['ID','學生ID','姓名','性別','就讀學校',',就讀年級','就讀班級','任課教師',	'使用電腦時間','尋找資訊','很會打字','很會搜尋資訊'];
+		$result[] = array_merge(['ID','學生ID','姓名','性別','就讀學校',',就讀年級','就讀班級','任課教師'],$survey_array);
+		//dd($result);
 		foreach($users as $user){
-			$result[] = [
+			$item = $user->user_info->survey;
+			$temp_array = [];
+			foreach($surveys as $survey){
+				$temp_array[] = $item[$survey->id];
+			}
+			
+			$result[] = array_merge([
 				$user->user_info->s_id,
 				$user->account,
 				$user->name,
@@ -25,11 +36,11 @@ class StudentsExport implements FromArray
 				$user->user_info->classroom->grade,
 				$user->user_info->classroom->classroom,
 				$user->user_info->classroom->teacher->user->name,
-				Config('map.computer')[$user->user_info->computer],
-				Config('map.search_time')[$user->user_info->search_time],
-				Config('map.typing')[$user->user_info->typing],
-				Config('map.search_easy')[$user->user_info->search_easy],
-			];
+				//Config('map.computer')[$user->user_info->computer],
+				//Config('map.search_time')[$user->user_info->search_time],
+				//Config('map.typing')[$user->user_info->typing],
+				//Config('map.search_easy')[$user->user_info->search_easy],
+			],$temp_array);
 		}
 		return $result;
     }

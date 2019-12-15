@@ -8,6 +8,7 @@ use App\Classroom;
 use App\Student;
 use App\User;
 use App\Teacher;
+use App\Survey;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\StudentsExport;
 
@@ -22,8 +23,9 @@ class StudentController extends Controller
     {
         //
 		$users = User::with('user_info')->where('role',1)->get();
+		$surveys = Survey::all();
 		//dd($users);
-		return view('students.index',compact('users'));
+		return view('students.index',compact('users','surveys'));
     }
 
     /**
@@ -34,7 +36,8 @@ class StudentController extends Controller
     public function create()
     {
         //
-		return view('students.create');
+		$surveys = Survey::all();
+		return view('students.create',compact('surveys'));
     }
 
     /**
@@ -57,10 +60,11 @@ class StudentController extends Controller
 			
 		Student::where('user_id',$user->id)
 			->update([
-				'computer' =>$data['stu_question_1'],
-				'search_time' =>$data['stu_question_2'],
-				'typing' =>$data['stu_question_3'],
-				'search_easy' =>$data['stu_question_4'],
+				//'computer' =>$data['stu_question_1'],
+				//'search_time' =>$data['stu_question_2'],
+				//'typing' =>$data['stu_question_3'],
+				//'search_easy' =>$data['stu_question_4'],
+				'survey' =>json_encode($data['survey']),
 			]);
 			
 		return redirect('groups');

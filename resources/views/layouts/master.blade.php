@@ -33,6 +33,7 @@
                     <a href="{{url('students')}}">學生資料維護</a>
                     <a href="{{url('record/index')}}">作答記錄查看</a>
                     <a href="{{url('ads')}}">廣告點擊報告</a>
+					<a href="{{url('surveys')}}">學生問券維護</a>
 					@endif
                 </div>
             </div>
