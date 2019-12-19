@@ -61,34 +61,64 @@ class RecordController extends Controller
 					$result[$question->id][] = $answer->answer;
 				}
 			}elseif($question->type == 2){
+				$items = json_decode($question->item,true);
+				//dd($items);
+				foreach($items as $index=>$item){
+					$result[$question->id][] = $this->cal_count($answers,$question->id,chr(65+$index));
+				}
+				//dd($result[$question->id] );
+				/*
 				$A = $this->cal_count($answers,$question->id,'A');
 				$B = $this->cal_count($answers,$question->id,'B');
 				$C = $this->cal_count($answers,$question->id,'C');
 				$D = $this->cal_count($answers,$question->id,'D');
 				$result[$question->id] = [$A,$B,$C,$D];
+				*/
 				/*
 				foreach($answers as $index => $answer){
 					$result[$question->id][] = $A;
 				}
 				*/
 			}elseif($question->type == 3){
-				$total = $A = $B = $C = $D = 0;
+				$items = json_decode($question->item,true);
+				$total = 0;
+				
+				foreach($items as $index=>$item){
+					$p = chr(65+$index);
+					$$p = 0;
+				}
+				
 				foreach($answers as $index => $answer){
 					$temp = json_decode($answer->answer,true);
 					$total = $total + count($temp);
-					foreach($temp as $v){
+					foreach($temp as $index=>$v){
+						/*
 						if($v == 'A') $A++;
 						elseif($v == 'B') $B++;
 						elseif($v == 'C') $C++;
 						elseif($v == 'D') $D++;
+						*/
+						foreach($items as $index=>$item){
+							$p = chr(65+$index);
+							if($v == $p) $$p++;
+						}
 					}
 				}
+				
+				foreach($items as $index=>$item){
+					$p = chr(65+$index);
+					$result[$question->id][] = ($$p == 0)? '0%' : round($$p/$total*100);
+					//$result[$question->id][] = $this->cal_count($answers,$question->id,chr(65+$index));
+				}
+				//dd($result[$question->id]);
+				/*
 				$result[$question->id] = [
 					($A == 0)? '0%' : round($A/$total*100),
 					($B == 0)? '0%' : round($B/$total*100),
 					($C == 0)? '0%' : round($C/$total*100),
 					($D == 0)? '0%' : round($D/$total*100),
 				];
+				*/
 			}
 		}
 		return $result;

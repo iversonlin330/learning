@@ -38,13 +38,12 @@
 					<div class="form-group">
 						<div><label for="" class="lable_title" >{{ $survey->title }}</label></div>
 						@foreach($survey->item as $item)
-						@if(!$item)
-							@continue
-						@endif
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="survey[{{$survey->id}}]" value="{{$item}}" required>
-							<label class="form-check-label" for="">{{$item}}</label>
-						</div>
+							@if($item)
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="survey[{{$survey->id}}]" value="{{$item}}" required>
+								<label class="form-check-label" for="">{{$item}}</label>
+							</div>
+							@endif
 						@endforeach
 					</div>
 					@endforeach

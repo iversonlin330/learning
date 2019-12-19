@@ -30,11 +30,12 @@ class GroupController extends Controller
 				$result[$group_classroom->group_id][] = $group_classroom->classroom_id;
 			}
 			//->pluck('group_id','classroom_id')->toArray();
+			$groups = $groups->where('is_hide',0);
 		}elseif($user->role == 99){
 			$classrooms = [];
 		}else{
 			$classrooms = [];
-			
+			$groups = $groups->where('is_hide',0);
 			$question_ids = UserAnswer::where('user_id',$user->id)
 				->pluck('question_id')
 				->toArray();

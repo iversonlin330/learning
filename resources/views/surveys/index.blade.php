@@ -30,7 +30,9 @@
 						<td>{{ $survey->title }}</td>
 						<td>
 							@foreach($survey->item as $index=>$item)
+								@if($item)
 								{{ $index+1}}.{{$item}}<br>
+								@endif
 							@endforeach
 						</td>
 						<td class="td-underline">

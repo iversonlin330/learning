@@ -36,6 +36,11 @@ class Student extends Model
 		'survey' => 'array',
     ];
 	
+	protected function asJson($value)
+    {
+        return json_encode($value, JSON_UNESCAPED_UNICODE);
+    }
+	
 	public function user_info()
     {
         if($this->role == 99){

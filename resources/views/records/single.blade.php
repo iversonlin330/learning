@@ -93,10 +93,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
 <script>
 //資料標題
-    var labels = ['A', 'B','C','D'];
+    //var labels = ['A', 'B','C','D','E','F','G','H'];
 
 $(".canvasPie").each(function(){
 	var rate = $(this).data('rate');
+	
+	var labels = [];
+	for(x in rate.split(",")){
+		var c = String.fromCharCode(65+ parseInt(x));
+		labels.push(c);
+	}
 	
     var pieChart = new Chart($(this), {
         type: 'pie',

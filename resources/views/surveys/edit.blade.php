@@ -22,14 +22,14 @@
 				<div class="row" style="margin:0;">
 					<div class="form-group mr-30">
 						<label for="teacher_email" class="lable_title">題組名稱</label>
-						<input type="text" class="form-control" id="teacher_email" name="title" style="width: 300px;" value="{{ $survey->title }}"required>
+						<input type="text" class="form-control" name="title" style="width: 300px;" value="{{ $survey->title }}"required>
 					</div>
 				</div>
-				@for($i = 0; $i < 5; $i ++)
+				@for($i = 0; $i < 8; $i ++)
 				<div class="row" style="margin:0;">
 					<div class="form-group mr-30">
 						<label for="teacher_email" class="lable_title">選項{{$i+1}}</label>
-						<input type="text" class="form-control" id="teacher_email" name="item[{{$i}}]" style="width: 300px;" value="{{ array_key_exists($i,$survey->item)? $survey->item[$i] : '' }}">
+						<input type="text" class="form-control" name="item[{{$i}}]" style="width: 300px;" value="{{ array_key_exists($i,$survey->item)? $survey->item[$i] : '' }}">
 					</div>
 				</div>
 				@endfor
@@ -63,9 +63,9 @@
 	
 	//$("[name='teacher_id']").val(parseInt(user.account.slice(0, 3))).change();
 	
-	$("[name='subject']").val(group.subject);
-	$("[name='grade']").val(group.grade);
-	$("[name='is_hide']").filter('[value='+group.is_hide+']').prop('checked', true);
+	//$("[name='subject']").val(group.subject);
+	//$("[name='grade']").val(group.grade);
+	$("[name='is_hide']").filter('[value='+survey.is_hide+']').prop('checked', true);
 	//$("[name='student_id']").val(parseInt(user.account.slice(4, 7)));
 	
 	$("[name='name']").val(user.name);

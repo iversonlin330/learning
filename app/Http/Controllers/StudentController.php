@@ -110,7 +110,8 @@ class StudentController extends Controller
 				];
 			}
 		}
-		return view('students.adminCreate',compact('teachers','class_map'));
+		$surveys = Survey::all();
+		return view('students.adminCreate',compact('teachers','class_map','surveys'));
     }
 	
 	public function postAdminCreate(Request $request)
@@ -139,10 +140,11 @@ class StudentController extends Controller
 		Student::create([
 			'user_id' => $new_user->id,
 			'classroom_id' => $data['class_id'],
-			'computer' =>$data['stu_question_1'],
-			'search_time' =>$data['stu_question_2'],
-			'typing' =>$data['stu_question_3'],
-			'search_easy' =>$data['stu_question_4'],
+			//'computer' =>$data['stu_question_1'],
+			//'search_time' =>$data['stu_question_2'],
+			//'typing' =>$data['stu_question_3'],
+			//'search_easy' =>$data['stu_question_4'],
+			'survey' =>$data['survey'],
 		]);
 		/*
 		
@@ -197,8 +199,8 @@ class StudentController extends Controller
 				];
 			}
 		}
-		
-		return view('students.adminCreate',compact('id','user','student','teachers','class_map'));
+		$surveys = Survey::all();
+		return view('students.adminCreate',compact('id','user','student','teachers','class_map','surveys'));
     }
 
     /**
@@ -235,10 +237,11 @@ class StudentController extends Controller
 		$new_user->user_info->update([
 			//'user_id' => $new_user->id,
 			'classroom_id' => $classroom->id,
-			'computer' =>$data['stu_question_1'],
-			'search_time' =>$data['stu_question_2'],
-			'typing' =>$data['stu_question_3'],
-			'search_easy' =>$data['stu_question_4'],
+			//'computer' =>$data['stu_question_1'],
+			//'search_time' =>$data['stu_question_2'],
+			//'typing' =>$data['stu_question_3'],
+			//'search_easy' =>$data['stu_question_4'],
+			'survey' =>$data['survey'],
 		]);
 
 		return redirect('students');
