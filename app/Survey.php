@@ -13,4 +13,9 @@ class Survey extends Model
 	protected $casts = [
         'item' => 'array',
     ];
+	
+	protected function asJson($value)
+    {
+        return json_encode($value, JSON_UNESCAPED_UNICODE);
+    }
 }

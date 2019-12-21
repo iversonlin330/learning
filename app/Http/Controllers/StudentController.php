@@ -23,7 +23,7 @@ class StudentController extends Controller
     {
         //
 		$users = User::with('user_info')->where('role',1)->get();
-		$surveys = Survey::all();
+		$surveys = Survey::where('is_hide',1)->get();
 		//dd($users);
 		return view('students.index',compact('users','surveys'));
     }
@@ -36,7 +36,7 @@ class StudentController extends Controller
     public function create()
     {
         //
-		$surveys = Survey::all();
+		$surveys = Survey::where('is_hide',1)->get();
 		return view('students.create',compact('surveys'));
     }
 
@@ -110,7 +110,7 @@ class StudentController extends Controller
 				];
 			}
 		}
-		$surveys = Survey::all();
+		$surveys = Survey::where('is_hide',1)->get();
 		return view('students.adminCreate',compact('teachers','class_map','surveys'));
     }
 	
@@ -199,7 +199,7 @@ class StudentController extends Controller
 				];
 			}
 		}
-		$surveys = Survey::all();
+		$surveys = Survey::where('is_hide',1)->get();
 		return view('students.adminCreate',compact('id','user','student','teachers','class_map','surveys'));
     }
 

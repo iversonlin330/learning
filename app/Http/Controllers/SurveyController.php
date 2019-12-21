@@ -48,7 +48,7 @@ class SurveyController extends Controller
 		foreach($data as $k => $v){
 			Survey::create([
 					'title' => $v[0],
-					'item' => json_encode(explode('@',$v[1]),JSON_UNESCAPED_UNICODE),
+					'item' => explode('@',$v[1]),
 				]);
 		}
 		return redirect('/surveys');

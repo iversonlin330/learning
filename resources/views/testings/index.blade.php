@@ -96,10 +96,12 @@
 							">
                                 <ul class="nav" style="margin-bottom: 40px;" role="tablist">
                                     @foreach($content['tab_title'] as $index => $value)
+									@if($value)
 									<li>
                                         <a class="{{ ($index == 0)? 'active' : '' }} exam_tab" data-toggle="tab" href="#topic_{{$template->id}}_{{$index}}" role="tab"
                                             aria-controls="topic_1" aria-selected="true">{{$value}}</a>
                                     </li>
+									@endif
 									@endforeach
                                 </ul>
                                 <div class="tab-content">

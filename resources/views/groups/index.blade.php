@@ -113,10 +113,8 @@
 						<th style="width:15%">年級</th>
 						<th style="width:15%">題組名稱</th>
 						<th style="width:40%">功能</th>
-						@if(0)
-							@if(Auth::user()->role >=99)
-								<th style="width:5%">隱藏</th>
-							@endif
+						@if(Auth::user()->role >=99)
+							<th style="width:5%">隱藏</th>
 						@endif
 						@else
 						<th>科目</th>
@@ -154,10 +152,8 @@
 								<a href="{{url('templates/?group_id='.$group->id)}}" style="float: left; margin-right: 10px;">編輯題組內容</a>
 								@endif
 							</td>
-							@if(0)
 							@if(Auth::user()->role >=99)
-								<td>{{ ['否','是'][$group->is_hide] }}</td>
-							@endif
+								<td>{{ ['公開','隱藏'][$group->is_hide] }}</td>
 							@endif
 						</tr>
 					@endforeach
