@@ -43,7 +43,7 @@ class SurveyController extends Controller
 		
 		$path = $request->file('file')->getRealPath();
 		$data = array_map('str_getcsv', file($path));
-		
+		Survey::truncate();
 		//dd($data);
 		foreach($data as $k => $v){
 			Survey::create([
