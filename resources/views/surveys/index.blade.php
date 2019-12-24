@@ -73,7 +73,7 @@
 					</div>
 				</div>
 			</div>
-			<button type="" class="btn btn_style" onclick="location.href='{{  url('surveys') }}'">返回</button>
+			<button type="" class="btn btn_style" onclick="location.href='{{  url('groups') }}'">返回</button>
 		</div>
 	</div>
 </div>

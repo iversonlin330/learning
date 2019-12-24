@@ -20,7 +20,7 @@
 						<div>
 							<div><label for="quantity" class="lable_title">檔案上傳</label></div>
 							<div class="custom-file">
-								<input type="file" class="custom-file-input" id="customFileLang" lang="zh-TW" style="width:350px;" name="file">
+								<input type="file" class="custom-file-input" id="customFileLang" lang="zh-TW" style="width:350px;" name="file" required>
 								<label class="custom-file-label" for="customFileLang">選擇文件</label>
 							</div>
 							<div class="status_text">*檔案上傳成功!</div>

@@ -92,6 +92,7 @@ class ClassroomController extends Controller
 			Student::create([
 				'user_id' => $new_user->id,
 				'classroom_id' => $new_classroom->id,
+				'survey' => []
 			]);
 		}
 		

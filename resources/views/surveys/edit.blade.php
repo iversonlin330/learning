@@ -25,7 +25,7 @@
 						<input type="text" class="form-control" name="title" style="width: 300px;" value="{{ $survey->title }}"required>
 					</div>
 				</div>
-				@for($i = 0; $i < 8; $i ++)
+				@for($i = 0; $i < 5; $i ++)
 				<div class="row" style="margin:0;">
 					<div class="form-group mr-30">
 						<label for="teacher_email" class="lable_title">選項{{$i+1}}</label>

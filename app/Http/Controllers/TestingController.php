@@ -41,7 +41,7 @@ class TestingController extends Controller
 			}
 		}
 		
-		//dd($question_map,$question_step,$new_question_no);
+		dd($question_map,$question_step,$new_question_no);
 		
 		return view('testings.index',compact('group','templates','questions','question_map','question_step','new_question_no'));
 	}
@@ -81,9 +81,34 @@ class TestingController extends Controller
 			->get()
 			->pluck('answer','question_id')
 			->toArray();
+		
+		$templates = $group->templates;
+		$question_map = $templates->pluck('question_map','order')->toArray();
+		$question_step = [];
+		$new_question_no = [];
+		foreach($question_map as $key=>$val){
+			$question_step[end($val)] = $key;
+		}
+		
+		$no = 0;
+		
+		foreach($question_map as $temp => $q_no){
+			foreach($q_no as $index => $val){
+				$no++;
+				$new_question_no[$val] = $no;
+			}
+		}
+		
+		//dd($question_map,$question_step,$new_question_no);
+		
+		$new_questions = [];
+		foreach($new_question_no as $k => $v){
+			$new_questions[] = $questions->where('id',$k)->first();
+		}
+			//dd($questions,$new_questions);
 		$correct = 0;
 		$total = 0;
-		foreach($questions as $question){
+		foreach($new_questions as $question){
 			if($question->type == 1)
 				continue;
 			if(array_key_exists($question->id,$user_answers)){
@@ -95,8 +120,8 @@ class TestingController extends Controller
 		}
 		
 		$rate = round($correct/$total*100);
-		
-		return view('testings.finish',compact('questions','user_answers','rate'));
+		$questions = $new_questions;
+		return view('testings.finish',compact('questions','user_answers','rate','new_question_no'));
 	}
 	
 }

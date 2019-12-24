@@ -20,7 +20,7 @@
 						<div>
 							<div><label for="quantity" class="lable_title">檔案上傳</label></div>
 							<div class="custom-file">
-								<input type="file" class="custom-file-input" id="customFileLang" lang="zh-TW" style="width:350px;" name="file">
+								<input type="file" class="custom-file-input" id="customFileLang" lang="zh-TW" style="width:350px;" name="file" required>
 								<label class="custom-file-label" for="customFileLang">選擇文件</label>
 							</div>
 							<div class="status_text">*檔案上傳成功!</div>
@@ -31,7 +31,7 @@
 			<div class="text-center">
 				<div class="btn-group">
 					<button type="submit" class="btn btn_style">上傳</button>
-					<button type="button" class="btn btn_cancel" onclick="location.href='{{ url('groups') }}'">取消</button>
+					<button type="button" class="btn btn_cancel" onclick="location.href='{{ url('surveys') }}'">取消</button>
 				</div>
 			</div>
 			</form>
