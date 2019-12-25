@@ -150,6 +150,32 @@ class GroupController extends Controller
 		$user = Auth::user();
 		$group = Group::find($id);
 		$questions = $group->questions;
+		if($user->role == 50){
+			$templates = $group->templates;
+			$question_map = $templates->pluck('question_map','order')->toArray();
+			$question_step = [];
+			$new_question_no = [];
+			foreach($question_map as $key=>$val){
+				$question_step[end($val)] = $key;
+			}
+			
+			$no = 0;
+			
+			foreach($question_map as $temp => $q_no){
+				foreach($q_no as $index => $val){
+					$no++;
+					$new_question_no[$val] = $no;
+				}
+			}
+			
+			//dd($question_map,$question_step,$new_question_no);
+			
+			$new_questions = [];
+			foreach($new_question_no as $k => $v){
+				$new_questions[] = $questions->where('id',$k)->first();
+			}	
+			$questions = $new_questions;
+		}
 		
 		return view('groups.show',compact('group','questions','user'));
     }

@@ -41,7 +41,7 @@ class TestingController extends Controller
 			}
 		}
 		
-		dd($question_map,$question_step,$new_question_no);
+		//dd($question_map,$question_step,$new_question_no);
 		
 		return view('testings.index',compact('group','templates','questions','question_map','question_step','new_question_no'));
 	}
