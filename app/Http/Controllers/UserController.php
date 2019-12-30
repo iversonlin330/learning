@@ -55,6 +55,7 @@ class UserController extends Controller
 		Student::create([
 			'user_id' => $new_user->id,
 			'classroom_id' => $classroom->id,
+            'survey' => []
 		]);
 			
 		return back();
