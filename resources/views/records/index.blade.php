@@ -106,7 +106,7 @@
 		<div class="text-center">
 			<div class="btn-group">
 				<button id="multi" type="submit" class="btn btn_style" onclick="goMulti()">多筆瀏覽</button>
-				<button type="" class="btn btn_cancel" onclick="history.back()" >返回</button>
+				<button type="" class="btn btn_cancel" onclick="location.href='{{url('groups')}}'" >返回</button>
 			</div>
 		</div>
 	</div>

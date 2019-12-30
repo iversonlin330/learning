@@ -201,7 +201,8 @@ class RecordController extends Controller
 			$multi_result[] = [
 				'group' => $group,
 				'questions' => $questions,
-				'result' => $result
+				'result' => $result,
+				'classroom' => $classroom
 			];
 			
 		}
