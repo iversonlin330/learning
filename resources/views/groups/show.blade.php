@@ -43,7 +43,7 @@
 				<tbody>
 				@foreach($questions as $question)
 					<tr>
-						<td>{{ $question->no }}</td>
+						<td>{{ $loop->iteration }}</td>
 						<td>{{ Config::get('map.question_type')[$question->type] }}</td>
 						<td>{{ $question->grade }}</td>
 						<td>{{ $question->history }}</td>
