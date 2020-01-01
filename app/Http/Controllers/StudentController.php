@@ -142,6 +142,10 @@ class StudentController extends Controller
 			'gender' => $data['gender'],
 		]);
 		
+		if(!array_key_exists('survey',$data)){
+			$data['survey'] = [];
+		}
+		
 		Student::create([
 			'user_id' => $new_user->id,
 			'classroom_id' => $data['class_id'],
