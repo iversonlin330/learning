@@ -25,7 +25,7 @@
 			@foreach($multi_result as $multi)
 			<?php $result = $multi['result']; ?>
 				<div class="exam_detial_table ">
-					<p class="title-brown">{{ $multi['classroom']->grade.'年'.$multi['classroom']->classroom }}<br>{{ $multi['group']->subject }}/{{ $multi['group']->grade }}/{{ $multi['group']->title }}</p>
+					<p class="title-brown">{{ $multi['classroom']->grade.'年'.$multi['classroom']->classroom }}班<br>{{ $multi['group']->subject }}/{{ $multi['group']->grade }}/{{ $multi['group']->title }}</p>
 					<table class="table table-bordered" id="result_table">
 						<thead>
 							<tr>

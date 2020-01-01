@@ -11,7 +11,7 @@
 @section('content')
 <div class="container mb-5">
 	<div class="teacher_view_single_result mb-60">
-		<p class="title-brown">{{ $classroom->grade.'年'.$classroom->classroom }}<br>{{ $group->subject }}/{{ $group->grade }}/{{ $group->title }}</p>
+		<p class="title-brown">{{ $classroom->grade.'年'.$classroom->classroom }}班<br>{{ $group->subject }}/{{ $group->grade }}/{{ $group->title }}</p>
 		<div class="top_right_button">
 				<button class="btn btn_function" onclick="location.href='{{url('record/single-export?classroom_id='.$data['classroom_id'].'&group_id='.$data['group_id'])}}'">匯出題組資料</button>
 				<button class="btn btn_function" onclick="location.href='{{url('record/single-export2?classroom_id='.$data['classroom_id'].'&group_id='.$data['group_id'])}}'">匯出詳細資料</button>
