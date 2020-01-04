@@ -33,7 +33,7 @@
 						
 						@foreach($questions as $question)
 						<tr>
-							<td style="width:10%">{{ $question->no }}</td>
+							<td style="width:10%">{{ $loop->index+1 }}</td>
 							<td style="width:90%">
 								@if($question->type==1)
 									@if(array_key_exists($question->id,$result))

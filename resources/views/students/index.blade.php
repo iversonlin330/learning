@@ -54,7 +54,11 @@
 						<?php 
 							$item = $user->user_info->survey;
 						?>
-						<td>{{ array_key_exists($survey->id,$item)? $item[$survey->id] : '' }}</td>
+						<td>
+						@if($item)
+						{{ array_key_exists($survey->id,$item)? $item[$survey->id] : '' }}
+						@endif
+						</td>
 					@endforeach
 					<!--td>{{ Config::get('map.computer')[$user->user_info->computer] }}</td>
 					<td>{{ Config::get('map.search_time')[$user->user_info->search_time] }}</td>

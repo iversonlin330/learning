@@ -24,7 +24,11 @@ class StudentsExport implements FromArray
 			$item = $user->user_info->survey;
 			$temp_array = [];
 			foreach($surveys as $survey){
-				$temp_array[] = $item[$survey->id];
+				if($item){
+					$temp_array[] = $item[$survey->id];
+				}else{
+					$temp_array[] = [];
+				}
 			}
 			
 			$result[] = array_merge([

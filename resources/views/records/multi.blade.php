@@ -36,7 +36,7 @@
 						<tbody class="scroll_section">
 							@foreach($multi['questions'] as $question)
 							<tr>
-								<td style="width:20%">{{ $question->no }}</td>
+								<td style="width:20%">{{ $loop->index+1 }}</td>
 								<td style="width:80%">
 									@if($question->type==1)
 										@if(array_key_exists($question->id,$result))

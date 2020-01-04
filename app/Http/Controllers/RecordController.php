@@ -54,6 +54,9 @@ class RecordController extends Controller
 		$user_answers = UserAnswer::whereIn('question_id',$question_ids)
 			->whereIn('user_id',$user_ids)
 			->get();
+		
+		$questions = $this->new_quesition($group_id); 
+		$result = [];
 		foreach($questions as $question){
 			$answers = $user_answers->where('question_id',$question->id);
 			if($question->type == 1){
@@ -145,6 +148,7 @@ class RecordController extends Controller
 			->get();
 		$result = [];
 		$result = $this->cal_rate($data['classroom_id'],$data['group_id']);
+		$questions = $this->new_quesition($data['group_id']);
 		
 		return view('records.single',compact('data','group','classroom','questions','user_answers','result'));
     }
@@ -197,6 +201,7 @@ class RecordController extends Controller
 				->get();
 			$result = [];
 			$result = $this->cal_rate($classroom_id,$group_id);
+			$questions = $this->new_quesition($group_id);
 			
 			$multi_result[] = [
 				'group' => $group,
@@ -342,4 +347,34 @@ class RecordController extends Controller
 		$user->delete();
 		return back();
     }
+	
+	private function new_quesition($group_id){
+		$group = Group::find($group_id);
+		$questions = $group->questions;
+		$templates = $group->templates;
+		$question_map = $templates->pluck('question_map','order')->toArray();
+		$question_step = [];
+		$new_question_no = [];
+		foreach($question_map as $key=>$val){
+			$question_step[end($val)] = $key;
+		}
+		
+		$no = 0;
+		
+		foreach($question_map as $temp => $q_no){
+			foreach($q_no as $index => $val){
+				$no++;
+				$new_question_no[$val] = $no;
+			}
+		}
+		
+		//dd($question_map,$question_step,$new_question_no);
+		
+		$new_questions = [];
+		foreach($new_question_no as $k => $v){
+			$new_questions[] = $questions->where('id',$k)->first();
+		}	
+		$questions = $new_questions;
+		return $questions;
+	}
 }

@@ -22,6 +22,7 @@
 						<th >題目</th>
 						<th >選項</th>
 						<th >功能</th>
+						<th >隱藏</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -41,6 +42,7 @@
 							<a href="" data-toggle="modal" data-target="#delete">刪除</a>
 							@endif
 						</td>
+						<td>{{ ['公開','隱藏'][$survey->is_hide] }}</td>
 					</tr>
 				@endforeach
 					<!--tr>
