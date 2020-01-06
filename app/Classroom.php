@@ -105,7 +105,7 @@ class Classroom extends Model
 				*/
 			}elseif($question->type == 2){
 				$total = $total + $answers->count();
-				$correct = $answers->where('answer',$question->correct_answer)->count();
+				$correct = $correct + $answers->where('answer',$question->correct_answer)->count();
 				//$result[$question->id] = [$A,$B,$C,$D];
 			}elseif($question->type == 3){
 				/*
