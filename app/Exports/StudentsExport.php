@@ -25,9 +25,13 @@ class StudentsExport implements FromArray
 			$temp_array = [];
 			foreach($surveys as $survey){
 				if($item){
-					$temp_array[] = $item[$survey->id];
+					if(array_key_exists($survey->id,$item)){
+						$temp_array[] = $item[$survey->id];
+					}else{
+						$temp_array[] = "";
+					}
 				}else{
-					$temp_array[] = [];
+					$temp_array[] = "";
 				}
 			}
 			

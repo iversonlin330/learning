@@ -43,7 +43,7 @@ class UserController extends Controller
 		$user = Auth::user();
 		$data = $request->all();
 		
-		$classroom = Classroom::find($data['classroom_id'])->first();
+		$classroom = Classroom::find($data['classroom_id']);
 		
 		$new_user = User::create([
 			'account' => str_pad($classroom->teacher->id,3,'0',STR_PAD_LEFT) . $classroom->class_number . str_pad($data['student_id'],3,'0',STR_PAD_LEFT),
