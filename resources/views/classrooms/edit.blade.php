@@ -93,12 +93,12 @@
 					</div>
 				</div>
 			</div>
-			<!--div class="text-center">
+			<div class="text-center">
 				<div class="btn-group">
-					<button type="" class="btn btn_style" data-toggle="modal" data-target="#teacher_creatClass">儲存</button>
-					<button type="" class="btn btn_cancel" onclick="location.href='{{url('classrooms')}}'">取消</button>
+					<!--button type="" class="btn btn_style" data-toggle="modal" data-target="#teacher_creatClass">儲存</button-->
+					<button type="" class="btn btn_cancel" onclick="location.href='{{url('classrooms')}}'">返回</button>
 				</div>
-			</div-->
+			</div>
 		</div>
 	</div>
 </div>
