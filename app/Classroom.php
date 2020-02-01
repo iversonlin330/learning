@@ -130,6 +130,7 @@ class Classroom extends Model
 			}
 		}
 		//dd($correct,$total);
+		if($group_id == 2 && $this->id == 2)
 		dd($classroom,$group,$questions,$user_ids,$question_ids,$user_answers,$correct,$total);
 		if($correct ==0 || $total == 0){
 			return '0%';
