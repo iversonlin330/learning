@@ -103,13 +103,13 @@ class Classroom extends Model
 					$result[$question->id][] = $answer->answer;
 				}
 				*/
-				$total = $total + $answers->count();
-				$correct = $correct + $answers->where('answer',$question->correct_answer)->count();
 			}elseif($question->type == 2){
 				$total = $total + $answers->count();
 				$correct = $correct + $answers->where('answer',$question->correct_answer)->count();
 				//$result[$question->id] = [$A,$B,$C,$D];
 			}elseif($question->type == 3){
+				$total = $total + $answers->count();
+				$correct = $correct + $answers->where('answer',$question->correct_answer)->count();
 				/*
 				$total = $A = $B = $C = $D = 0;
 				foreach($answers as $index => $answer){
