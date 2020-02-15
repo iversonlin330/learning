@@ -51,7 +51,7 @@ $('#customFileLang').on('change',function(e){
 	var fileName = e.target.files[0].name;
 	//replace the "Choose a file" label
 	$(this).next('.custom-file-label').html(fileName);
-	$(".status_text").show();
+	//$(".status_text").show();
 })
 
 function sort_group_table(type){

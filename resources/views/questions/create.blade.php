@@ -45,7 +45,7 @@
 						</div>
 						<div class="form-group">
 							<label for="que_content" class="lable_title">題目內容</label>
-							<textarea style="width: 390px; height: 170px;" type="text" class="form-control" id="que_content"  name="name"></textarea>
+							<textarea style="width: 390px; height: 170px;" type="text" class="form-control" id="que_content"  name="name" required></textarea>
 						</div>
 						<div class="form-group">
 							<label for="que_content" class="lable_title">選項</label>

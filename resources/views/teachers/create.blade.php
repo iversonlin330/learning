@@ -110,7 +110,7 @@
 					<div class="row" style="margin:0;">
 						<div class="form-group mr-30">
 							<label for="number_of_class" class="lable_title">班級數量</label>
-							<input type="number" class="form-control" id="number_of_class" name="number_of_class" style="width: 300px;" required>
+							<input type="number" class="form-control" id="number_of_class" name="number_of_class" style="width: 300px;" max="26" required>
 						</div>
 					</div>
 					@endif

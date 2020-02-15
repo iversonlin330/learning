@@ -55,7 +55,7 @@
 							$item = $user->user_info->survey;
 						?>
 						<td>
-						@if($item)
+						@if(is_array($item))
 						{{ array_key_exists($survey->id,$item)? $item[$survey->id] : '' }}
 						@endif
 						</td>

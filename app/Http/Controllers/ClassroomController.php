@@ -23,7 +23,7 @@ class ClassroomController extends Controller
 		//$classrooms = Classroom::where('teacher_id',$user->info_id)->get();
 		$classrooms = $user->user_info->classrooms;
 		
-		$is_add = $teacher->number_of_class >= $teacher->classrooms->count();
+		$is_add = $teacher->number_of_class > $teacher->classrooms->count();
 		
 		return view('classrooms.index',compact('classrooms','is_add'));
     }

@@ -65,7 +65,7 @@ class LoginController extends Controller
 			$credentials = User::where('account',$data['account'])
 				->where('password',$data['password'])
 				->first();
-			if($credentials){
+			if($credentials && $credentials->email_verified_at != null){
 				Auth::login($credentials);
 				$user = Auth::user();
 				if($user->user_info){
