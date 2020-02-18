@@ -81,7 +81,15 @@
 @section('script')
 @parent
 <script>
-    $("form").submit(function(e) {
+    
+$("#class_id").keypress(function(event){
+    var ew = event.which;
+    if(65 <= ew && ew <= 90)
+        return true;
+    return false;
+});
+	
+	$("form").submit(function(e) {
 		
 		e.preventDefault();
 		$.ajax({
