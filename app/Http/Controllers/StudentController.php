@@ -104,9 +104,13 @@ class StudentController extends Controller
 	public function getAdminCreate()
     {
         //
-		$teachers = User::with('user_info')->has('user_info')->where('role',50)->get();
+		$teachers = User::where('role',50)->get();
 		$class_map = [];
-		
+		foreach($teachers as $k=>$v){
+			if(!$v->user_info){
+				unset($teachers[$k]);
+			}
+		}
 		foreach($teachers as $teacher){
 			foreach($teacher->user_info->classrooms as $classroom){
 				$class_map[$teacher->user_info->id][] = [
@@ -197,8 +201,14 @@ class StudentController extends Controller
         //
 		$user = User::find($id);
 		$student = $user->user_info; 
-		$teachers = User::with('user_info')->has('user_info')->where('role',50)->get();
+		$teachers = User::where('role',50)->get();
 		$class_map = [];
+		
+		foreach($teachers as $k=>$v){
+			if(!$v->user_info){
+				unset($teachers[$k]);
+			}
+		}
 		
 		foreach($teachers as $teacher){
 			foreach($teacher->user_info->classrooms as $classroom){
