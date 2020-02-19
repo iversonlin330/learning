@@ -67,6 +67,7 @@
 					</div>
 					
 					<!--Q1-->
+					@if(0)
 					@foreach($surveys as $survey)
 					<div class="form-group">
 						<div><label for="" class="lable_title" >{{ $survey->title }}</label></div>
@@ -80,7 +81,6 @@
 						@endforeach
 					</div>
 					@endforeach
-					@if(0)
 					<div class="form-group">
 						<div><label for="stu_question_1" class="lable_title" >你每天花多少時間使用電腦？(單選)</label></div>
 						<div class="form-check form-check-inline">
