@@ -50,7 +50,7 @@ class TestingController extends Controller
 	public function finish(Request $request, $id){
 		$user = Auth::user();
 		$data = $request->all();
-		$question_ids = Question::where('group_id',2)->get()->pluck('id')->toArray();
+		$question_ids = Question::where('group_id',$id)->get()->pluck('id')->toArray();
 		//dd($data,$question_ids);
 		UserAnswer::where('user_id',$user->id)->whereIn('question_id',$question_ids)->delete();
 		foreach($data['answer'] as $question_id => $answer){
