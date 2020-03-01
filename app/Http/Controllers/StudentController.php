@@ -253,9 +253,9 @@ class StudentController extends Controller
 			'gender' => $data['gender'],
 		]);
 		
-		if(!array_key_exists('survey',$data)){
-			$data['survey'] = [];
-		}
+		//if(!array_key_exists('survey',$data)){
+		//	$data['survey'] = [];
+		//}
 		
 		$new_user->user_info->update([
 			//'user_id' => $new_user->id,
@@ -264,7 +264,7 @@ class StudentController extends Controller
 			//'search_time' =>$data['stu_question_2'],
 			//'typing' =>$data['stu_question_3'],
 			//'search_easy' =>$data['stu_question_4'],
-			'survey' => json_encode($data['survey']),
+			//'survey' => json_encode($data['survey']),
 		]);
 
 		return redirect('students');
