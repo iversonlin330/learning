@@ -157,7 +157,7 @@ class StudentController extends Controller
 			//'search_time' =>$data['stu_question_2'],
 			//'typing' =>$data['stu_question_3'],
 			//'search_easy' =>$data['stu_question_4'],
-			'survey' => json_encode($data['survey']),
+			'survey' => [],
 		]);
 		/*
 		
