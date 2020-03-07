@@ -104,7 +104,7 @@
 				<div id="stu_btn"  onclick="tab_show(2)"><a href="#"></a></div>
 			</div>
 		@endif
-			<table id="group_table" class="table table-bordered">
+			<table id="group_table" class="table table-bordered group_table">
 				<thead>
 					<tr>
 						@if(Auth::user()->role >=50)
@@ -127,12 +127,18 @@
 				</thead>
 				<tbody>
 					@foreach($groups as $group)
-						<tr data-id="{{ $group->id }}">
+					<?php
+						$number = 0;
+						if(array_key_exists($group->grade,Config('map.class_number'))){
+							$number = Config('map.class_number')[$group->grade];
+						}
+					?>
+						<tr data-id="{{ $group->id }}" data-number="{{ $number }}">
 							@if(Auth::user()->role >=50)
 							<td>{{$group->g_id}}</td>
 							@endif
 							<td>{{$group->subject}}</td>
-							<td data-number="{{ Config('map.class_number')[$group->grade] }}">{{$group->grade}}</td>
+							<td>{{$group->grade}}</td>
 							<td>{{$group->title}}</td>
 							@if(Auth::user()->role == 1)
 							<td>{{ $group->is_finish }}</td>
@@ -159,7 +165,7 @@
 					@endforeach
 				</tbody>
 			</table>
-			<table id="group_table_2" class="table table-bordered">
+			<table id="group_table_2" class="table table-bordered group_table">
 				<thead>
 					<tr>
 						@if(Auth::user()->role >=50)
@@ -179,12 +185,18 @@
 				</thead>
 				<tbody>
 					@foreach($teacher_not_group as $group)
-						<tr data-id="{{ $group->id }}">
+					<?php
+						$number = 0;
+						if(array_key_exists($group->grade,Config('map.class_number'))){
+							$number = Config('map.class_number')[$group->grade];
+						}
+					?>
+						<tr data-id="{{ $group->id }}" data-number="{{ $number }}">
 							@if(Auth::user()->role >=50)
 							<td>{{$group->g_id}}</td>
 							@endif
 							<td>{{$group->subject}}</td>
-							<td data-number="{{ Config('map.class_number')[$group->grade] }}">{{$group->grade}}</td>
+							<td>{{$group->grade}}</td>
 							<td>{{$group->title}}</td>
 							@if(Auth::user()->role == 1)
 							<td>{{ $group->is_finish }}</td>
@@ -259,8 +271,35 @@ function sort_group_table(type){
 	$tbody.find('tr').sort(function(a,b){ 
 		//var tda = $(a).find('td:eq(2)').text(); // can replace 1 with the column you want to sort on
 		//var tdb = $(b).find('td:eq(2)').text(); // this will sort on the second column
-		var tda = $(a).find('td:eq(2)').data('number'); // can replace 1 with the column you want to sort on
-		var tdb = $(b).find('td:eq(2)').data('number'); // this will sort on the second column
+		//var tda = $(a).find('td:eq(2)').data('number'); // can replace 1 with the column you want to sort on
+		//var tdb = $(b).find('td:eq(2)').data('number'); // this will sort on the second column
+		var tda = $(a).data('number'); // can replace 1 with the column you want to sort on
+		var tdb = $(b).data('number'); // this will sort on the second column
+				// if a < b return 1
+		if(type == 'desc'){
+			return tda < tdb ? 1 
+			   // else if a > b return -1
+			   : tda > tdb ? -1 
+			   // else they are equal - return 0    
+			   : 0;  
+		}else{
+			return tda > tdb ? 1 
+			   // else if a > b return -1
+			   : tda < tdb ? -1 
+			   // else they are equal - return 0    
+			   : 0;  
+		}
+		         
+	}).appendTo($tbody);
+	
+	var $tbody = $('#group_table_2 tbody');
+	$tbody.find('tr').sort(function(a,b){ 
+		//var tda = $(a).find('td:eq(2)').text(); // can replace 1 with the column you want to sort on
+		//var tdb = $(b).find('td:eq(2)').text(); // this will sort on the second column
+		//var tda = $(a).find('td:eq(2)').data('number'); // can replace 1 with the column you want to sort on
+		//var tdb = $(b).find('td:eq(2)').data('number'); // this will sort on the second column
+		var tda = $(a).data('number'); // can replace 1 with the column you want to sort on
+		var tdb = $(b).data('number'); // this will sort on the second column
 				// if a < b return 1
 		if(type == 'desc'){
 			return tda < tdb ? 1 
@@ -293,7 +332,7 @@ $("#filter_subject").change(function () {
     var jo = $('#group_table tbody').find("tr");
     if (this.value == "") {
         jo.show();
-        return;
+        //return;
     }
     //hide all the rows
     jo.hide();
@@ -310,6 +349,30 @@ $("#filter_subject").change(function () {
     })
     //show the rows that match.
     .show();
+	
+	var data = this.value.split(" ");
+    //create a jquery object of the rows
+    var jo = $('#group_table_2 tbody').find("tr");
+    if (this.value == "") {
+        jo.show();
+        //return;
+    }
+    //hide all the rows
+    jo.hide();
+
+    //Recusively filter the jquery object to get results.
+    jo.filter(function (i, v) {
+        var $t = $(this);
+        for (var d = 0; d < data.length; ++d) {
+            if ($t.is(":contains('" + data[d] + "')")) {
+                return true;
+            }
+        }
+        return false;
+    })
+    //show the rows that match.
+    .show();
+	
 });
 
 var group_classrooms = {!! json_encode($result,true) !!};
