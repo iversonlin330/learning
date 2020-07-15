@@ -13,7 +13,7 @@
 	<div class="admin_view_detial">
 		<p class="title-brown"></p>
 		<div class="top_right_button">
-			<button class="btn btn_function" onclick="location.href='{{  url('surveys/create') }}'">新增問券</button>
+			<button class="btn btn_function" onclick="location.href='{{  url('surveys/create') }}'">新增問卷</button>
 		</div>
 		<div class="view_detial_table">
 			<table class="table table-bordered">

@@ -12,7 +12,7 @@
 <div class="container mb-5">
 	<div class="col-12">
 		<div class="admin_import_exam">
-			<p style="margin-bottom: 15px; font-weight: bold;" class="title-20 text-center">匯入學生問券</p>
+			<p style="margin-bottom: 15px; font-weight: bold;" class="title-20 text-center">匯入學生問卷</p>
 			<form action="{{ url('surveys') }}" method="post" enctype="multipart/form-data">
 			<div class="admin_import_exam_main white_box_bg mb-30">
 				<div class="row" style="margin:0;">

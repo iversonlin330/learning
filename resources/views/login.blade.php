@@ -15,7 +15,7 @@
 			<div class="login">
 				<p class="title-20 text-center">數位閱讀學習平台</p>
 				<div class="login_left">
-					<a href="#"><img src="img/explanation.png" alt=""></a>
+					<a href="https://pirls.ntue.edu.tw/pirls/%E6%95%B8%E4%BD%8D%E9%96%B1%E8%AE%80%E5%AD%B8%E7%BF%92%E5%B9%B3%E5%8F%B0/"><img src="img/explanation.png" alt=""></a>
 				</div>
 				<div class="login_right">
 				<p class="title-20 text-center mb-15">登入 LOGIN</p>
@@ -45,7 +45,7 @@
 								<!--a href="UC2-PF4_forgot_password.html" class="signup">忘記密碼?</a>
 								<a href="UC2-PF2_teacher_signup.html" class="signup">申請帳號</a-->
 								<a href="{{url('forgot')}}" class="signup">忘記密碼?</a>
-								<a href="{{url('registers')}}" class="signup">申請帳號</a-->
+								<a href="{{url('registers')}}" class="signup">申請帳號</a>
 							</div>
 							<button  type="submit" class="btn btn_style">登入</button>
 						</form>

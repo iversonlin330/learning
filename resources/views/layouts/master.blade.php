@@ -46,6 +46,7 @@
 		<section>
             @yield('content')
         </section>
+		<p class="text-center">建議使用1360ｘ768以上解析度，以獲得最佳瀏覽體驗。</p>
 		@section('script')
         <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/jquery-ui.js') }}"></script>

@@ -14,7 +14,7 @@
 	<form action="{{url('surveys/'.$survey->id)}}" method="post">
 	@method('PUT')
 		<div class="student_questionaire">
-			<p style="margin-bottom: 15px;" class="title-20">學生問券編輯</p>
+			<p style="margin-bottom: 15px;" class="title-20">學生問卷編輯</p>
 			<hr class="line">
 			<div class="student_questionaire_main mb-30">
 				<!--question form-->
