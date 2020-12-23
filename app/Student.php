@@ -33,7 +33,13 @@ class Student extends Model
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+		'survey' => 'array',
     ];
+	
+	protected function asJson($value)
+    {
+        return json_encode($value, JSON_UNESCAPED_UNICODE);
+    }
 	
 	public function user_info()
     {

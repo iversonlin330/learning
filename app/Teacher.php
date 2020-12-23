@@ -49,6 +49,6 @@ class Teacher extends Model
 	
 	public function getTIdAttribute()
     {
-        return 'T'.str_pad($this->id,3,'0',STR_PAD_LEFT);
+        return 'T'.str_pad($this->id,4,'0',STR_PAD_LEFT);
     }
 }

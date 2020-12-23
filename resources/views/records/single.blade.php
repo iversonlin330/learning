@@ -11,7 +11,7 @@
 @section('content')
 <div class="container mb-5">
 	<div class="teacher_view_single_result mb-60">
-		<p class="title-brown">{{ $group->subject }}/{{ $group->grade }}/{{ $group->title }}</p>
+		<p class="title-brown">{{ $classroom->grade.'年'.$classroom->classroom }}班<br>{{ $group->subject }}/{{ $group->grade }}/{{ $group->title }}</p>
 		<div class="top_right_button">
 				<button class="btn btn_function" onclick="location.href='{{url('record/single-export?classroom_id='.$data['classroom_id'].'&group_id='.$data['group_id'])}}'">匯出題組資料</button>
 				<button class="btn btn_function" onclick="location.href='{{url('record/single-export2?classroom_id='.$data['classroom_id'].'&group_id='.$data['group_id'])}}'">匯出詳細資料</button>
@@ -33,7 +33,7 @@
 						
 						@foreach($questions as $question)
 						<tr>
-							<td style="width:10%">{{ $question->no }}</td>
+							<td style="width:10%">{{ $loop->index+1 }}</td>
 							<td style="width:90%">
 								@if($question->type==1)
 									@if(array_key_exists($question->id,$result))
@@ -93,10 +93,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
 <script>
 //資料標題
-    var labels = ['A', 'B','C','D'];
+    //var labels = ['A', 'B','C','D','E','F','G','H'];
 
 $(".canvasPie").each(function(){
 	var rate = $(this).data('rate');
+	
+	var labels = [];
+	for(x in rate.split(",")){
+		var c = String.fromCharCode(65+ parseInt(x));
+		labels.push(c);
+	}
 	
     var pieChart = new Chart($(this), {
         type: 'pie',
@@ -110,7 +116,11 @@ $(".canvasPie").each(function(){
                     "#FDC777",
                     "#E57878",
                     "#78A0E5",
-                    "#88725B"
+                    "#88725B",
+					"#d7a7c4",
+					"#afafaf",
+					"#74a075",
+					"#8d83a4"
                 ],
             }],
         }

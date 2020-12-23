@@ -25,7 +25,7 @@
 			@foreach($multi_result as $multi)
 			<?php $result = $multi['result']; ?>
 				<div class="exam_detial_table ">
-					<p class="title-brown">{{ $multi['group']->subject }}/{{ $multi['group']->grade }}/{{ $multi['group']->title }}</p>
+					<p class="title-brown">{{ $multi['classroom']->grade.'年'.$multi['classroom']->classroom }}班<br>{{ $multi['group']->subject }}/{{ $multi['group']->grade }}/{{ $multi['group']->title }}</p>
 					<table class="table table-bordered" id="result_table">
 						<thead>
 							<tr>
@@ -36,7 +36,7 @@
 						<tbody class="scroll_section">
 							@foreach($multi['questions'] as $question)
 							<tr>
-								<td style="width:20%">{{ $question->no }}</td>
+								<td style="width:20%">{{ $loop->index+1 }}</td>
 								<td style="width:80%">
 									@if($question->type==1)
 										@if(array_key_exists($question->id,$result))
@@ -101,10 +101,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
 <script>
 //資料標題
-    var labels = ['A', 'B','C','D'];
+    //var labels = ['A', 'B','C','D'];
 
 $(".canvasPie").each(function(){
 	var rate = $(this).data('rate');
+	
+	var labels = [];
+	for(x in rate.split(",")){
+		var c = String.fromCharCode(65+ parseInt(x));
+		labels.push(c);
+	}
 	
     var pieChart = new Chart($(this), {
         type: 'pie',
@@ -118,7 +124,11 @@ $(".canvasPie").each(function(){
                     "#FDC777",
                     "#E57878",
                     "#78A0E5",
-                    "#88725B"
+                    "#88725B",
+					"#d7a7c4",
+					"#afafaf",
+					"#74a075",
+					"#8d83a4"
                 ],
             }],
         }

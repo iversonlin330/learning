@@ -55,7 +55,11 @@ class LoginController extends Controller
 			$user = User::where('account',$data['account'])->first();
 			Auth::login($user);
 			if($user->user_info){
-				return redirect('groups');
+				if($user->user_info->survey == "[]"){
+					return redirect('students/create');
+				}else{
+					return redirect('groups');
+				}
 			}else{
 				return redirect('students/create');
 			}
@@ -65,7 +69,7 @@ class LoginController extends Controller
 			$credentials = User::where('account',$data['account'])
 				->where('password',$data['password'])
 				->first();
-			if($credentials){
+			if($credentials && $credentials->email_verified_at != null){
 				Auth::login($credentials);
 				$user = Auth::user();
 				if($user->user_info){

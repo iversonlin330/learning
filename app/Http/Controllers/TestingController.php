@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Group;
 use App\UserAnswer;
+use App\Question;
 use Auth;
 
 class TestingController extends Controller
@@ -49,6 +50,9 @@ class TestingController extends Controller
 	public function finish(Request $request, $id){
 		$user = Auth::user();
 		$data = $request->all();
+		$question_ids = Question::where('group_id',$id)->get()->pluck('id')->toArray();
+		//dd($data,$question_ids);
+		UserAnswer::where('user_id',$user->id)->whereIn('question_id',$question_ids)->delete();
 		foreach($data['answer'] as $question_id => $answer){
 			
 			$user_answer = UserAnswer::firstOrNew(array('question_id' => $question_id,'user_id' => $user->id));
@@ -81,9 +85,34 @@ class TestingController extends Controller
 			->get()
 			->pluck('answer','question_id')
 			->toArray();
+		
+		$templates = $group->templates;
+		$question_map = $templates->pluck('question_map','order')->toArray();
+		$question_step = [];
+		$new_question_no = [];
+		foreach($question_map as $key=>$val){
+			$question_step[end($val)] = $key;
+		}
+		
+		$no = 0;
+		
+		foreach($question_map as $temp => $q_no){
+			foreach($q_no as $index => $val){
+				$no++;
+				$new_question_no[$val] = $no;
+			}
+		}
+		
+		//dd($question_map,$question_step,$new_question_no);
+		
+		$new_questions = [];
+		foreach($new_question_no as $k => $v){
+			$new_questions[] = $questions->where('id',$k)->first();
+		}
+			//dd($questions,$new_questions);
 		$correct = 0;
 		$total = 0;
-		foreach($questions as $question){
+		foreach($new_questions as $question){
 			if($question->type == 1)
 				continue;
 			if(array_key_exists($question->id,$user_answers)){
@@ -95,8 +124,8 @@ class TestingController extends Controller
 		}
 		
 		$rate = round($correct/$total*100);
-		
-		return view('testings.finish',compact('questions','user_answers','rate'));
+		$questions = $new_questions;
+		return view('testings.finish',compact('questions','user_answers','rate','new_question_no'));
 	}
 	
 }

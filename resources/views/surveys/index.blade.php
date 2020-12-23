@@ -11,68 +11,38 @@
 @section('content')
 <div class="container mb-5">
 	<div class="admin_view_detial">
-		<p class="title-brown">{{$group->subject}}/{{$group->grade}}/{{$group->title}}</p>
-		@if($user->role == 99)
+		<p class="title-brown"></p>
 		<div class="top_right_button">
-			<button class="btn btn_function" onclick="location.href='{{  url('questions/create/?group_id='.$group->id) }}'">新增題目</button>
+			<button class="btn btn_function" onclick="location.href='{{  url('surveys/create') }}'">新增問卷</button>
 		</div>
-		@endif
 		<div class="view_detial_table">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						@if($user->role == 99)
-						<th style="width:8%">題號</th>
-						<th style="width:8%">題型</th>
-						<th style="width:8%">適合年級</th>
-						<th style="width:8%">閱讀歷程</th>
-						<th style="width:36%">題目內容</th>
-						<th style="width:8%">參考答案</th>
-						<th style="width:8%">數位指標</th>
-						<th style="width:16%">功能</th>
-						@else
-						<th style="width:10%">題號</th>
-						<th style="width:10%">題型</th>
-						<th style="width:10%">適合年級</th>
-						<th style="width:10%">閱讀歷程</th>
-						<th style="width:50%">題目內容</th>
-						<th style="width:10%">參考答案</th>
-						@endif
+						<th >題目</th>
+						<th >選項</th>
+						<th >功能</th>
+						<th >隱藏</th>
 					</tr>
 				</thead>
 				<tbody>
-				@foreach($questions as $question)
+				@foreach($surveys as $survey)
 					<tr>
-						<td>{{ $loop->iteration }}</td>
-						<td>{{ Config::get('map.question_type')[$question->type] }}</td>
-						<td>{{ $question->grade }}</td>
-						<td>{{ $question->history }}</td>
-						<td>{{ $question->name }}
-							@if($question->type != 1)
-							<br>
-							選項範例：
-							<?php $items = json_decode($question->item,true); ?>
-							@foreach($items as $index=>$item)
-								<br>{{chr(65+$index)}}:{{ $item }}
-							@endforeach
-							@endif
-						</td>
+						<td>{{ $survey->title }}</td>
 						<td>
-						@if($question->type == 3)
-							{{ implode('、',json_decode($question->correct_answer)) }}
-						@else
-							{{ $question->correct_answer }}
-						@endif
-						</td>   
-						@if($user->role == 99)
-						<td>{{ $question->goal }}</td>
+							@foreach($survey->item as $index=>$item)
+								@if($item)
+								{{ $index+1}}.{{$item}}<br>
+								@endif
+							@endforeach
+						</td>
 						<td class="td-underline">
-							<a href="{{ url('questions/'.$question->id.'/edit') }}" style="float: left; margin-right: 10px;">編輯</a>
+							<a href="{{ url('surveys/'.$survey->id.'/edit') }}" style="float: left; margin-right: 10px;">編輯</a>
 							@if(0)
 							<a href="" data-toggle="modal" data-target="#delete">刪除</a>
 							@endif
 						</td>
-						@endif
+						<td>{{ ['公開','隱藏'][$survey->is_hide] }}</td>
 					</tr>
 				@endforeach
 					<!--tr>

@@ -12,8 +12,8 @@
 <div class="container mb-5">
 	<div class="col-12">
 		<div class="admin_import_exam">
-			<p style="margin-bottom: 15px; font-weight: bold;" class="title-20 text-center">匯入題組</p>
-			<form action="{{ url('groups') }}" method="post" enctype="multipart/form-data">
+			<p style="margin-bottom: 15px; font-weight: bold;" class="title-20 text-center">匯入學生問卷</p>
+			<form action="{{ url('surveys') }}" method="post" enctype="multipart/form-data">
 			<div class="admin_import_exam_main white_box_bg mb-30">
 				<div class="row" style="margin:0;">
 					<div class="form-group mr-30">
@@ -31,7 +31,7 @@
 			<div class="text-center">
 				<div class="btn-group">
 					<button type="submit" class="btn btn_style">上傳</button>
-					<button type="button" class="btn btn_cancel" onclick="location.href='{{ url('groups') }}'">取消</button>
+					<button type="button" class="btn btn_cancel" onclick="location.href='{{ url('surveys') }}'">取消</button>
 				</div>
 			</div>
 			</form>
@@ -51,7 +51,7 @@ $('#customFileLang').on('change',function(e){
 	var fileName = e.target.files[0].name;
 	//replace the "Choose a file" label
 	$(this).next('.custom-file-label').html(fileName);
-	//$(".status_text").show();
+	$(".status_text").show();
 })
 
 function sort_group_table(type){

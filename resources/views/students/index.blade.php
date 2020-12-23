@@ -30,10 +30,13 @@
 						<th style="width:15%;">就讀學校</th>
 						<th style="width:5%;">年級</th>
 						<th style="width:5%;">班級</th>
-						<th style="width:10%;">使用時間</th>
+						@foreach($surveys as $survey)
+							<th>{{ $survey->title }}</th>
+						@endforeach
+						<!--th style="width:10%;">使用時間</th>
 						<th style="width:10%;">尋找資訊時間</th>
 						<th style="width:8%;">自評打字能力</th>
-						<th style="width:8%;">自評尋找資訊</th>
+						<th style="width:8%;">自評尋找資訊</th-->
 						<th style="width:10%;">功能</th>
 					</tr>
 				</thead>
@@ -47,10 +50,20 @@
 					<td>{{ $user->user_info->classroom->teacher->school_id }}</td>
 					<td>{{ $user->user_info->classroom->grade }}</td>
 					<td>{{ $user->user_info->classroom->classroom }}</td>
-					<td>{{ Config::get('map.computer')[$user->user_info->computer] }}</td>
+					@foreach($surveys as $survey)
+						<?php 
+							$item = $user->user_info->survey;
+						?>
+						<td>
+						@if(is_array($item))
+						{{ array_key_exists($survey->id,$item)? $item[$survey->id] : '' }}
+						@endif
+						</td>
+					@endforeach
+					<!--td>{{ Config::get('map.computer')[$user->user_info->computer] }}</td>
 					<td>{{ Config::get('map.search_time')[$user->user_info->search_time] }}</td>
 					<td>{{ Config::get('map.typing')[$user->user_info->typing] }}</td>
-					<td>{{ Config::get('map.search_easy')[$user->user_info->search_easy] }}</td>
+					<td>{{ Config::get('map.search_easy')[$user->user_info->search_easy] }}</td-->
 					<td class="td-underline">
 						<a href="{{url('students/'.$user->id.'/edit')}}" style="float: left; margin-right: 10px;">編輯</a>
 						@if(0)

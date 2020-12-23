@@ -67,6 +67,20 @@
 					</div>
 					
 					<!--Q1-->
+					@if(0)
+					@foreach($surveys as $survey)
+					<div class="form-group">
+						<div><label for="" class="lable_title" >{{ $survey->title }}</label></div>
+						@foreach($survey->item as $item)
+							@if($item)
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="survey[{{$survey->id}}]" value="{{$item}}" required>
+								<label class="form-check-label" for="">{{$item}}</label>
+							</div>
+							@endif
+						@endforeach
+					</div>
+					@endforeach
 					<div class="form-group">
 						<div><label for="stu_question_1" class="lable_title" >你每天花多少時間使用電腦？(單選)</label></div>
 						<div class="form-check form-check-inline">
@@ -146,7 +160,7 @@
 							<label class="form-check-label" for="inlineRadio4">非常不同意</label>
 						</div>
 					</div>
-				
+					@endif
 			</div>
 			<div class="text-center">
 				<div class="btn-group">
@@ -187,6 +201,10 @@ $("#teacher_id").change(function(){
 	$("[name='name']").val(user.name);
 	$("[name='gender']").filter('[value='+user.gender+']').prop('checked', true);
 	
+	for(x in student.survey){
+		
+		$("[name='survey["+x+"]']").filter('[value='+student.survey[x]+']').prop('checked', true);
+	}
 	$("[name='stu_question_1']").filter('[value='+student.computer+']').prop('checked', true);
 	$("[name='stu_question_2']").filter('[value='+student.search_time+']').prop('checked', true);
 	$("[name='stu_question_3']").filter('[value='+student.typing+']').prop('checked', true);

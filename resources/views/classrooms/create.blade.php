@@ -81,7 +81,25 @@
 @section('script')
 @parent
 <script>
-    $("form").submit(function(e) {
+    "use strict"
+$("#class_id").keypress(function(event){
+    var ew = event.which;
+	
+	if(65 <= ew && ew <= 90)
+        return true;
+    return false;
+});
+
+
+$("#class_id").on("change keyup keypress",function(){
+	let value = $(this).val();
+	if(!/^[a-zA-Z()]$/.test(value)){
+		$("#class_id").val("");
+	}
+})
+
+	
+	$("form").submit(function(e) {
 		
 		e.preventDefault();
 		$.ajax({

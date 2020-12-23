@@ -40,6 +40,11 @@ class QuestionController extends Controller
     {
         //
 		$data = $request->all();
+        
+        if($data['type'] == 3){
+            $data['correct_answer'] = json_encode(explode('@',$data['correct_answer']),JSON_UNESCAPED_UNICODE);
+        }
+        
 		Question::create([
 			'no' => Question::where('group_id',$data['group_id'])->max('no')+1,
 			'name' => $data['name'],
@@ -98,6 +103,10 @@ class QuestionController extends Controller
 		
 		$question = Question::find($id);
 		
+        if($data['type'] == 3){
+            $data['correct_answer'] = json_encode(explode('@',$data['correct_answer']),JSON_UNESCAPED_UNICODE);
+        }
+        
 		$question->update([
 			//'no' => 1,
 			'name' => $data['name'],

@@ -79,6 +79,8 @@ class Classroom extends Model
 	
 	public function groups_rate($group_id)
 	{
+		//if($group_id != 2 )
+		//	return;
 		//dd($this->belongsToMany('\App\Group','group_classroom','classroom_id','group_id'));
 		//return '80%';
 		//echo $this->id.$group_id;
@@ -92,22 +94,26 @@ class Classroom extends Model
 		$user_answers = UserAnswer::whereIn('question_id',$question_ids)
 			->whereIn('user_id',$user_ids)
 			->get();
+		$already_answer_count = $user_answers->groupby('user_id')->count();
 		$result = [];
 		$total = 0;
 		$correct = 0;
+		//dd($questions->pluck('type',"id"));
 		foreach($questions as $question){
-			$answers = $user_answers->where('question_id',$question->id);
 			if($question->type == 1){
-				/*
-				foreach($answers as $index => $answer){
-					$result[$question->id][] = $answer->answer;
-				}
-				*/
-			}elseif($question->type == 2){
-				$total = $total + $answers->count();
-				$correct = $answers->where('answer',$question->correct_answer)->count();
+				continue;
+			}
+			$answers = $user_answers->where('question_id',$question->id);
+			
+			if($question->type == 2){
+				//$total = $total + $answers->count() ;
+				$total = $total + $already_answer_count;
+				$correct = $correct + $answers->where('answer',$question->correct_answer)->count();
 				//$result[$question->id] = [$A,$B,$C,$D];
 			}elseif($question->type == 3){
+				//$total = $total + $answers->count();
+				$total = $total + $already_answer_count;
+				$correct = $correct + $answers->where('answer',$question->correct_answer)->count();
 				/*
 				$total = $A = $B = $C = $D = 0;
 				foreach($answers as $index => $answer){
@@ -129,7 +135,8 @@ class Classroom extends Model
 				*/
 			}
 		}
-		//dd($correct,$total);
+		//if($group_id == 2 && $this->id == 2)
+		//dd($classroom,$group,$questions,$user_ids,$question_ids,$user_answers,$correct,$total);
 		if($correct ==0 || $total == 0){
 			return '0%';
 		}else{
