@@ -1,13 +1,13 @@
 @extends('layouts.master')
- 
+
 @section('title', 'index')
- 
+
 @section('style')
 @parent
 <style>
 </style>
 @endsection
- 
+
 @section('content')
 <div class="container mb-5">
 	<div class="col-12">
@@ -42,7 +42,7 @@
 							@foreach($citys as $city=>$school)
 								<option value="{{ $city }}">{{ $city }}</option>
 							@endforeach
-							</select>  
+							</select>
 						</div>
 						<div class="mb-15">
 							<div><label for="teacher_school" class="lable_title">服務學校</label></div>
@@ -64,6 +64,9 @@
 								<option value="四">四</option>
 								<option value="五">五</option>
 								<option value="六">六</option>
+                                <option value="七">七</option>
+                                <option value="八">八</option>
+                                <option value="九">九</option>
 							</select>
 						</div>
 						<div class="mb-15">
@@ -72,7 +75,7 @@
 								<input type="text" class="form-control" name="classroom" id="teacher_class" style="width: 280px;" required>
 								<span class="input-group-addon" style="line-height: 35px; margin-left:5px;">班</span>
 							</div-->
-							
+
 							<div class="form-group">
 								<label for="teacher_class" class="lable_title">任教班級</label>
 								<div class="input-group">
@@ -125,7 +128,7 @@
 						</div>
 					</div>
 					<p class="status_text" style="text-align: left">*以上資料皆為必填, 不能空白</p>
-				
+
 			</div>
 			<div class="text-center">
 				<div class="btn-group">
@@ -138,7 +141,7 @@
 	</div>
 </div>
 @endsection
- 
+
 @section('script')
 @parent
 <script>
@@ -155,7 +158,7 @@
 	$("[name='password']").val(user.password);
 	$("#teacher_password_again").val(user.password);
 	$("[name='number_of_class']").val(teacher.number_of_class);
-	
+
 	for(x in teacher.subject){
 		$("[name^='subject']").filter('[value='+teacher.subject[x]+']').prop('checked', true);
 	}
