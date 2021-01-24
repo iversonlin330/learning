@@ -19,6 +19,7 @@
 			<button class="btn btn_function" onclick="location.href='{{url('students/admin-create')}}'">新增資料</button>
 			<button class="btn btn_function" onclick="location.href='{{url('students/export')}}'">資料匯出</button>
 		</div>
+		{{ $users->links() }}
 		<div class="student_edit_table">
 			<table class="table table-bordered">
 				<thead>

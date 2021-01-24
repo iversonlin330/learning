@@ -22,7 +22,7 @@ class StudentController extends Controller
     public function index()
     {
         //
-		$users = User::with(['user_info', "user_info.classroom", "user_info.classroom.teacher"])->where('role', 1)->get();
+		$users = User::with(['user_info', "user_info.classroom", "user_info.classroom.teacher"])->where('role', 1)->paginate(30);
 		$surveys = Survey::where('is_hide',0)->get();
 		//dd($users);
 		return view('students.index',compact('users','surveys'));
