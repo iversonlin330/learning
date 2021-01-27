@@ -114,10 +114,6 @@ class TeacherController extends Controller
 			//->send("<a href>");
 			->send(new Register($data));
 		*/
-		Mail::to($data['account'])
-			//->subject('認證...')
-			//->send("<a href>");
-			->send(new Register($data));
 			
 		$user = User::create([
 			'account' => $data['account'],
