@@ -124,6 +124,7 @@ class TeacherController extends Controller
 			'role' => 50,
 			'remember_token' => $token,
 			'email' => $data['account'],
+			'email_verified_at' => date("Y-m-d H:i:s")
         ]);
 		
 		Teacher::create([
