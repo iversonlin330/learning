@@ -19,7 +19,7 @@
 				<div class="row" style="margin:0;">
 					<div class="form-group">
 						<label for="class_id" class="lable_title">班級ID</label>
-						<input style="width: 350px;" type="text" class="form-control" id="class_id" name="class_number" placeholder="只能輸入一個英文字母" maxlength='1' required>
+						<input style="width: 350px;" type="text" class="form-control" id="class_id" name="class_number" placeholder="只能輸入一個大寫英文字母" maxlength='1' required>
 					</div>
 					<div class="form-group mr-30">
 						<div class="mr-30">
