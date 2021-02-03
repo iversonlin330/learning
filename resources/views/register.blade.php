@@ -79,6 +79,9 @@
 								<option value="四">四</option>
 								<option value="五">五</option>
 								<option value="六">六</option>
+								<option value="七">七</option>
+								<option value="八">八</option>
+								<option value="九">九</option>
 							</select>
 						</div>
 						<div class="mb-15">
