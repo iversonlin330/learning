@@ -1,19 +1,21 @@
 @extends('layouts.master')
- 
+
 @section('title', 'index')
- 
+
 @section('style')
 @parent
 <style>
 </style>
 @endsection
- 
+
 @section('content')
 <div class="container mb-5">
 	<div class="student_edit">
 		<div class="filter">
-			<input class="form-control large_filter" id="student_date_search" type="text" placeholder="Search.." style="margin-right: 0;">
-			<div class="btn"><img src="img/search.png" alt=""></div>
+            <form action="">
+                <input name="q" class="form-control large_filter" id="student_date_search" type="text" placeholder="Search.." style="margin-right: 0;">
+                <div class="btn" onclick="form_submit()"><img src="img/search.png" alt=""></div>
+            </form>
 		</div>
 		<div class="top_right_button">
 			<button class="btn btn_function" onclick="location.href='{{url('students/admin-create')}}'">新增資料</button>
@@ -52,7 +54,7 @@
 					<td>{{ $user->user_info->classroom->grade }}</td>
 					<td>{{ $user->user_info->classroom->classroom }}</td>
 					@foreach($surveys as $survey)
-						<?php 
+						<?php
 							$item = $user->user_info->survey;
 						?>
 						<td>
@@ -142,11 +144,13 @@
 	</div>
 </div>
 @endsection
- 
+
 @section('script')
 @parent
 <script>
-
+function form_submit(){
+    $("form").submit();
+}
 </script>
 @endsection
 
