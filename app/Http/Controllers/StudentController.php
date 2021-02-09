@@ -27,12 +27,12 @@ class StudentController extends Controller
             $users = User::with(['user_info', "user_info.classroom", "user_info.classroom.teacher"])
                 ->where('role', 1)
                 ->where('name', 'like', "%" . $search . "%")
-                ->paginate(30);
+                ->paginate(100);
 
         } else {
             $users = User::with(['user_info', "user_info.classroom", "user_info.classroom.teacher"])
                 ->where('role', 1)
-                ->paginate(30);
+                ->paginate(100);
         }
         $surveys = Survey::where('is_hide', 0)->get();
         //dd($users);
